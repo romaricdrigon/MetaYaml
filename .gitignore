@@ -1,0 +1,6 @@
+app/cache
+app/logs
+composer.lock
+vendor
+web/
+.idea/*
