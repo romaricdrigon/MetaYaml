@@ -22,10 +22,12 @@ class MetaYaml
     public function loadSchemaFromYaml($yaml)
     {
         $this->schema = Yaml::Parse($yaml);
+        return $this->schema;
     }
     public function loadSchema(array $schema)
     {
         $this->schema = $schema;
+        return $this->schema;
     }
 
     // we build (into memory) a treeBuilder

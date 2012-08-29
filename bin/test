@@ -1,0 +1,2 @@
+#!/bin/sh
+vendor/bin/atoum -bf test/bootstrap.php --loop $*
