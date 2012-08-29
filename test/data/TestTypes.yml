@@ -6,3 +6,11 @@ multi_ligne: |
 enume: mac
 nombre: 15
 booleen: false
+prototype_bool:
+    any_value: true
+    other_value: false
+prototype_array:
+    first_array:
+        texte: bla bla
+    second_array:
+        texte: bla bla

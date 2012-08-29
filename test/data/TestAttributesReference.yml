@@ -13,7 +13,8 @@ _root:
                 _type: array
                 _not_empty: true
                 _required: true
+                _ignore_extra_keys: true
             _content:
-                1:
+                index:
                     _metadata:
                         _type: text

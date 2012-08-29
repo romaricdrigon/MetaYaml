@@ -38,7 +38,7 @@ class MetaYaml
     }
     public function validate(array $data)
     {
-        // check if schema is build, if possible build it
+        // check if schema is build
         if ($this->schema === null) {
             throw new \Exception('You should set schema, via loadSchema() or loadSchemaFromYaml, first !');
         }
@@ -105,25 +105,42 @@ class MetaYaml
 
         switch ($node['_metadata']['_type']) {
             case 'array':
-                $children = $builder->arrayNode($name);
-                $this->schemaNodeSetAttributes($node['_metadata'], $children);
+                $child = $builder->arrayNode($name);
+                $this->schemaArrayNodeSetAttributes($node['_metadata'], $child);
                 //TODO : tester la présence de _content
 
                 foreach ($node['_content'] as $name => $value) {
-                    $this->schemaNode($name, $children->children(), $value);
+                    $this->schemaNode($name, $child->children(), $value);
                 }
 
                 $builder->end();
                 break;
+            case 'prototype':
+                //TODO : tester la présence de _prototype
+                $type = $node['_prototype']['_metadata']['_type'];
+                // TODO : parser les attributs is_required, autres ?
+                $child = $builder
+                    ->arrayNode($name)
+                        ->prototype($type);
+
+                if ($type === 'array') {
+                    foreach ($node['_prototype']['_content'] as $name => $value) {
+                        $this->schemaNode($name, $child->children(), $value);
+                    }
+                }
+
+                $child->end();
+                $builder->end();
+                break;
             case 'text':
-                $children = $builder->scalarNode($name);
-                $this->schemaNodeSetAttributes($node['_metadata'], $children);
+                $child = $builder->scalarNode($name);
+                $this->schemaNodeSetAttributes($node['_metadata'], $child);
                 $builder->end();
                 break;
             case 'number':
-                $children = $builder->scalarNode($name);
-                $this->schemaNodeSetAttributes($node['_metadata'], $children);
-                $children
+                $child = $builder->scalarNode($name);
+                $this->schemaNodeSetAttributes($node['_metadata'], $child);
+                $child
                     ->validate()
                         ->ifTrue(function ($v) {return !is_numeric($v);})
                         ->thenInvalid("Node $name value must be numeric")
@@ -131,15 +148,15 @@ class MetaYaml
                 $builder->end();
                 break;
             case 'boolean':
-                $children = $builder->booleanNode($name);
-                $this->schemaNodeSetAttributes($node['_metadata'], $children);
+                $child = $builder->booleanNode($name);
+                $this->schemaNodeSetAttributes($node['_metadata'], $child);
                 $builder->end();
                 break;
             case 'enum':
-                $children = $builder->enumNode($name);
-                $this->schemaNodeSetAttributes($node['_metadata'], $children);
+                $child = $builder->enumNode($name);
+                $this->schemaNodeSetAttributes($node['_metadata'], $child);
                 // TODO : tester la présence de _values
-                $children->values($node['_values']);
+                $child->values($node['_values']);
                 $builder->end();
                 break;
         }
@@ -153,14 +170,16 @@ class MetaYaml
         }
 
         if (isset($metadata['_not_empty']) && $metadata['_not_empty']) {
-            if ($metadata['_type'] === 'array') {
-                //(! isset($metadata['_required']) || ! $metadata['_required']) && $nodeDef->isRequired();
-//                /var_dump($nodeDef);
-                //$nodeDef->requiresAtLeastOneElement();
-                // TODO : seems not to work, why?
-            } else {
-                $nodeDef->cannotBeEmpty();
-            }
+            $nodeDef->cannotBeEmpty();
+        }
+    }
+    // the same but for an array, there are more attributes
+    private function schemaArrayNodeSetAttributes(array $metadata, ArrayNodeDefinition $nodeDef)
+    {
+        $this->schemaNodeSetAttributes($metadata, $nodeDef);
+
+        if (isset($metadata['_ignore_extra_keys']) && $metadata['_ignore_extra_keys']) {
+            $nodeDef->ignoreExtraKeys();
         }
     }
 }

@@ -23,3 +23,20 @@ _root:
         booleen:
             _metadata:
                 _type: boolean
+        prototype_bool:
+            _metadata:
+                _type: prototype
+            _prototype:
+                _metadata:
+                    _type: boolean
+        prototype_array:
+            _metadata:
+                _type: prototype
+            _prototype:
+                _metadata:
+                    _type: array
+                _content:
+                    texte:
+                        _metadata:
+                            _type: text
+                            _is_required:
