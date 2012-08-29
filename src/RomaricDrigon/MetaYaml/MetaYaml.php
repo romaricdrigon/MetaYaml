@@ -71,14 +71,11 @@ class MetaYaml
         // there are a lot of references under the roof, so take care
         $root = $builder->root('root');
 
-        if (! isset($node['_metadata'])) {
-            throw new \Exception('Missing metadata for root node !');
+        if (! isset($node['_metadata']) || ! isset($node['_metadata']['_type'])) {
+            $node['_metadata']['_type'] = 'array'; // by default the root is an array
         }
         if (! isset($node['_content'])) {
-            throw new \Exception('Missing content for root node !');
-        }
-        if (! isset($node['_metadata']['_type'])) {
-            throw new \Exception('Root node must have a type !');
+            throw new \Exception('Missing _content for root node !');
         }
 
         switch ($node['_metadata']['_type']) {
@@ -100,16 +97,17 @@ class MetaYaml
     private function schemaNode($name, NodeBuilder $builder, array $node)
     {
         if (! isset($node['_metadata'])) {
-            throw new \Exception("Missing metadata for $name node !");
+            throw new \Exception("Missing _metadata for $name node !");
         }
         if (! isset($node['_metadata']['_type'])) {
-            throw new \Exception("Node $name doesn't have a type !");
+            throw new \Exception("Node $name doesn't have a _type !");
         }
 
         switch ($node['_metadata']['_type']) {
             case 'array':
                 $children = $builder->arrayNode($name);
                 $this->schemaNodeSetAttributes($node['_metadata'], $children);
+                //TODO : tester la présence de _content
 
                 foreach ($node['_content'] as $name => $value) {
                     $this->schemaNode($name, $children->children(), $value);
@@ -122,6 +120,28 @@ class MetaYaml
                 $this->schemaNodeSetAttributes($node['_metadata'], $children);
                 $builder->end();
                 break;
+            case 'number':
+                $children = $builder->scalarNode($name);
+                $this->schemaNodeSetAttributes($node['_metadata'], $children);
+                $children
+                    ->validate()
+                        ->ifTrue(function ($v) {return !is_numeric($v);})
+                        ->thenInvalid("Node $name value must be numeric")
+                    ->end();
+                $builder->end();
+                break;
+            case 'boolean':
+                $children = $builder->booleanNode($name);
+                $this->schemaNodeSetAttributes($node['_metadata'], $children);
+                $builder->end();
+                break;
+            case 'enum':
+                $children = $builder->enumNode($name);
+                $this->schemaNodeSetAttributes($node['_metadata'], $children);
+                // TODO : tester la présence de _values
+                $children->values($node['_values']);
+                $builder->end();
+                break;
         }
     }
 
@@ -130,6 +150,17 @@ class MetaYaml
     {
         if (isset($metadata['_required']) && $metadata['_required']) {
             $nodeDef->isRequired();
+        }
+
+        if (isset($metadata['_not_empty']) && $metadata['_not_empty']) {
+            if ($metadata['_type'] === 'array') {
+                //(! isset($metadata['_required']) || ! $metadata['_required']) && $nodeDef->isRequired();
+//                /var_dump($nodeDef);
+                //$nodeDef->requiresAtLeastOneElement();
+                // TODO : seems not to work, why?
+            } else {
+                $nodeDef->cannotBeEmpty();
+            }
         }
     }
 }

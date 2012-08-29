@@ -1,0 +1,11 @@
+fleurs:
+    roses:
+        opera: la plus belle
+        sauvages:
+            du jardin: cueillie ce matin !
+            des bois: plus dure à trouver
+    violette:
+        nom: Daphnée
+        est fannee: false
+        beauté: très belle
+        age: 15

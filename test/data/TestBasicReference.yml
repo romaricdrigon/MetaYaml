@@ -1,8 +1,6 @@
 _root:
-    _metadata:
-        _description: Racine de notre élément
-        _type: array
-        # forcément required !
+     # _root is by default an array
+     # and is required
     _content:
         fleurs:
             _metadata:

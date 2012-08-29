@@ -1,0 +1,8 @@
+texte: bla bla bla
+multi_ligne: |
+    bla bla bla
+    bla bla bla
+    and meh
+enume: mac
+nombre: 15
+booleen: false

@@ -1,0 +1,19 @@
+_root:
+    _content:
+        requis:
+            _metadata:
+                _type: text
+                _required: true
+        pas vide:
+            _metadata:
+                _type: text
+                _not_empty: true
+        tableau:
+            _metadata:
+                _type: array
+                _not_empty: true
+                _required: true
+            _content:
+                1:
+                    _metadata:
+                        _type: text
