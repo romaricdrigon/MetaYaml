@@ -52,6 +52,7 @@ class MetaYaml
     /*
      * Private functions
      * Used to build the validation tree
+     * ~ Here lies dragons ~
      */
 
     private function schemaToTree(array $schema)
@@ -105,59 +106,22 @@ class MetaYaml
 
         switch ($node['_metadata']['_type']) {
             case 'array':
-                $child = $builder->arrayNode($name);
-                $this->schemaArrayNodeSetAttributes($node['_metadata'], $child);
-                //TODO : tester la présence de _content
-
-                foreach ($node['_content'] as $name => $value) {
-                    $this->schemaNode($name, $child->children(), $value);
-                }
-
-                $builder->end();
+                $this->schemaArrayNode($name, $builder, $node);
                 break;
             case 'prototype':
-                //TODO : tester la présence de _prototype
-                $type = $node['_prototype']['_metadata']['_type'];
-                // TODO : parser les attributs is_required, autres ?
-                $child = $builder
-                    ->arrayNode($name)
-                        ->prototype($type);
-
-                if ($type === 'array') {
-                    foreach ($node['_prototype']['_content'] as $name => $value) {
-                        $this->schemaNode($name, $child->children(), $value);
-                    }
-                }
-
-                $child->end();
-                $builder->end();
+                $this->schemaPrototypeNode($name, $builder, $node);
                 break;
             case 'text':
-                $child = $builder->scalarNode($name);
-                $this->schemaNodeSetAttributes($node['_metadata'], $child);
-                $builder->end();
+                $this->schemaTextNode($name, $builder, $node);
                 break;
             case 'number':
-                $child = $builder->scalarNode($name);
-                $this->schemaNodeSetAttributes($node['_metadata'], $child);
-                $child
-                    ->validate()
-                        ->ifTrue(function ($v) {return !is_numeric($v);})
-                        ->thenInvalid("Node $name value must be numeric")
-                    ->end();
-                $builder->end();
+                $this->schemaNumberNode($name, $builder, $node);
                 break;
             case 'boolean':
-                $child = $builder->booleanNode($name);
-                $this->schemaNodeSetAttributes($node['_metadata'], $child);
-                $builder->end();
+                $this->schemaBooleanNode($name, $builder, $node);
                 break;
             case 'enum':
-                $child = $builder->enumNode($name);
-                $this->schemaNodeSetAttributes($node['_metadata'], $child);
-                // TODO : tester la présence de _values
-                $child->values($node['_values']);
-                $builder->end();
+                $this->schemaEnumNode($name, $builder, $node);
                 break;
         }
     }
@@ -181,5 +145,73 @@ class MetaYaml
         if (isset($metadata['_ignore_extra_keys']) && $metadata['_ignore_extra_keys']) {
             $nodeDef->ignoreExtraKeys();
         }
+    }
+
+    // helpers to analyze a node
+    private function schemaArrayNode($name, NodeBuilder $builder, array $node)
+    {
+        $child = $builder->arrayNode($name);
+        $this->schemaArrayNodeSetAttributes($node['_metadata'], $child);
+
+        //TODO : tester la présence de _content
+
+        foreach ($node['_content'] as $name => $value) {
+            $this->schemaNode($name, $child->children(), $value);
+        }
+
+        $builder->end();
+    }
+    private function schemaTextNode($name, NodeBuilder $builder, array $node)
+    {
+        $child = $builder->scalarNode($name);
+        $this->schemaNodeSetAttributes($node['_metadata'], $child);
+        $builder->end();
+    }
+    private function schemaNumberNode($name, NodeBuilder $builder, array $node)
+    {
+        $child = $builder->scalarNode($name);
+        $this->schemaNodeSetAttributes($node['_metadata'], $child);
+
+        $child
+            ->validate()
+                ->ifTrue(function ($v) {return !is_numeric($v);})
+                ->thenInvalid("Node $name value must be numeric")
+            ->end();
+
+        $builder->end();
+    }
+    private function schemaBooleanNode($name, NodeBuilder $builder, array $node)
+    {
+        $child = $builder->booleanNode($name);
+        $this->schemaNodeSetAttributes($node['_metadata'], $child);
+        $builder->end();
+    }
+    private function schemaEnumNode($name, NodeBuilder $builder, array $node)
+    {
+        $child = $builder->enumNode($name);
+        $this->schemaNodeSetAttributes($node['_metadata'], $child);
+
+        // TODO : tester la présence de _values
+
+        $child->values($node['_values']);
+        $builder->end();
+    }
+    private function schemaPrototypeNode($name, NodeBuilder $builder, array $node)
+    {
+        //TODO : tester la présence de _prototype
+        $type = $node['_prototype']['_metadata']['_type'];
+        // TODO : parser les attributs is_required, autres ?
+        $child = $builder
+            ->arrayNode($name)
+            ->prototype($type);
+
+        if ($type === 'array') {
+            foreach ($node['_prototype']['_content'] as $name => $value) {
+                $this->schemaNode($name, $child->children(), $value);
+            }
+        }
+
+        $child->end();
+        $builder->end();
     }
 }
