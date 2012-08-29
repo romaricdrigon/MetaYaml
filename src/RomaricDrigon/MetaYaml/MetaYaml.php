@@ -21,19 +21,12 @@ class MetaYaml
     // function to load our schema
     public function loadSchemaFromYaml($yaml)
     {
-        $this->schema = Yaml::Parse($yaml);
-        return $this->schema;
+        $this->loadSchema(Yaml::Parse($yaml));
     }
+    // load and build
     public function loadSchema(array $schema)
     {
         $this->schema = $schema;
-        return $this->schema;
-    }
-
-    // we build (into memory) a treeBuilder
-    // according to our schema
-    public function buildSchema()
-    {
         $builder = $this->schemaToTree($this->schema);
         $this->built_schema = $builder->buildTree();
     }
@@ -41,12 +34,17 @@ class MetaYaml
     // validate Yaml using our schema
     public function validateYaml($yaml)
     {
-        $this->validate(Yaml::Parse($yaml));
+        return $this->validate(Yaml::Parse($yaml));
     }
-    public function validate(array $content)
+    public function validate(array $data)
     {
+        // check if schema is build, if possible build it
+        if ($this->schema === null) {
+            throw new \Exception('You should set schema, via loadSchema() or loadSchemaFromYaml, first !');
+        }
+
         $processor = new Processor();
-        $processor->process($this->built_schema, array('root' => $content));
+        $processor->process($this->built_schema, array('root' => $data));
 
         return true; // we could return anything!
     }
@@ -58,6 +56,10 @@ class MetaYaml
 
     private function schemaToTree(array $schema)
     {
+        if (! isset($schema['_root'])) {
+            throw new \Exception('Missing _root element for schema !');
+        }
+
         // root node is specific, so treat him accordingly
         return $this->schemaRootNode($schema['_root']);
     }

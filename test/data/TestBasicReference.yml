@@ -1,0 +1,18 @@
+_root:
+    _metadata:
+        _description: Racine de notre élément
+        _type: array
+        # forcément required !
+    _content:
+        fleurs:
+            _metadata:
+                _type: array
+                _required: true
+            _content:
+                rose:
+                    _metadata:
+                        _required: true
+                        _type: text
+                violette:
+                    _metadata:
+                        _type: text

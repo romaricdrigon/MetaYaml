@@ -16,25 +16,56 @@ class MetaYaml extends atoum\test
                 ->object($object)->isInstanceOf('RomaricDrigon\\MetaYaml\\MetaYaml');
     }
 
-    public function testLoad()
+    public function testBasic()
     {
         $this
-            ->if($yaml = <<<EOT
-fleurs:
-    roses: 5
-    violettes: 15
-EOT
-            )
-            ->and($array = array(
-                'fleurs' => array(
-                    'roses' => 5,
-                    'violettes' => 15
-                )
-            ))
+            ->if($schema = file_get_contents('test/data/TestBasicReference.yml'))
+            ->and($yaml = file_get_contents('test/data/TestBasicBase.yml'))
+            ->and($object = new testedClass())
+            ->and($object->loadSchemaFromYaml($schema))
+            ->then
+                ->boolean($object->validateYaml($yaml))->isEqualTo(true);
+    }
+
+    public function testForgottenSchemaLoad()
+    {
+        $this
+            ->if($yaml = file_get_contents('test/data/TestBasicRequired.yml'))
             ->and($object = new testedClass())
             ->then
-                ->object($object)->isInstanceOf('RomaricDrigon\\MetaYaml\\MetaYaml')
-                ->array($object->loadSchemaFromYaml($yaml))->isEqualTo($array)
-                ->array($object->loadSchema($array))->isEqualTo($array);
+                ->exception(function() use ($object, $yaml) { $object->validateYaml($yaml); })
+                ->hasMessage('You should set schema, via loadSchema() or loadSchemaFromYaml, first !');
+    }
+
+    /*
+     * Tests about schema structure :
+     * we make sure we're able to parse properly our schema file
+     */
+
+    public function testSchemaNoRoot()
+    {
+        $this
+            ->if($yaml = file_get_contents('test/data/TestBasicRequired.yml'))
+            ->and($object = new testedClass())
+            ->then
+                ->exception(function() use ($object) { $object->loadSchema(array()); })
+                ->hasMessage('Missing _root element for schema !');
+    }
+
+    /*
+     * Tests about data validation :
+     * we try to validate more and more complex structures
+     */
+
+    public function testDataRequired()
+    {
+        $this
+            ->if($schema = file_get_contents('test/data/TestBasicReference.yml'))
+            ->and($yaml = file_get_contents('test/data/TestBasicRequired.yml'))
+            ->and($object = new testedClass())
+            ->and($object->loadSchemaFromYaml($schema))
+            ->then
+                ->exception(function() use ($object, $yaml) { $object->validateYaml($yaml); })
+                    ->hasMessage('The child node "rose" at path "root.fleurs" must be configured.');
     }
 }
