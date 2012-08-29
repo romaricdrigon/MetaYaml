@@ -1,0 +1,16 @@
+{
+    "name": "meta-yaml",
+    "description": "Meta-Yaml to validate Yaml using Yaml",
+    "keywords": ["yaml", "validation", "schema"],
+    "autoload": {
+        "psr-0": {
+            "RomaricDrigon\\MetaYaml": "src/"
+        }
+    },
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/yaml": "dev-master",
+        "symfony/config": "dev-master",
+        "mageekguy/atoum": "dev-master"
+    }
+}
