@@ -31,7 +31,7 @@ class MetaYaml extends atoum\test
      * we make sure we're able to parse properly our schema file
      */
 
-    public function testSchemaNoRoot()
+    /*public function testSchemaNoRoot()
     {
         $this
             ->if($yaml = file_get_contents('test/data/TestBasicRequired.yml'))
@@ -39,7 +39,7 @@ class MetaYaml extends atoum\test
             ->then
                 ->exception(function() use ($object) { $object->loadSchema(array()); })
                 ->hasMessage('Missing _root element for schema !');
-    }
+    }*/
 
     /*
      * Tests about data validation :
@@ -81,6 +81,7 @@ class MetaYaml extends atoum\test
             ->then
                 ->boolean($object->validateYaml($yaml))->isEqualTo(true);
     }
+
     public function testAttributesRequired()
     {
         $this
@@ -94,6 +95,7 @@ class MetaYaml extends atoum\test
                 ->exception(function() use ($object, $data) { $object->validate($data); })
                     ->hasMessage('The child node "requis" at path "root" must be configured.');
     }
+ 
     public function testAttributesNotEmpty()
     {
         $this
@@ -108,6 +110,7 @@ class MetaYaml extends atoum\test
                 ->exception(function() use ($object, $data) { $object->validate($data); })
                     ->hasMessage('The path "root.pas vide" cannot contain an empty value, but got "".');
     }
+
 //    public function testAttributesNotEmptyArray()
 //    {
 //        $this
@@ -135,6 +138,7 @@ class MetaYaml extends atoum\test
             ->then
                 ->boolean($object->validateYaml($yaml))->isEqualTo(true);
     }
+    
     public function testTypesWrongBool()
     {
         $this
@@ -145,6 +149,7 @@ class MetaYaml extends atoum\test
                 ->exception(function() use ($object) { $object->validate(array('booleen' => 'no')); })
                 ->hasMessage('Invalid type for path "root.booleen". Expected boolean, but got string.');
     }
+    
     public function testTypesWrongEnum()
     {
         $this
