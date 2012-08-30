@@ -21,14 +21,4 @@ class YamlLoader extends atoum\test
                         )
                     ));
     }
-
-    public function testFileNotFound()
-    {
-        $this
-            ->if($object = new testedClass())
-            ->then
-            ->object($object)->isInstanceOf('RomaricDrigon\\MetaYaml\\Loader\\YamlLoader')
-            ->exception(function() use ($object) { $object->loadFromFile('fileNotFound'); })
-                ->hasMessage("The file 'fileNotFound' was not found");
-    }
 }
