@@ -3,6 +3,7 @@
 namespace RomaricDrigon\MetaYaml\NodeValidator;
 
 use RomaricDrigon\MetaYaml\SchemaValidator;
+use RomaricDrigon\MetaYaml\Exception\NodeValidatorException;
 
 abstract class NodeValidator implements NodeValidatorInterface
 {
@@ -17,7 +18,7 @@ abstract class NodeValidator implements NodeValidatorInterface
     {
         $required = (!isset($node_config['_metadata']['_required']) || $node_config['_metadata']['_required']);
         if ($required && is_null($data)) {
-            throw new \Exception(sprintf('The node "%s" is required', $name));
+            throw new NodeValidatorException($name, sprintf('The node "%s" is required', $name));
         } elseif (!$required && is_null($data)) {
             return true;
         }
@@ -29,7 +30,7 @@ abstract class NodeValidator implements NodeValidatorInterface
     {
         $not_empty = (!isset($node_config['_metadata']['_not_empty']) || $node_config['_metadata']['_not_empty']);
         if ($not_empty && empty($data)) {
-            throw new \Exception(sprintf('The node "%s" can not be empty', $name));
+            throw new NodeValidatorException($name, sprintf('The node "%s" can not be empty', $name));
         } elseif (!$not_empty && empty($data)) {
             return true;
         }
