@@ -10,7 +10,7 @@ class ArrayNodeValidator extends NodeValidator
     {
         if ($this->checkRequired($name, $node_config, $data)) return true;
 
-        if (!is_array($data)) {
+        if (! is_array($data)) {
             throw new NodeValidatorException($name, sprintf('The node "%s" is not an array', $name));
         }
 
