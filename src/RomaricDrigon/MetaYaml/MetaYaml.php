@@ -21,30 +21,23 @@ class MetaYaml
     // function to load our schema
     public function loadSchemaFromYaml($yaml)
     {
-        $this->loadSchema(Yaml::Parse($yaml));
+        $this->schema = Yaml::Parse($yaml);
     }
-    // load and build
-    public function loadSchema(array $schema)
-    {
-        $schema_builder = new SchemaBuilder();
-        $this->schema = $schema;
-        $this->built_schema = $schema_builder->build($schema);
-    }
-
+    
     // validate Yaml using our schema
     public function validateYaml($yaml)
     {
         return $this->validate(Yaml::Parse($yaml));
     }
+
     public function validate(array $data)
     {
-        // check if schema is build
-        if ($this->schema === null) {
+        if (is_null($this->schema)) {
             throw new \Exception('You should set schema, via loadSchema() or loadSchemaFromYaml, first !');
         }
 
-        $processor = new Processor();
-        $processor->process($this->built_schema, array('root' => $data));
+        $validator = new SchemaValidator();
+        $validator->validate($this->schema, $data);
 
         return true; // we could return anything!
     }

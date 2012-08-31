@@ -10,7 +10,6 @@
     "require": {
         "php": ">=5.3.3",
         "symfony/yaml": "dev-master",
-        "symfony/config": "dev-master",
         "mageekguy/atoum": "dev-master"
     }
 }
