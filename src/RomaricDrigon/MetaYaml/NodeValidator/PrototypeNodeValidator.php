@@ -2,6 +2,8 @@
 
 namespace RomaricDrigon\MetaYaml\NodeValidator;
 
+use RomaricDrigon\MetaYaml\Exception\NodeValidatorException;
+
 class PrototypeNodeValidator extends NodeValidator
 {
     public function validate($name, $node_config, $data)
@@ -9,7 +11,7 @@ class PrototypeNodeValidator extends NodeValidator
         if ($this->checkRequired($name, $node_config, $data)) return true;
         
         if (!is_array($data)) {
-            throw new \Exception(sprintf('The node "%s" is not an array', 
+            throw new NodeValidatorException($name, sprintf('The node "%s" is not an array', 
                 $name));
         }
         
