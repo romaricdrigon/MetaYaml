@@ -10,11 +10,13 @@ class BooleanNodeValidator extends NodeValidator
     {
         if ($this->checkRequired($name, $node_config, $data)) return true;
 
-        if (!is_bool($data)) {
+        $strict = isset($node_config['_metadata']['_strict']) && isset($node_config['_metadata']['_strict']);
+
+        if (is_bool($data) || (! $strict && ($data == 'true' || $data == 'false'))) {
+            return true;
+        } else {
             throw new NodeValidatorException($name, sprintf('The node "%s" is not a boolean', 
                 $name));
         }
-
-        return true;
     }
 }

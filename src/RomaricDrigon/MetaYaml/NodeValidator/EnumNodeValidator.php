@@ -10,9 +10,30 @@ class EnumNodeValidator extends NodeValidator
     {
         if ($this->checkRequired($name, $node_config, $data)) return true;
 
-        if (!in_array($data, $node_config['_values'])) {
-            throw new NodeValidatorException($name, sprintf('The value of the node "%s" is not allowed', 
-                $name));
+        $strict = isset($node_config['_metadata']['_strict']) && isset($node_config['_metadata']['_strict']);
+
+        // because of php lousy comparaisons,
+        // when strict is false, anything compared
+        // to true will be ok, to false not. Let's fix this
+        // by forcing them to strings
+        $haystack = $node_config['_values'];
+        if (! $strict) {
+            if ($data === true) {
+                $data = 'true';
+            }
+            if ($data === false) {
+                $data = 'false';
+            }
+            if ($key = array_search(true, $haystack, true)) {
+                $haystack[$key] = 'true';
+            }
+            if ($key = array_search(false, $haystack, false)) {
+                $haystack[$key] = 'false';
+            }
+        }
+
+        if (! in_array($data, $haystack, $strict)) {
+            throw new NodeValidatorException($name, 'The value "'.$data.'" is not allowed for node "'.$name.'"');
         }
 
         return true;
