@@ -1,0 +1,12 @@
+<fleurs>
+    <roses couleur="rose">
+        <opera>une rose</opera>
+        <sauvage>
+            <des_bois>une autre rose</des_bois>
+            <des_sous_bois sauvage="oui">encore</des_sous_bois>
+        </sauvage>
+    </roses>
+    <tulipe>je vais disparaitre !</tulipe>
+    <tulipe>deuxieme tulipe</tulipe>
+    <fleur couleur="violette" sauvage="non" _key="violette">une violette</fleur>
+</fleurs>
