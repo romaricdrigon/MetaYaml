@@ -2,6 +2,8 @@
 
 namespace RomaricDrigon\MetaYaml\NodeValidator;
 
+use RomaricDrigon\MetaYaml\Exception\NodeValidatorException;
+
 class TextNodeValidator extends NodeValidator
 {
     public function validate($name, $node_config, $data)
@@ -10,7 +12,7 @@ class TextNodeValidator extends NodeValidator
         if ($this->checkEmpty($name, $node_config, $data)) return true;
 
         if (!is_string($data)) {
-            throw new \Exception(sprintf('The node "%s" is not a string', 
+            throw new NodeValidatorException($name, sprintf('The node "%s" is not a string', 
                 $name));
         }
 
