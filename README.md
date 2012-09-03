@@ -1,7 +1,7 @@
 # MetaYaml
 
 A `[put your file type here]` schema validator using `[put another file type here]` files.  
-At the moment, file type can be Json, Yaml, or Xml.
+At the moment, file type can be Json, Yaml, or Xml.  
 _The name comes from the fact that it was initially made to implement a pseudo-schema for Yaml files._
 
 ## Installation
@@ -12,19 +12,19 @@ This component is organized as a Symfony2 bundle, but actually the core has no d
 * If you want to use the YamlLoader, you will need the Symfony component [Yaml](https://github.com/symfony/Yaml) (standalone component, does not require Symfony2).
 * To run the tests, you'll need [atoum](https://github.com/mageekguy/atoum).
 
-To install all these packages, the easiest is to use composer: put [composer.phar](http://getcomposer.org) in root folder, and then run `./composer.phar --update`
+To install all these packages, the easiest way is to use [composer](http://getcomposer.org): put composer.phar in root folder, and then run `./composer.phar --update`
 
 ## Basic usage
 
-You have to create a SchemaValidator object, and then pass it both the schema as a multidimensional php array and your data :
+You have to create a SchemaValidator object, and then pass it both the schema and your data as multidimensional php arrays:
 ```php
 $schema = new SchemaValidator();
 $schema->validate($schema, $data);
 ```
 
-You can use any of the provided loaders to obtain these arrays (yep, you can validate Xml using a schema in a Yaml file !).
+You can use any of the provided loaders to obtain these arrays (yep, you can validate Xml using a schema from an Yaml file!).
 
-Some loader examples :
+Some loader examples:
 ```php
 // create one loader object
 $loader = new JsonLoader(); // Json (will use php json_decode)
@@ -68,7 +68,7 @@ fleurs:
     violette: une violette
 ```
 
-For more examples, look inside test/data folder.
+For more examples, look inside test/data folder. You have some .yml files, and their schemas (suffix 'Reference').
 
 ## Test
 
