@@ -10,7 +10,9 @@ class NumberNodeValidator extends NodeValidator
     {
         if ($this->checkRequired($name, $node_config, $data)) return true;
 
-        if (!is_numeric($data)) {
+        $strict = isset($node_config['_metadata']['_strict']) && isset($node_config['_metadata']['_strict']);
+
+        if (! is_numeric($data) || ($strict && ! (is_integer($data) || is_float($data)))) {
             throw new NodeValidatorException($name, sprintf('The node "%s" is not numeric', 
                 $name));
         }
