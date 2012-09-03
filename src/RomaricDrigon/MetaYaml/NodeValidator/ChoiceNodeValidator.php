@@ -13,14 +13,13 @@ class ChoiceNodeValidator extends NodeValidator
         $valid = false;
         $message = '';
         $count_levels = -1;
-        foreach ($node_config['_choices'] as $key => $choice_config) {
+        foreach ($node_config['_choices'] as $choice_config) {
             try {
                 $this->schema_validator->validateNode($name, $choice_config['_metadata']['_type'], 
                     $choice_config, $data);
                 $valid = true;
                 break;
             } catch (NodeValidatorException $e) {
-                $path = $e->getNodePath();
                 $current_count_levels = count(explode('.', $e->getNodePath()));
                 if ($current_count_levels > $count_levels) {
                     $message = $e->getMessage();

@@ -22,6 +22,8 @@ class NodeValidatorFactory
                 return new ArrayNodeValidator($validator);
             case 'prototype':
                 return new PrototypeNodeValidator($validator);
+            case 'partial':
+                return new PartialNodeValidator($validator);
             default:
                 throw new NodeValidatorException($name, 'Unknown validator type : '.$type);
         }

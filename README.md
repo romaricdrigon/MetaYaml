@@ -12,7 +12,7 @@ This component is organized as a Symfony2 bundle, but actually the core has no d
 * If you want to use the YamlLoader, you will need the Symfony component [Yaml](https://github.com/symfony/Yaml) (standalone component, does not require Symfony2).
 * To run the tests, you'll need [atoum](https://github.com/mageekguy/atoum).
 
-To install all these packages, the easiest is to use composer: put [composer.phar](http://getcomposer.org) in root folder, and then run `./composer.phar --update`.
+To install all these packages, the easiest is to use composer: put [composer.phar](http://getcomposer.org) in root folder, and then run `./composer.phar --update`
 
 ## Basic usage
 
