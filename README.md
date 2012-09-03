@@ -1,16 +1,18 @@
 # MetaYaml
 
 A `[put your file type here]` schema validator using `[put another file type here]` files.  
-At the moment, file types can be Json, Yaml, or Xml.  
+At the moment, file type can be Json, Yaml, or Xml.
 _The name comes from the fact that it was initially made to implement a pseudo-schema for Yaml files._
 
 ## Installation
 
-This component is organized to be a Symfony bundle, but actually the core has no dependencies
-which should prevent you to use it anywhere else.
+This component is organized as a Symfony2 bundle, but actually the core has no dependencies which should prevent you to use it anywhere else.
 
-If you want to use the YamlLoader, you will need the Symfony component [Yaml](https://github.com/symfony/Yaml) (standalone component, does not require Symfony).  
-The XmlLoader will use some conventions, cf below.
+* The core requires PHP >= 5.3.3.
+* If you want to use the YamlLoader, you will need the Symfony component [Yaml](https://github.com/symfony/Yaml) (standalone component, does not require Symfony2).
+* To run the tests, you'll need [atoum](https://github.com/mageekguy/atoum).
+
+To install all these packages, the easiest is to use composer: put [composer.phar](http://getcomposer.org) in root folder, and then run `./composer.phar --update`.
 
 ## Basic usage
 
@@ -71,7 +73,7 @@ For more examples, look inside test/data folder.
 ## Test
 
 The project is extensively tested using [atoum](https://github.com/mageekguy/atoum).
-To launch tests, just run in a shell './bin/test --test-all'.
+To launch tests, just run in a shell `./bin/test --test-all`.
 
 ## Extending
 
