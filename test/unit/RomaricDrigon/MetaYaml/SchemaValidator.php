@@ -127,15 +127,4 @@ class SchemaValidator extends atoum\test
             ->then
                 ->boolean($object->validate($config, $data))->isEqualTo(true);
     }
-    public function testMetaValidation()
-    {
-        $this
-            ->if($yaml_loader = new YamlLoader())
-            ->and($json_loader = new JsonLoader())
-            ->and($data = $yaml_loader->loadFromFile('test/data/TestTypes/Schema.yml'))
-            ->and($config = $json_loader->loadFromFile('bin/MetaSchema.json'))
-            ->and($object = new testedClass())
-            ->then
-                ->boolean($object->validate($config, $data))->isEqualTo(true);
-    }
 }

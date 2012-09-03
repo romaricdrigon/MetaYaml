@@ -3,7 +3,6 @@
 A `[put your file type here]` schema validator using `[put another file type here]` files.  
 At the moment, file type can be Json, Yaml, or Xml.
 
-
 _The name comes from the fact that it was initially made to implement a pseudo-schema for Yaml files._
 
 ## Installation
@@ -20,8 +19,8 @@ To install all these packages, the easiest way is to use [composer](http://getco
 
 You have to create a SchemaValidator object, and then pass it both the schema and your data as multidimensional php arrays:
 ```php
-$schema = new SchemaValidator();
-$schema->validate($schema, $data);
+$schema = new MetaYaml($schema);
+$schema->validate($data); // will return true or throw an exception
 ```
 
 You can use any of the provided loaders to obtain these arrays (yep, you can validate Xml using a schema from an Yaml file!).
@@ -75,7 +74,7 @@ Of courses the same structures are possible with Json and XML, because the core 
 ### Schema structure
 
 A schema file must have a 'root' node, which will described the first-level content.
-You can optionaly define a `prefix`. By defaults it's `_` (`_type`, `_required`...).
+You can optionally define a `prefix`. By defaults it's `_` (`_type`, `_required`...).
 You'll define a `partials` node if you want to use this feature.
 
 So a basic schema file:
@@ -165,7 +164,9 @@ partials:
 ### More information
 
 For more examples, look inside test/data folder.
-In each folder, you have an .yml file and its schema.
+In each folder, you have an .yml file and its schema. There's also a Xml example.
+
+If you're curious about an advanced usage, you can check bin/MetaSchema.json: schema files are validated using this schema.
 
 ## Test
 
@@ -177,3 +178,7 @@ To launch tests, just run in a shell `./bin/test --test-all`.
 You may want to write your own loader, using anything else.  
 Take a look at any class in Loader/ folder, it's pretty simple :
 you have to implement the LoaderInterface, and may want to extend Loader class (so you don't have to write `loadFromFile()`).
+
+## Thanks
+
+Thanks to [Riad Benguella](https://github.com/youknowriad) and [Julien Bianchi](https://github.com/jubianchi) for their help & advices.
