@@ -3,7 +3,7 @@ multi_ligne: |
     bla bla bla
     bla bla bla
     and meh
-enume: mac
+enume: linux
 nombre: 15
 booleen: false
 prototype_bool:
@@ -17,3 +17,4 @@ prototype_array:
 paragraph:
     line_1: some text
     line_2: more text
+test_choice: 5

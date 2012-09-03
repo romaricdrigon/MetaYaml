@@ -105,6 +105,7 @@ Those types are available:
 * `enum`: list accepted values in _values node
 * `array`: define children in a _content node ; array children must have named keys
 * `prototype`: define a repetition of items whose name is not important. You must give children's type in `_prototype` node.
+* `choice`: child node can be any of the nodes provided in `_choices`
 * `partial`: "shortcut" to a block described in `partials` root node. Provide partial name in `_partial`
 
 For some types, you can specify additional attributes:
@@ -143,6 +144,16 @@ root:
         paragraph:
             _type: partial
             _partial: block
+        test_choice:
+            _type: choice
+            _choices:
+                1:
+                    _type: enum
+                    _values:
+                        - windows
+                        - linux
+                2:
+                    _type: number
 partials:
     block:
         _type: array

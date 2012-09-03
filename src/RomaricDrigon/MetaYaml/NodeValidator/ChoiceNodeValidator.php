@@ -22,6 +22,7 @@ class ChoiceNodeValidator extends NodeValidator
                 break;
             } catch (NodeValidatorException $e) {
                 $current_count_levels = count(explode('.', $e->getNodePath()));
+
                 if ($current_count_levels > $count_levels) {
                     $message = $e->getMessage();
                     $count_levels = $current_count_levels;
@@ -29,8 +30,8 @@ class ChoiceNodeValidator extends NodeValidator
             }
         }
 
-        if (!$valid) {
-            throw new NodeValidatorException($name, sprintf("The node \"%s\" is invalid, we think it's because : %s",
+        if (! $valid) {
+            throw new NodeValidatorException($name, sprintf("The choice node \"%s\" is invalid with error: %s",
                 $name, $message));
         }
 

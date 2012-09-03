@@ -11,12 +11,21 @@ root:
             _type: enum
             _values:
                 - windows
-                - mac
                 - linux
         nombre:
             _type: number
         booleen:
             _type: boolean
+        test_choice:
+            _type: choice
+            _choices:
+                1:
+                    _type: enum
+                    _values:
+                        - windows
+                        - linux
+                2:
+                    _type: number
         prototype_bool:
             _type: prototype
             _prototype:
