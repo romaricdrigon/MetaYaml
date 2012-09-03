@@ -6,11 +6,11 @@ use RomaricDrigon\MetaYaml\Exception\NodeValidatorException;
 
 class BooleanNodeValidator extends NodeValidator
 {
-    public function validate($name, $node_config, $data)
+    public function validate($name, $node, $data)
     {
-        if ($this->checkRequired($name, $node_config, $data)) return true;
+        if ($this->checkRequired($name, $node, $data)) return true;
 
-        $strict = isset($node_config[$this->schema_validator->getFullName('strict')]) && isset($node_config[$this->schema_validator->getFullName('strict')]);
+        $strict = isset($node[$this->schema_validator->getFullName('strict')]) && isset($node[$this->schema_validator->getFullName('strict')]);
 
         if (is_bool($data) || (! $strict && ($data == 'true' || $data == 'false'))) {
             return true;

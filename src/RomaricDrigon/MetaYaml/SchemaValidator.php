@@ -37,11 +37,11 @@ class SchemaValidator
 
     // validate nodes
 
-    public function validateNode($name, $type, $node_config, $data)
+    public function validateNode($name, $type, $node, $data)
     {
         $validator = $this->factory->getValidator($name, $type, $this);
 
-        return $validator->validate($name, $node_config, $data);
+        return $validator->validate($name, $node, $data);
     }
 
     public function validatePartial($name, $data)

@@ -14,5 +14,4 @@ class MetaYaml extends atoum\test
             ->then
                 ->object($object)->isInstanceOf('RomaricDrigon\\MetaYaml\\MetaYaml');
     }
-
 }

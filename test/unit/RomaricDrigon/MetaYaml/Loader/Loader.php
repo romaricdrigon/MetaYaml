@@ -13,7 +13,7 @@ class Loader extends atoum\test
             ->if($object = new \mock\RomaricDrigon\MetaYaml\Loader\Loader())
             ->then
                 ->object($object)->isInstanceOf('RomaricDrigon\\MetaYaml\\Loader\\Loader')
-                ->string($object->loadFromFile('test/data/TestBasicBase.yml'))
+                ->string($object->loadFromFile('test/data/TestBasic/TestBase.yml'))
                     ->isEqualTo("fleurs:\n    rose: une rose\n    violette: une violette");
     }
 

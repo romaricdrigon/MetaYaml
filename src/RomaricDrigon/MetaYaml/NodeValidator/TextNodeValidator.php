@@ -6,12 +6,12 @@ use RomaricDrigon\MetaYaml\Exception\NodeValidatorException;
 
 class TextNodeValidator extends NodeValidator
 {
-    public function validate($name, $node_config, $data)
+    public function validate($name, $node, $data)
     {
-        if ($this->checkRequired($name, $node_config, $data)) return true;
-        if ($this->checkEmpty($name, $node_config, $data)) return true;
+        if ($this->checkRequired($name, $node, $data)) return true;
+        if ($this->checkEmpty($name, $node, $data)) return true;
 
-        $strict = isset($node_config[$this->schema_validator->getFullName('strict')]) && isset($node_config[$this->schema_validator->getFullName('strict')]);
+        $strict = isset($node[$this->schema_validator->getFullName('strict')]) && isset($node[$this->schema_validator->getFullName('strict')]);
 
         if (! is_scalar($data) || ($strict && ! is_string($data))) {
             throw new NodeValidatorException($name, sprintf('The node "%s" is not a text value', $name));

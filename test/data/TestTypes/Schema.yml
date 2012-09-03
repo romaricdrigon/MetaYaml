@@ -1,0 +1,42 @@
+root:
+    _type: array
+    _content:
+        texte:
+            _type: text
+        # a comment
+        # should not provoke anything
+        multi_ligne:
+            _type: text
+        enume:
+            _type: enum
+            _values:
+                - windows
+                - mac
+                - linux
+        nombre:
+            _type: number
+        booleen:
+            _type: boolean
+        prototype_bool:
+            _type: prototype
+            _prototype:
+                _type: boolean
+        prototype_array:
+            _type: prototype
+            _prototype:
+                _type: array
+                _content:
+                    texte:
+                        _type: text
+                        _is_required: true
+        paragraph:
+            _type: partial
+            _partial: block
+partials:
+    block:
+        _type: array
+        _content:
+            line_1:
+                _type: text
+            line_2:
+                _type: text

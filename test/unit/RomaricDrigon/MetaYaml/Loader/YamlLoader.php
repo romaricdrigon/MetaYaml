@@ -13,7 +13,7 @@ class YamlLoader extends atoum\test
             ->if($object = new testedClass())
             ->then
                 ->object($object)->isInstanceOf('RomaricDrigon\\MetaYaml\\Loader\\YamlLoader')
-                ->array($object->loadFromFile('test/data/TestBasicBase.yml'))
+                ->array($object->loadFromFile('test/data/TestBasic/TestBase.yml'))
                     ->isEqualTo(array(
                         'fleurs' => array(
                             'rose' => 'une rose',

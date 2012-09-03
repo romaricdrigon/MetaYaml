@@ -13,7 +13,7 @@ class JsonLoader extends atoum\test
             ->if($object = new testedClass())
             ->then
                 ->object($object)->isInstanceOf('RomaricDrigon\\MetaYaml\\Loader\\JsonLoader')
-                ->array($object->loadFromFile('test/data/TestBasicBase.json'))
+                ->array($object->loadFromFile('test/data/TestBasic/TestBase.json'))
                     ->isEqualTo(array(
                         'fleurs' => array(
                             'rose' => 'une rose',

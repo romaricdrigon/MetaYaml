@@ -65,12 +65,12 @@ fleurs:
     violette: une violette
 ```
 
-For more examples, look inside test/data folder. You have some .yml files, and their schemas (suffix 'Reference').
-Watch out, they use a '_metadata' element which is no more used.
+For more examples, look inside test/data folder.
+In each folder, you have an .yml file and its schema.
 
 ## Test
 
-The project is extensively tested using [atoum](https://github.com/mageekguy/atoum).
+The project is fully tested using [atoum](https://github.com/mageekguy/atoum).
 To launch tests, just run in a shell `./bin/test --test-all`.
 
 ## Extending

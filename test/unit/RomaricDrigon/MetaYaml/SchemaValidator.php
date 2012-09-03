@@ -4,6 +4,7 @@ namespace test\unit\RomaricDrigon\MetaYaml;
 
 use mageekguy\atoum;
 use RomaricDrigon\MetaYaml\SchemaValidator as testedClass;
+use RomaricDrigon\MetaYaml\Loader\YamlLoader;
 
 class SchemaValidator extends atoum\test
 {
@@ -69,5 +70,49 @@ class SchemaValidator extends atoum\test
                 ->boolean($object->validate($config, array('a' => 'test', 'b' => 'toto')))->isEqualTo(true)
                 ->exception(function() use($object, $config) { $object->validate($config, array('a' => 10, 'b' => '5')); })
                     ->hasMessage('The node "contenu" is not a text value');
+    }
+
+    /*
+     * "Full" tests where we load a file
+     */
+    public function testBasicBase()
+    {
+        $this
+            ->if($loader = new YamlLoader())
+            ->and($data = $loader->loadFromFile('test/data/TestBasic/TestBase.yml'))
+            ->and($config = $loader->loadFromFile('test/data/TestBasic/Schema.yml'))
+            ->and($object = new testedClass())
+            ->then
+                ->boolean($object->validate($config, $data))->isEqualTo(true);
+    }
+    public function testTypesBase()
+    {
+        $this
+            ->if($loader = new YamlLoader())
+            ->and($data = $loader->loadFromFile('test/data/TestTypes/TestBase.yml'))
+            ->and($config = $loader->loadFromFile('test/data/TestTypes/Schema.yml'))
+            ->and($object = new testedClass())
+            ->then
+                ->boolean($object->validate($config, $data))->isEqualTo(true);
+    }
+    public function testAttributesBase()
+    {
+        $this
+            ->if($loader = new YamlLoader())
+            ->and($data = $loader->loadFromFile('test/data/TestAttributes/TestBase.yml'))
+            ->and($config = $loader->loadFromFile('test/data/TestAttributes/Schema.yml'))
+            ->and($object = new testedClass())
+            ->then
+                ->boolean($object->validate($config, $data))->isEqualTo(true);
+    }
+    public function testAdvancedBase()
+    {
+        $this
+            ->if($loader = new YamlLoader())
+            ->and($data = $loader->loadFromFile('test/data/TestAdvanced/TestBase.yml'))
+            ->and($config = $loader->loadFromFile('test/data/TestAdvanced/Schema.yml'))
+            ->and($object = new testedClass())
+            ->then
+                ->boolean($object->validate($config, $data))->isEqualTo(true);
     }
 }

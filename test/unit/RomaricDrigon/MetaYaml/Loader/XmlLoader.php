@@ -141,7 +141,7 @@ EOT
             ->if($object = new testedClass())
             ->then
                 ->object($object)->isInstanceOf('RomaricDrigon\\MetaYaml\\Loader\\XmlLoader')
-                ->array($object->loadFromFile('test/data/TestAdvancedXml.xml'))
+                ->array($object->loadFromFile('test/data/Xml/TestBase.xml'))
                     ->isEqualTo(array (
                         'fleurs' => array(
                             'roses' => array(

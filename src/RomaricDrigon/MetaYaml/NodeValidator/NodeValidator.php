@@ -14,11 +14,11 @@ abstract class NodeValidator implements NodeValidatorInterface
         $this->schema_validator = $schema_validator;
     }
 
-    protected function checkRequired($name, array $node_config, $data)
+    protected function checkRequired($name, array $node, $data)
     {
         if (! is_null($data)) return false; // ok
 
-        $required = isset($node_config[$this->schema_validator->getFullName('required')]) && $node_config[$this->schema_validator->getFullName('required')];
+        $required = isset($node[$this->schema_validator->getFullName('required')]) && $node[$this->schema_validator->getFullName('required')];
 
         if ($required) {
             throw new NodeValidatorException($name, sprintf('The node "%s" is required', $name));
@@ -27,11 +27,11 @@ abstract class NodeValidator implements NodeValidatorInterface
         }
     }
 
-    protected function checkEmpty($name, array $node_config, $data)
+    protected function checkEmpty($name, array $node, $data)
     {
         if (! empty($data)) return false; // ok
 
-        $not_empty = isset($node_config[$this->schema_validator->getFullName('not_empty')]) && $node_config[$this->schema_validator->getFullName('not_empty')];
+        $not_empty = isset($node[$this->schema_validator->getFullName('not_empty')]) && $node[$this->schema_validator->getFullName('not_empty')];
 
         if ($not_empty) {
             throw new NodeValidatorException($name, sprintf('The node "%s" can not be empty', $name));

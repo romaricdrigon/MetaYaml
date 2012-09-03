@@ -1,0 +1,51 @@
+prefix: __
+root:
+    __type: array
+    __content:
+        fleurs:
+            __type: array
+            __required: true
+            __content:
+                roses:
+                    __required: true
+                    __type: array
+                    __content:
+                        opera:
+                            __required: true
+                            __type: text
+                        sauvages:
+                            __type: array
+                            __content:
+                                'du jardin':
+                                    __strict: true
+                                    __type: text
+                                des bois:
+                                    __type: text
+                violette:
+                    __type: array
+                    __content:
+                        nom:
+                            __type: text
+                        est fannee:
+                            __type: boolean
+                            __required: true
+                        beauté:
+                            __type: enum
+                            __required: true
+                            __values:
+                                - 'très belle'
+                                - 'jolie'
+                                - 'un peu moins belle'
+                        age:
+                            __type: number
+                            __required: true
+partials:
+    tulipe:
+        __type: array
+        __required: true
+        __content:
+            nom:
+                __type: text
+                __required: true
+            lieu__cueillette:
+                __type: text

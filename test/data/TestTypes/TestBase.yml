@@ -14,3 +14,6 @@ prototype_array:
         texte: bla bla
     second_array:
         texte: bla bla
+paragraph:
+    line_1: some text
+    line_2: more text
