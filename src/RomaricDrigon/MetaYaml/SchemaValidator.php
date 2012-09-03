@@ -8,18 +8,34 @@ class SchemaValidator
 {
     private $factory;
     private $schema_config;
+    private $prefix = '_';
 
     public function __construct()
     {
         $this->factory = new NodeValidatorFactory();
     }
 
+    // main function
+
     public function validate($schema_config, $data)
     {
         $this->schema_config = $schema_config;
 
-        return $this->validateNode('root', 'array', $schema_config['_root'], $data);
+        if (isset($schema_config['prefix'])) {
+            $this->prefix = $schema_config['prefix'];
+        }
+
+        return $this->validateNode('root', 'array', $schema_config['root'], $data);
     }
+
+    // get prefix-aware name
+
+    public function getFullName($name)
+    {
+        return $this->prefix . $name;
+    }
+
+    // validate nodes
 
     public function validateNode($name, $type, $node_config, $data)
     {
@@ -30,12 +46,12 @@ class SchemaValidator
 
     public function validatePartial($name, $data)
     {
-        if (! isset($this->schema_config['_partials']) || ! isset($this->schema_config['_partials'][$name]))
-            throw new \Exception("You're using a partial but _partial '$name' is not defined in your schema");
+        if (! isset($this->schema_config['partials']) || ! isset($this->schema_config['partials'][$name]))
+            throw new \Exception("You're using a partial but partial '$name' is not defined in your schema");
 
         return $this->validateNode($name,
-            $this->schema_config['_partials'][$name]['_metadata']['_type'],
-            $this->schema_config['_partials'][$name],
+            $this->schema_config['partials'][$name][$this->getFullName('type')],
+            $this->schema_config['partials'][$name],
             $data
         );
     }

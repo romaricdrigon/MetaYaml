@@ -14,9 +14,7 @@ class EnumNodeValidator extends atoum\test
             ->if($schema_validator = new SchemaValidator())
             ->and($object = new testedClass($schema_validator))
             ->and($config = array(
-                    '_metadata' => array(
-                        '_required' => true,
-                    ),
+                    '_required' => true,
                     '_values' => array(
                         'toto',
                         5,
@@ -45,9 +43,7 @@ class EnumNodeValidator extends atoum\test
             ->if($schema_validator = new SchemaValidator())
             ->and($object = new testedClass($schema_validator))
             ->and($config = array(
-                '_metadata' => array(
-                    '_required' => true,
-                ),
+                '_required' => true,
                 '_values' => array(
                     'toto',
                     5,
@@ -75,10 +71,8 @@ class EnumNodeValidator extends atoum\test
             ->if($schema_validator = new SchemaValidator())
             ->and($object = new testedClass($schema_validator))
             ->and($config = array(
-                    '_metadata' => array(
-                        '_required' => true,
-                        '_strict' => true
-                    ),
+                    '_required' => true,
+                    '_strict' => true,
                     '_values' => array(
                         'toto',
                         5,

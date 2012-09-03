@@ -23,6 +23,6 @@ class PartialNodeValidator extends atoum\test
                 ->object($object)
                     ->isInstanceOf('RomaricDrigon\\MetaYaml\\NodeValidator\\PartialNodeValidator')
                 ->exception(function() use ($object, $config) { $object->validate('test', $config, array()); })
-                    ->hasMessage("You're using a partial but _partial 'nom_partial' is not defined in your schema");
+                    ->hasMessage("You're using a partial but partial 'nom_partial' is not defined in your schema");
     }
 }

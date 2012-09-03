@@ -10,7 +10,7 @@ class BooleanNodeValidator extends NodeValidator
     {
         if ($this->checkRequired($name, $node_config, $data)) return true;
 
-        $strict = isset($node_config['_metadata']['_strict']) && isset($node_config['_metadata']['_strict']);
+        $strict = isset($node_config[$this->schema_validator->getFullName('strict')]) && isset($node_config[$this->schema_validator->getFullName('strict')]);
 
         if (is_bool($data) || (! $strict && ($data == 'true' || $data == 'false'))) {
             return true;

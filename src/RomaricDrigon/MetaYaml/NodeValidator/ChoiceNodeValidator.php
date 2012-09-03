@@ -13,9 +13,9 @@ class ChoiceNodeValidator extends NodeValidator
         $valid = false;
         $message = '';
         $count_levels = -1;
-        foreach ($node_config['_choices'] as $choice_config) {
+        foreach ($node_config[$this->schema_validator->getFullName('choices')] as $choice_config) {
             try {
-                $this->schema_validator->validateNode($name, $choice_config['_metadata']['_type'], 
+                $this->schema_validator->validateNode($name, $choice_config[$this->schema_validator->getFullName('type')],
                     $choice_config, $data);
                 $valid = true;
                 break;

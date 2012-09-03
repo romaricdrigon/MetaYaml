@@ -13,14 +13,17 @@ class ChoiceNodeValidator extends atoum\test
         $this
             ->if($schema_validator = new SchemaValidator())
             ->and($object = new testedClass($schema_validator))
-            ->and($config = array('_metadata' => array('_required' => true), '_choices' => array(
-                'a' => array('_metadata' => array('_type' => 'number')),
-                'b' => array('_metadata' => array('_type' => 'boolean'))
-            )))
+            ->and($config = array(
+                '_required' => true,
+                '_choices' => array(
+                    'a' => array('_type' => 'number'),
+                    'b' => array('_type' => 'boolean')
+                )
+            ))
             ->then
                 ->boolean($object->validate('toto', $config, 10))->isEqualTo(true)
                 ->boolean($object->validate('toto', $config, true))->isEqualTo(true)
                 ->exception(function() use($object, $config) { $object->validate('toto', $config, 'test'); })
-                    ->hasMessage('The node "toto" is invalid, we think it\'s because : The node "toto" is not numeric');
+                    ->hasMessage('The node "toto" is invalid, we think it\'s because : The node "toto" is not a number');
     }
 }

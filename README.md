@@ -1,7 +1,7 @@
 # MetaYaml
 
 A `[put your file type here]` schema validator using `[put another file type here]` files.  
-At the moment, file type can be Json, Yaml, or Xml.  
+At the moment, file type can be Json, Yaml, or Xml.
 _The name comes from the fact that it was initially made to implement a pseudo-schema for Yaml files._
 
 ## Installation
@@ -44,20 +44,17 @@ A schema file will define the array structure (which elements are allowed, where
 
 Here's a simple example of a schema, using Yaml syntax :
 ```yaml
-_root: # _root is an always required node
+root: # root is an always required node ; no prefix here
     _content: # array nodes have a _content, defining their children
         fleurs:
-            _metadata: # each node (except _root) must have a _metadata node
-                _type: array # which precises its type
-                _required: true # optional, default false
+            _type: array # _type is always required
+            _required: true # optional, default false
             _content:
                 rose:
-                    _metadata:
-                        _required: true
-                        _type: text
+                    _required: true
+                    _type: text
                 violette:
-                    _metadata:
-                        _type: text
+                    _type: text
                 # = only rose and violette are allowed children of fleurs
 ```
 
@@ -69,6 +66,7 @@ fleurs:
 ```
 
 For more examples, look inside test/data folder. You have some .yml files, and their schemas (suffix 'Reference').
+Watch out, they use a '_metadata' element which is no more used.
 
 ## Test
 

@@ -10,13 +10,13 @@ class EnumNodeValidator extends NodeValidator
     {
         if ($this->checkRequired($name, $node_config, $data)) return true;
 
-        $strict = isset($node_config['_metadata']['_strict']) && isset($node_config['_metadata']['_strict']);
+        $strict = isset($node_config[$this->schema_validator->getFullName('strict')]) && isset($node_config[$this->schema_validator->getFullName('strict')]);
 
         // because of php lousy comparaisons,
         // when strict is false, anything compared
         // to true will be ok, to false not. Let's fix this
         // by forcing them to strings
-        $haystack = $node_config['_values'];
+        $haystack = $node_config[$this->schema_validator->getFullName('values')];
         if (! $strict) {
             if ($data === true) {
                 $data = 'true';

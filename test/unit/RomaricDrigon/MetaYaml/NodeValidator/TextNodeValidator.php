@@ -13,7 +13,7 @@ class TextNodeValidator extends atoum\test
         $this
             ->if($schema_validator = new SchemaValidator())
             ->and($object = new testedClass($schema_validator))
-            ->and($config = array('_metadata' => array('_not_empty' => true)))
+            ->and($config = array('_not_empty' => true))
             ->then
                 ->boolean($object->validate('toto', $config, 'test'))->isEqualTo(true)
                 ->boolean($object->validate('toto', $config, true))->isEqualTo(true)
@@ -28,10 +28,10 @@ class TextNodeValidator extends atoum\test
         $this
             ->if($schema_validator = new SchemaValidator())
             ->and($object = new testedClass($schema_validator))
-            ->and($config = array('_metadata' => array('_strict' => true)))
+            ->and($config = array('_strict' => true))
             ->then
                 ->boolean($object->validate('toto', $config, 'test'))->isEqualTo(true)
                 ->exception(function() use($object, $config) { $object->validate('test', $config, true); })
-                    ->hasMessage('The node "test" is not a string');
+                    ->hasMessage('The node "test" is not a text value');
     }
 }

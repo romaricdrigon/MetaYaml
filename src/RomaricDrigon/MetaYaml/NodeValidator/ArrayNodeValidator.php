@@ -14,8 +14,8 @@ class ArrayNodeValidator extends NodeValidator
             throw new NodeValidatorException($name, sprintf('The node "%s" is not an array', $name));
         }
 
-        foreach ($node_config['_content'] as $key => $value) {
-            $this->schema_validator->validateNode($name.'.'.$key, $value['_metadata']['_type'],
+        foreach ($node_config[$this->schema_validator->getFullName('content')] as $key => $value) {
+            $this->schema_validator->validateNode($name.'.'.$key, $value[$this->schema_validator->getFullName('type')],
                 $value, isset($data[$key]) ? $data[$key] : null);
         }
 
