@@ -1,0 +1,219 @@
+{
+    "prefix": "schema:",
+    "root": {
+        "schema:type": "array",
+        "schema:content": {
+            "root": {
+                "schema:type": "array",
+                "schema:required": true,
+                "schema:not_empty": true,
+                "schema:content": {
+                    "_content": {
+                        "schema:type": "prototype",
+                        "schema:required": true,
+                        "schema:prototype": {
+                            "schema:type": "partial",
+                            "schema:partial": "node"
+                        }
+                    }
+                }
+            },
+            "prefix": {
+                "schema:type": "text"
+            }
+        }
+    },
+    "partials": {
+        "node": {
+            "schema:type": "choice",
+            "schema:choices": {
+                "0": {
+                    "schema:type": "partial",
+                    "schema:partial": "node_text"
+                },
+                "1": {
+                    "schema:type": "partial",
+                    "schema:partial": "node_number"
+                },
+                "2": {
+                    "schema:type": "partial",
+                    "schema:partial": "node_boolean"
+                },
+                "3": {
+                    "schema:type": "partial",
+                    "schema:partial": "node_enum"
+                },
+                "4": {
+                    "schema:type": "partial",
+                    "schema:partial": "node_prototype"
+                },
+                "5": {
+                    "schema:type": "partial",
+                    "schema:partial": "node_choice"
+                },
+                "6": {
+                    "schema:type": "partial",
+                    "schema:partial": "node_partial"
+                },
+                "7": {
+                    "schema:type": "partial",
+                    "schema:partial": "node_array"
+                }
+            }
+        },
+        "node_text": {
+            "schema:type": "array",
+            "schema:content": {
+                "_type": {
+                    "schema:type": "enum",
+                    "schema:required": true,
+                    "schema:values": ["text"]
+                },
+                "_required": {
+                    "schema:type": "boolean"
+                },
+                "_strict": {
+                    "schema:type": "boolean"
+                },
+                "_not_empty": {
+                    "schema:type": "boolean"
+                }
+            }
+        },
+        "node_number": {
+            "schema:type": "array",
+            "schema:content": {
+                "_type": {
+                    "schema:type": "enum",
+                    "schema:required": true,
+                    "schema:values": ["number"]
+                },
+                "_required": {
+                    "schema:type": "boolean"
+                },
+                "_strict": {
+                    "schema:type": "boolean"
+                }
+            }
+        },
+        "node_boolean": {
+            "schema:type": "array",
+            "schema:content": {
+                "_type": {
+                    "schema:type": "enum",
+                    "schema:required": true,
+                    "schema:values": ["boolean"]
+                },
+                "_required": {
+                    "schema:type": "boolean"
+                },
+                "_strict": {
+                    "schema:type": "boolean"
+                }
+            }
+        },
+        "node_enum": {
+            "schema:type": "array",
+            "schema:content": {
+                "_type": {
+                    "schema:type": "enum",
+                    "schema:required": true,
+                    "schema:values": ["enum"]
+                },
+                "_required": {
+                    "schema:type": "boolean"
+                },
+                "_strict": {
+                    "schema:type": "boolean"
+                },
+                "_values": {
+                    "schema:type": "prototype",
+                    "schema:required": true,
+                    "schema:prototype": {
+                        "schema:type": "text"
+                    }
+                }
+            }
+        },
+        "node_prototype": {
+            "schema:type": "array",
+            "schema:content": {
+                "_type": {
+                    "schema:type": "enum",
+                    "schema:required": true,
+                    "schema:values": ["prototype"]
+                },
+                "_required": {
+                    "schema:type": "boolean"
+                },
+                "_prototype": {
+                    "schema:type": "partial",
+                    "schema:required": true,
+                    "schema:partial": "node"
+                }
+            }
+        },
+        "node_choice": {
+            "schema:type": "array",
+            "schema:content": {
+                "_type": {
+                    "schema:type": "enum",
+                    "schema:required": true,
+                    "schema:values": ["choice"]
+                },
+                "_required": {
+                    "schema:type": "boolean"
+                },
+                "_choices": {
+                    "schema:type": "prototype",
+                    "schema:required": true,
+                    "schema:prototype": {
+                        "schema:type": "partial",
+                        "schema:partial": "node"
+                    }
+                }
+            }
+        },
+        "node_partial": {
+            "schema:type": "array",
+            "schema:content": {
+                "_type": {
+                    "schema:type": "enum",
+                    "schema:required": true,
+                    "schema:values": ["partial"]
+                },
+                "_required": {
+                    "schema:type": "boolean"
+                },
+                "_partial": {
+                    "schema:type": "text",
+                    "schema:required": true
+                }
+            }
+        },
+        "node_array": {
+            "schema:type": "array",
+            "schema:content": {
+                "_type": {
+                    "schema:type": "enum",
+                    "schema:required": true,
+                    "schema:values": ["array"]
+                },
+                "_required": {
+                    "schema:type": "boolean"
+                },
+                "_not_empty": {
+                    "schema:type": "boolean"
+                },
+                "_content": {
+                    "schema:type": "prototype",
+                    "schema:required": true,
+                    "schema:prototype": {
+                        "schema:type": "partial",
+                        "schema:partial": "node"
+                    }
+                }
+            }
+        }
+    }
+}

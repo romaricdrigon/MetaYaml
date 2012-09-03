@@ -13,10 +13,12 @@ class PrototypeNodeValidator extends NodeValidator
         if (! is_array($data)) {
             throw new NodeValidatorException($name, sprintf('The node "%s" is not an array', $name));
         }
-        
+
         foreach ($data as $key => $subdata) {
-            $this->schema_validator->validateNode($name.'.'.$key, $node[$this->schema_validator->getFullName('prototype')][$this->schema_validator->getFullName('type')],
-                $node[$this->schema_validator->getFullName('prototype')], $subdata);
+            $this->schema_validator->validateNode($name.'.'.$key,
+                $node[$this->schema_validator->getFullName('prototype')][$this->schema_validator->getFullName('type')],
+                $node[$this->schema_validator->getFullName('prototype')],
+                $subdata);
         }
 
         return true;
