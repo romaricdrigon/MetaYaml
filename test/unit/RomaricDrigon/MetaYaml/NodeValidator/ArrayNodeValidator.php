@@ -14,7 +14,7 @@ class ArrayNodeValidator extends atoum\test
             ->if($schema_validator = new SchemaValidator())
             ->and($object = new testedClass($schema_validator))
             ->and($config = array('_metadata' => array('_required' => true), '_content' => 
-                array('a' => array('_metadata' => array('_type' => 'text'))),
+                array('a' => array('_metadata' => array('_type' => 'text', '_strict' => true))),
                 array('b' => array('_metadata' => array('_type' => 'text')))
             ))
             ->then

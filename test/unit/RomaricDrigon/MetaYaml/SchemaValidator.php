@@ -14,7 +14,7 @@ class SchemaValidator extends atoum\test
             ->and($config = array('_root' => array(
                 '_metadata' => array('_required'=> true), 
                 '_content' => array(
-                    'a' => array('_metadata' => array('_type' => 'text')),
+                    'a' => array('_metadata' => array('_type' => 'text', '_strict' => true)),
                     'b' => array('_metadata' => array('_type' => 'text'))
             ))))
             ->then
