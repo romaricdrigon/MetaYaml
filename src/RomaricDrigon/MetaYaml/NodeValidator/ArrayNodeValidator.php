@@ -9,6 +9,7 @@ class ArrayNodeValidator extends NodeValidator
     public function validate($name, $node, $data)
     {
         if ($this->checkRequired($name, $node, $data)) return true;
+        if ($this->checkEmpty($name, $node, $data)) return true;
 
         if (! is_array($data)) {
             throw new NodeValidatorException($name, sprintf('The node "%s" is not an array', $name));

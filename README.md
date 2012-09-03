@@ -2,6 +2,8 @@
 
 A `[put your file type here]` schema validator using `[put another file type here]` files.  
 At the moment, file type can be Json, Yaml, or Xml.
+
+
 _The name comes from the fact that it was initially made to implement a pseudo-schema for Yaml files._
 
 ## Installation
@@ -39,6 +41,8 @@ $array = $loader->loadFromFile('path/to/file);
 
 ## How to write a schema
 
+### Introduction
+
 A schema file will define the array structure (which elements are allowed, where), some attributes
 (required, can be empty...) and the possible values for these elements (or their type).
 
@@ -65,6 +69,90 @@ fleurs:
     violette: une violette
 ```
 
+We'll continue with Yaml examples; if you're not familiar with the syntax, you may want to take a look at it's [Wikipedia page](http://en.wikipedia.org/wiki/YAML).
+Of courses the same structures are possible with Json and XML, because the core is the same ; take a look at examples in test/data/ folder.
+
+### Schema structure
+
+A schema file must have a 'root' node, which will described the first-level content.
+You can optionaly define a `prefix`. By defaults it's `_` (`_type`, `_required`...).
+You'll define a `partials` node if you want to use this feature.
+
+So a basic schema file:
+```yaml
+root:
+    # here put the elements who will be in the file
+prefix: my_ # so it's gonna be my_type, my_required...
+partials:
+    block:
+        # here I define a partial called block
+```
+
+### Schema nodes
+
+Each node in the schema must have a `_type` attribute.
+Here I define a node called `paragraph` whose content is some text:
+```yaml
+paragraph:
+    _type: text
+```
+
+Those types are available:
+
+* `text`
+* `number`
+* `boolean`
+* `enum`: list accepted values in _values node
+* `array`: define children in a _content node ; array children must have named keys
+* `prototype`: define a repetition of items whose name is not important. You must give children's type in `_prototype` node.
+* `partial`: "shortcut" to a block described in `partials` root node. Provide partial name in `_partial`
+
+For some types, you can specify additional attributes:
+
+* `_required`: this node must always be defined (default false)
+* `_not_empty` for text and array nodes: they can't be empty (respectively '' and array())
+* `_strict` with text, number, boolean and enum will enforce a strict type check (respectively, with a string, an integer or a float, a boolean, any of these values). Watch out when using these with a parser which may not be type-aware (such as the Xml one; Yaml and Json should be ok)
+
+Here's a comprehensive example:
+```yaml
+root:
+    # root is always an array
+    _content:
+        texte:
+            _type: text
+            _not_empty: true
+        enume:
+            _type: enum
+            _values:
+                - windows
+                - mac
+                - linux
+        entier:
+            _type: number
+            _strict: true
+        booleen:
+            _type: boolean
+        prototype_array:
+            _type: prototype
+            _prototype:
+                _type: array
+                _content:
+                    texte:
+                        _type: text
+                        _is_required: true
+        paragraph:
+            _type: partial
+            _partial: block
+partials:
+    block:
+        _type: array
+        _content:
+            line_1:
+                _type: text
+```
+
+### More information
+
 For more examples, look inside test/data folder.
 In each folder, you have an .yml file and its schema.
 
@@ -77,4 +165,4 @@ To launch tests, just run in a shell `./bin/test --test-all`.
 
 You may want to write your own loader, using anything else.  
 Take a look at any class in Loader/ folder, it's pretty simple :
-you have to implement the LoaderInterface, and may want to extend Loader class (so you don't have to write loadFromFile()).
+you have to implement the LoaderInterface, and may want to extend Loader class (so you don't have to write `loadFromFile()`).
