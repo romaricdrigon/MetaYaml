@@ -15,7 +15,7 @@ class XmlLoader extends Loader
         // node _value
 
         if (! $ignore_first_node) {
-            $string = '<xml>'.$string.'</xml>';
+            $string = '<mock_tag>'.$string.'</mock_tag>';
         }
 
         $sxi = simplexml_load_string($string, 'SimpleXmlIterator');

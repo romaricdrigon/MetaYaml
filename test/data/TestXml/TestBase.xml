@@ -8,5 +8,5 @@
     </roses>
     <tulipe>je vais disparaitre !</tulipe>
     <tulipe>deuxieme tulipe</tulipe>
-    <fleur couleur="violette" sauvage="non" _key="violette">une violette</fleur>
+    <fleur couleur="violette" sauvage="false" _key="violette">une violette</fleur>
 </fleurs>

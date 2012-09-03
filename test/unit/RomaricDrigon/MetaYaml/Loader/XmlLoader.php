@@ -141,7 +141,7 @@ EOT
             ->if($object = new testedClass())
             ->then
                 ->object($object)->isInstanceOf('RomaricDrigon\\MetaYaml\\Loader\\XmlLoader')
-                ->array($object->loadFromFile('test/data/Xml/TestBase.xml'))
+                ->array($object->loadFromFile('test/data/TestXml/TestBase.xml'))
                     ->isEqualTo(array (
                         'fleurs' => array(
                             'roses' => array(
@@ -158,7 +158,7 @@ EOT
                             'tulipe' => 'deuxieme tulipe',
                             'violette' => array(
                                 'couleur' => 'violette',
-                                'sauvage' => 'non',
+                                'sauvage' => 'false',
                                 '_value' => 'une violette',
                             ),
                         ),

@@ -5,6 +5,7 @@ namespace test\unit\RomaricDrigon\MetaYaml;
 use mageekguy\atoum;
 use RomaricDrigon\MetaYaml\SchemaValidator as testedClass;
 use RomaricDrigon\MetaYaml\Loader\YamlLoader;
+use RomaricDrigon\MetaYaml\Loader\XmlLoader;
 
 class SchemaValidator extends atoum\test
 {
@@ -111,6 +112,16 @@ class SchemaValidator extends atoum\test
             ->if($loader = new YamlLoader())
             ->and($data = $loader->loadFromFile('test/data/TestAdvanced/TestBase.yml'))
             ->and($config = $loader->loadFromFile('test/data/TestAdvanced/Schema.yml'))
+            ->and($object = new testedClass())
+            ->then
+                ->boolean($object->validate($config, $data))->isEqualTo(true);
+    }
+    public function testXmlBase()
+    {
+        $this
+            ->if($loader = new XmlLoader())
+            ->and($data = $loader->loadFromFile('test/data/TestXml/TestBase.xml'))
+            ->and($config = $loader->loadFromFile('test/data/TestXml/Schema.xml'))
             ->and($object = new testedClass())
             ->then
                 ->boolean($object->validate($config, $data))->isEqualTo(true);
