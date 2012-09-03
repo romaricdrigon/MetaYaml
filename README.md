@@ -17,7 +17,7 @@ To install all these packages, the easiest way is to use [composer](http://getco
 
 ## Basic usage
 
-You have to create a SchemaValidator object, and then pass it both the schema and your data as multidimensional php arrays:
+You have to create a MetaYaml object, and then pass it both the schema and your data as multidimensional php arrays:
 ```php
 $schema = new MetaYaml($schema);
 $schema->validate($data); // will return true or throw an exception
