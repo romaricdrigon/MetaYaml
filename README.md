@@ -57,6 +57,7 @@ _root: # _root is an always required node
                     _metadata:
                         _type: text
                 # = only rose and violette are allowed children of fleurs
+```
 
 And a valid Yaml file :
 ```yaml
