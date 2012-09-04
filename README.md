@@ -114,6 +114,7 @@ For some types, you can specify additional attributes:
 * `_required`: this node must always be defined (default false)
 * `_not_empty` for text and array nodes: they can't be empty (respectively '' and array())
 * `_strict` with text, number, boolean and enum will enforce a strict type check (respectively, with a string, an integer or a float, a boolean, any of these values). Watch out when using these with a parser which may not be type-aware (such as the Xml one; Yaml and Json should be ok)
+* `_ignore_extra_keys` for array nodes only: it can contain children whose keys are not listed in `_children`; they'll be ignored
 
 Here's a comprehensive example:
 ```yaml

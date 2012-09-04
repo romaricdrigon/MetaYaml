@@ -144,6 +144,9 @@
                 "#required": {
                     "schema:type": "boolean"
                 },
+                "#ignore_extra_keys": {
+                    "schema:type": "boolean"
+                },
                 "#prototype": {
                     "schema:type": "partial",
                     "schema:required": true,

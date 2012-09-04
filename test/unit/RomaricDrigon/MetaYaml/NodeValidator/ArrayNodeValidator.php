@@ -65,4 +65,20 @@ class ArrayNodeValidator extends atoum\test
                     ->hasMessage('The node "test" has not allowed extra key(s): test2')
         ;
     }
+
+    public function testIgnoreExtraKeys()
+    {
+        $this
+            ->if($schema_validator = new SchemaValidator())
+            ->and($object = new testedClass($schema_validator))
+            ->and($config = array(
+                '_ignore_extra_keys' => true,
+                '_children' => array(
+                    'a' => array('_type' => 'text')
+                )
+            ))
+            ->then
+            ->boolean($object->validate('test', $config, array('a' => 'test', 'b' => 'test2')))->isEqualTo(true)
+        ;
+    }
 }

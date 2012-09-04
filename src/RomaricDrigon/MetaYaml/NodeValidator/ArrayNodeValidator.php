@@ -26,6 +26,11 @@ class ArrayNodeValidator extends NodeValidator
                 unset($data[$key]);
         }
 
+        if (isset($node[$this->schema_validator->getFullName('ignore_extra_keys')])
+            && $node[$this->schema_validator->getFullName('ignore_extra_keys')]) {
+            return true; // we skip the next check
+        }
+
         // we check if we don't have extra keys in $data array, thus not allowed
         if (count($data) !== 0)
             throw new NodeValidatorException($name,

@@ -1,4 +1,5 @@
 tableau:
     index: value
+    extra_index: this value is not important
 requis: value
 pas vide: other value

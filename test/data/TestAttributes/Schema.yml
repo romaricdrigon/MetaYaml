@@ -11,6 +11,7 @@ root:
             _type: array
             _not_empty: true
             _required: true
+            _ignore_extra_keys: true
             _children:
                 index:
                     _type: text
