@@ -19,7 +19,20 @@ To install all these packages, the easiest way is to use [composer](http://getco
 
 You have to create a MetaYaml object, and then pass it both the schema and your data as multidimensional php arrays:
 ```php
-$schema = new MetaYaml($schema); // load and validate the schema. You can skip validation by passing false as second argument.
+// create object, load schema from an array
+$schema = new MetaYaml($schema);
+
+/*
+    you can optionally validate the schema
+    it can take some time (up to a second for a few hundred lines)
+    so do it only once, and maybe only in development!
+*/
+$schema->validate_schema(); // return true or throw an exception
+
+// you could also have done this at construct
+$schema = new MetaYaml($schema, true); // will load AND validate
+
+// finally, validate your data according to the schema
 $schema->validate($data); // return true or throw an exception
 ```
 

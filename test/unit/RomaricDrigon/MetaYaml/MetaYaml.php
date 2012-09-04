@@ -15,7 +15,7 @@ class MetaYaml extends atoum\test
             ->if($yaml_loader = new YamlLoader())
             ->and($schema = $yaml_loader->loadFromFile('test/data/TestTypes/Schema.yml'))
             ->and($data = $yaml_loader->loadFromFile('test/data/TestTypes/TestBase.yml'))
-            ->and($object = new testedClass($schema))
+            ->and($object = new testedClass($schema, true))
             ->then
                 ->object($object)->isInstanceOf('RomaricDrigon\\MetaYaml\\MetaYaml')
                 ->array($object->getSchema())->isNotNull()
@@ -30,7 +30,7 @@ class MetaYaml extends atoum\test
             ->if($yaml_loader = new YamlLoader())
             ->and($schema = $yaml_loader->loadFromFile('test/data/TestAdvanced/Schema.yml'))
             ->and($data = $yaml_loader->loadFromFile('test/data/TestAdvanced/TestBase.yml'))
-            ->and($object = new testedClass($schema))
+            ->and($object = new testedClass($schema, true))
             ->then
                 ->object($object)->isInstanceOf('RomaricDrigon\\MetaYaml\\MetaYaml')
                 ->boolean($object->validate($data))
@@ -44,7 +44,7 @@ class MetaYaml extends atoum\test
             ->if($yaml_loader = new YamlLoader())
             ->and($schema = $yaml_loader->loadFromFile('test/data/TestRoot/Schema.yml'))
             ->and($data = $yaml_loader->loadFromFile('test/data/TestRoot/TestBase.yml'))
-            ->and($object = new testedClass($schema))
+            ->and($object = new testedClass($schema, true))
             ->then
                 ->object($object)->isInstanceOf('RomaricDrigon\\MetaYaml\\MetaYaml')
                 ->boolean($object->validate($data))
@@ -58,7 +58,7 @@ class MetaYaml extends atoum\test
             ->if($yaml_loader = new YamlLoader())
             ->and($very_wrong_schema = $yaml_loader->loadFromFile('test/data/TestTypes/TestBase.yml'))
             ->then
-                ->exception(function() use ($very_wrong_schema) { new testedClass($very_wrong_schema); })
+                ->exception(function() use ($very_wrong_schema) { new testedClass($very_wrong_schema, true); })
                     ->hasMessage('Unable to validate schema with error: The node "root.root" is required')
         ;
     }

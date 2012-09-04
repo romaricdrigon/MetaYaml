@@ -23,7 +23,7 @@ class ChoiceNodeValidator extends NodeValidator
             } catch (NodeValidatorException $e) {
                 $current_count_levels = count(explode('.', $e->getNodePath()));
 
-                if ($current_count_levels >= $count_levels) {
+                if ($current_count_levels > $count_levels) {
                     $message = $e->getMessage();
                     $count_levels = $current_count_levels;
                 }

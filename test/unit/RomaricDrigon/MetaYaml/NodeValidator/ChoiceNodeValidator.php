@@ -24,7 +24,7 @@ class ChoiceNodeValidator extends atoum\test
                 ->boolean($object->validate('toto', $config, 10))->isEqualTo(true)
                 ->boolean($object->validate('toto', $config, true))->isEqualTo(true)
                 ->exception(function() use($object, $config) { $object->validate('test', $config, 'test'); })
-                    ->hasMessage('The choice node "test" is invalid with error: The node "test" is not a boolean')
+                    ->hasMessage('The choice node "test" is invalid with error: The node "test" is not a number')
         ;
     }
 }
