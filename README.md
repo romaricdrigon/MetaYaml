@@ -35,7 +35,7 @@ $loader = new XmlLoader(); // Xml (using php SimpleXml)
 // the usage is the same then
 $array = $loader->load($some_string);
 // or you can load from a file
-$array = $loader->loadFromFile('path/to/file);
+$array = $loader->loadFromFile('path/to/file');
 ```
 
 ## How to write a schema
@@ -47,10 +47,10 @@ A schema file will define the array structure (which elements are allowed, where
 Here's a simple example of a schema, using Yaml syntax :
 ```yaml
 root: # root is always required node ; no prefix here
-    _type: array
+    _type: array # each element must always have a _type
     _children: # array nodes have a _children, defining their children
         fleurs:
-            _type: array # _type is always required
+            _type: array
             _required: true # optional, default false
             _children:
                 rose:
@@ -58,7 +58,7 @@ root: # root is always required node ; no prefix here
                     _type: text
                 violette:
                     _type: text
-                # = only rose and violette are allowed children of fleurs
+                # -> only rose and violette are allowed children of fleurs
 ```
 
 And a valid Yaml file :
@@ -73,15 +73,15 @@ Of courses the same structures are possible with Json and XML, because the core 
 
 ### Schema structure
 
-A schema file must have a 'root' node, which will described the first-level content.
-You can optionally define a `prefix`. By defaults it's `_` (`_type`, `_required`...).
-You'll define a `partials` node if you want to use this feature.
+A schema file must have a `root` node, which will described the first-level content.
+You can optionally define a `prefix`; by defaults it's `_` (`_type`, `_required`...).
+You have to define a `partials` node if you want to use this feature.
 
 So a basic schema file:
 ```yaml
 root:
     # here put the elements who will be in the file
-    # note that root can be anything: an array, a number, a prototype... just set the corresponding _type
+    # note that root can be anything: an array, a number, a prototype...
 prefix: my_ # so it's gonna be my_type, my_required...
 partials:
     block:
@@ -112,7 +112,8 @@ For some types, you can specify additional attributes:
 
 * `_required`: this node must always be defined (default false)
 * `_not_empty` for text and array nodes: they can't be empty (respectively '' and array())
-* `_strict` with text, number, boolean and enum will enforce a strict type check (respectively, with a string, an integer or a float, a boolean, any of these values). Watch out when using these with a parser which may not be type-aware (such as the Xml one; Yaml and Json should be ok)
+* `_strict` with text, number, boolean and enum will enforce a strict type check (respectively, with a string, an integer or a float, a boolean, any of these values).
+ Watch out when using these with a parser which may not be type-aware (such as the XML one; Yaml and Json should be ok)
 * `_ignore_extra_keys` for array nodes only: it can contain children whose keys are not listed in `_children`; they'll be ignored
 
 Here's a comprehensive example:
@@ -173,7 +174,7 @@ If you're curious about an advanced usage, you can check data/MetaSchema.json: s
 ## Test
 
 The project is fully tested using [atoum](https://github.com/mageekguy/atoum).
-To launch tests, just run in a shell `./bin/test --test-all`.
+To launch tests, just run in a shell `./bin/test --test-all`
 
 ## Extending
 
