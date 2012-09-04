@@ -15,3 +15,9 @@ root:
             _children:
                 index:
                     _type: text
+        repetition:
+            _type: prototype
+            _min_items: 1
+            _max_items: 3
+            _prototype:
+                _type: number

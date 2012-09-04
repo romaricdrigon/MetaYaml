@@ -22,8 +22,9 @@ class ArrayNodeValidator extends NodeValidator
                 isset($data[$key]) ? $data[$key] : null
             );
 
-            if (isset($data[$key]))
+            if (isset($data[$key])) {
                 unset($data[$key]);
+            }
         }
 
         if (isset($node[$this->schema_validator->getFullName('ignore_extra_keys')])
@@ -32,10 +33,11 @@ class ArrayNodeValidator extends NodeValidator
         }
 
         // we check if we don't have extra keys in $data array, thus not allowed
-        if (count($data) !== 0)
+        if (count($data) !== 0) {
             throw new NodeValidatorException($name,
                 "The node \"$name\" has not allowed extra key(s): ".implode(', ', $data)
             );
+        }
 
         return true;
     }

@@ -144,6 +144,12 @@
                 "#required": {
                     "schema:type": "boolean"
                 },
+                "#min_items": {
+                    "schema:type": "number"
+                },
+                "#max_items": {
+                    "schema:type": "number"
+                },
                 "#prototype": {
                     "schema:type": "partial",
                     "schema:required": true,

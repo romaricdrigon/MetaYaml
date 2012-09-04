@@ -104,17 +104,22 @@ Those types are available:
 * `boolean`
 * `enum`: list accepted values in _values node
 * `array`: define children in a _children node ; array children must have named keys ; any extra key will provoke an error
-* `prototype`: define a repetition of items whose name is not important. You must give children's type in `_prototype` node.
+* `prototype`: define a repetition of items whose name/index is not important. You must give children's type in `_prototype` node.
 * `choice`: child node can be any of the nodes provided in `_choices`. Keys in `_choices` array are not important (as long as they are unique). In `_choices` it's best to put array options in last.
 * `partial`: "shortcut" to a block described in `partials` root node. Provide partial name in `_partial`
 
 For some types, you can specify additional attributes:
 
-* `_required`: this node must always be defined (default false)
-* `_not_empty` for text and array nodes: they can't be empty (respectively '' and array())
-* `_strict` with text, number, boolean and enum will enforce a strict type check (respectively, with a string, an integer or a float, a boolean, any of these values).
+* general attributes:
+ * `_required`: this node must always be defined (default false)
+ * `_not_empty` for text and array nodes: they can't be empty (respectively '' and array())
+ * `_strict` with text, number, boolean and enum will enforce a strict type check (respectively, with a string, an integer or a float, a boolean, any of these values).
  Watch out when using these with a parser which may not be type-aware (such as the XML one; Yaml and Json should be ok)
-* `_ignore_extra_keys` for array nodes only: it can contain children whose keys are not listed in `_children`; they'll be ignored
+* only for array nodes:
+ * `_ignore_extra_keys`: the node can contain children whose keys are not listed in `_children`; they'll be ignored
+* only for prototype nodes:
+ * `min_items`: the prototype node should contain at least 'min' elements
+ * `max_items`: the opposite, the max number of elements in the prototype node (by default 200)
 
 Here's a comprehensive example:
 ```yaml

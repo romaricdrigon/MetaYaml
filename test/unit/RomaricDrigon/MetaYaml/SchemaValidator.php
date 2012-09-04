@@ -10,7 +10,7 @@ use RomaricDrigon\MetaYaml\Loader\XmlLoader;
 
 class SchemaValidator extends atoum\test
 {
-    public function testAll()
+    public function testBase()
     {
         $this
             ->if($object = new testedClass())
@@ -78,6 +78,29 @@ class SchemaValidator extends atoum\test
                 ->boolean($object->validate($config, array('a' => 'test', 'b' => 'toto')))->isEqualTo(true)
                 ->exception(function() use($object, $config) { $object->validate($config, array('a' => 10, 'b' => '5')); })
                     ->hasMessage('The node "contenu" is not a text value')
+        ;
+    }
+
+    public function testChoiceNotSatisfied()
+    {
+        $this
+            ->if($object = new testedClass())
+            ->and($config = array('root' => array(
+                '_type' => 'choice',
+                '_choices' => array(
+                    0 => array(
+                        '_type' => 'array',
+                        '_children' => array('value' => array('_type' => 'enum', '_values' =>array('1')))
+                    ),
+                    1 => array(
+                        '_type' => 'array',
+                        '_children' => array('value' => array('_type' => 'enum', '_values' =>array('2')))
+                    )
+            ))))
+            ->then
+                ->boolean($object->validate($config, array('value' => 1)))->isEqualTo(true)
+                ->exception(function() use($object, $config) { $object->validate($config, array('value' => 0)); })
+                    ->hasMessage('The choice node "root" is invalid with error: The value "0" is not allowed for node "root.value"')
         ;
     }
 

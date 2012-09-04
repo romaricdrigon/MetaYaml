@@ -14,11 +14,26 @@ class PrototypeNodeValidator extends NodeValidator
             throw new NodeValidatorException($name, sprintf('The node "%s" is not an array', $name));
         }
 
+        // get min and max number of prototype repetition
+        $min = isset($node[$this->schema_validator->getFullName('min_items')]) ? $node[$this->schema_validator->getFullName('min_items')] : 0;
+        $max = isset($node[$this->schema_validator->getFullName('max_items')]) ? $node[$this->schema_validator->getFullName('max_items')] : 200;
+        $n = 0;
+
         foreach ($data as $key => $subdata) {
+            if ($n >= $max) { // because we count from 0
+                throw new NodeValidatorException($name, "Prototype node '$name' has too much children");
+            }
+
             $this->schema_validator->validateNode($name.'.'.$key,
                 $node[$this->schema_validator->getFullName('prototype')][$this->schema_validator->getFullName('type')],
                 $node[$this->schema_validator->getFullName('prototype')],
                 $subdata);
+
+            $n++;
+        }
+
+        if ($n < $min) {
+            throw new NodeValidatorException($name, "Prototype node '$name' has not enough children");
         }
 
         return true;

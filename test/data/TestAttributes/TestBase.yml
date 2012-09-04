@@ -3,3 +3,7 @@ tableau:
     extra_index: this value is not important
 requis: value
 pas vide: other value
+repetition:
+    0: 1
+    1: 2
+    2: 3
