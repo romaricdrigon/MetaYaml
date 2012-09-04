@@ -1,5 +1,6 @@
 <prefix>my_</prefix>
 <root>
+    <my_type>array</my_type>
     <my_children>
         <fleurs>
             <my_type>array</my_type>

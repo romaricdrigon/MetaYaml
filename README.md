@@ -47,7 +47,8 @@ A schema file will define the array structure (which elements are allowed, where
 
 Here's a simple example of a schema, using Yaml syntax :
 ```yaml
-root: # root is an always required node ; no prefix here
+root: # root is always required node ; no prefix here
+    _type: array
     _children: # array nodes have a _children, defining their children
         fleurs:
             _type: array # _type is always required
@@ -116,7 +117,7 @@ For some types, you can specify additional attributes:
 Here's a comprehensive example:
 ```yaml
 root:
-    # root is always an array
+    _type: array
     _children:
         texte:
             _type: text

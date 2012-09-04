@@ -1,4 +1,5 @@
 root:
+    _type: array
     _children:
         fleurs:
             _type: array

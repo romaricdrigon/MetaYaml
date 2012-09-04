@@ -8,6 +8,10 @@
                 "schema:required": true,
                 "schema:not_empty": true,
                 "schema:children": {
+                    "#type": {
+                        "schema:type": "enum",
+                        "schema:values": ["array"]
+                    },
                     "#children": {
                         "schema:type": "prototype",
                         "schema:required": true,

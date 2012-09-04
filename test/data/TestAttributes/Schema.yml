@@ -1,4 +1,5 @@
 root:
+    _type: array
     _children:
         requis:
             _type: text
