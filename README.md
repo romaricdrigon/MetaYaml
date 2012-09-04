@@ -82,7 +82,7 @@ So a basic schema file:
 root:
     # here put the elements who will be in the file
     # note that root can be anything: an array, a number, a prototype...
-prefix: my_ # so it's gonna be my_type, my_required...
+prefix: my_ # so it's gonna be my_type, my_required, my_children...
 partials:
     block:
         # here I define a partial called block
@@ -99,21 +99,21 @@ paragraph:
 
 Those types are available:
 
-* `text`
-* `number`
-* `boolean`
-* `pattern`: check if match the regular expression provided in `_pattern`, which is a [PCRE regex](http://www.php.net/manual/en/reference.pcre.pattern.syntax.php)
-* `enum`: list accepted values in _values node
-* `array`: define children in a _children node ; array children must have named keys ; any extra key will provoke an error
+* `text`: scalar value
+* `number`: numeric value
+* `boolean`: boolean value
+* `pattern`: check if the value matches the regular expression provided in `_pattern`, which is a [PCRE regex](http://www.php.net/manual/en/reference.pcre.pattern.syntax.php)
+* `enum`: enumeration ; list accepted values in `_values` node
+* `array`: array ; define children in a _children node ; array children must have named keys ; any extra key will provoke an error
 * `prototype`: define a repetition of items whose name/index is not important. You must give children's type in `_prototype` node.
 * `choice`: child node can be any of the nodes provided in `_choices`. Keys in `_choices` array are not important (as long as they are unique). In `_choices` it's best to put array options in last.
 * `partial`: "shortcut" to a block described in `partials` root node. Provide partial name in `_partial`
 
-For some types, you can specify additional attributes:
+You can specify additional attributes:
 
 * general attributes:
- * `_required`: this node must always be defined (default false)
- * `_not_empty` for text and array nodes: they can't be empty (respectively '' and array())
+ * `_required`: this node must always be defined (by default false)
+ * `_not_empty` for text and array nodes: they can't be empty
  * `_strict` with text, number, boolean and enum will enforce a strict type check (respectively, with a string, an integer or a float, a boolean, any of these values).
  Watch out when using these with a parser which may not be type-aware (such as the XML one; Yaml and Json should be ok)
 * only for array nodes:

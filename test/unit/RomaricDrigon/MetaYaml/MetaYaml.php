@@ -5,6 +5,7 @@ namespace test\unit\RomaricDrigon\MetaYaml;
 use mageekguy\atoum;
 use RomaricDrigon\MetaYaml\MetaYaml as testedClass;
 use RomaricDrigon\MetaYaml\Loader\YamlLoader;
+use RomaricDrigon\MetaYaml\Loader\JsonLoader;
 
 class MetaYaml extends atoum\test
 {
@@ -51,7 +52,7 @@ class MetaYaml extends atoum\test
         ;
     }
 
-    public function testAll()
+    public function testWrongSchema()
     {
         $this
             ->if($yaml_loader = new YamlLoader())
