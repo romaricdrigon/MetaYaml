@@ -81,6 +81,25 @@ class SchemaValidator extends atoum\test
         ;
     }
 
+    public function testWrongPartial()
+    {
+        $this
+            ->if($object = new testedClass())
+            ->and($config = array(
+            'root' => array(
+                '_type' => 'array',
+                '_required'=> true,
+                '_children' => array(
+                    'a' => array('_type' => 'partial', '_partial' => 'undefined'),
+                ),
+            )
+        ))
+            ->then
+            ->exception(function() use($object, $config) { $object->validate($config, array('a' => 10)); })
+                ->hasMessage("You're using a partial but partial 'undefined' is not defined in your schema")
+        ;
+    }
+
     public function testChoiceNotSatisfied()
     {
         $this
