@@ -4,23 +4,10 @@
         "schema:type": "array",
         "schema:children": {
             "root": {
-                "schema:type": "array",
+                "schema:type": "partial",
                 "schema:required": true,
                 "schema:not_empty": true,
-                "schema:children": {
-                    "#type": {
-                        "schema:type": "enum",
-                        "schema:values": ["array"]
-                    },
-                    "#children": {
-                        "schema:type": "prototype",
-                        "schema:required": true,
-                        "schema:prototype": {
-                            "schema:type": "partial",
-                            "schema:partial": "node"
-                        }
-                    }
-                }
+                "schema:partial": "node"
             },
             "prefix": {
                 "schema:type": "text"

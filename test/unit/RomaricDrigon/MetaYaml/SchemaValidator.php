@@ -15,6 +15,7 @@ class SchemaValidator extends atoum\test
         $this
             ->if($object = new testedClass())
             ->and($config = array('root' => array(
+                '_type' => 'array',
                 '_required'=> true,
                 '_children' => array(
                     'a' => array('_type' => 'text', '_strict' => true),
@@ -25,7 +26,8 @@ class SchemaValidator extends atoum\test
                 ->exception(function() use($object, $config) { $object->validate($config, 'test'); })
                     ->hasMessage('The node "root" is not an array')
                 ->exception(function() use($object, $config) { $object->validate($config, array('a' => 10, 'b' => '5')); })
-                    ->hasMessage('The node "root.a" is not a text value');
+                    ->hasMessage('The node "root.a" is not a text value')
+        ;
     }
 
     public function testWithPrefix()
@@ -34,6 +36,7 @@ class SchemaValidator extends atoum\test
             ->if($object = new testedClass())
             ->and($config = array(
                 'root' => array(
+                    'my:type' => 'array',
                     'my:required'=> true,
                     'my:children' => array(
                         'a' => array('my:type' => 'text', 'my:strict' => true),
@@ -47,7 +50,8 @@ class SchemaValidator extends atoum\test
                 ->exception(function() use($object, $config) { $object->validate($config, 'test'); })
                     ->hasMessage('The node "root" is not an array')
                 ->exception(function() use($object, $config) { $object->validate($config, array('a' => 10, 'b' => '5')); })
-                    ->hasMessage('The node "root.a" is not a text value');
+                    ->hasMessage('The node "root.a" is not a text value')
+        ;
     }
 
     public function testPartial()
@@ -56,6 +60,7 @@ class SchemaValidator extends atoum\test
             ->if($object = new testedClass())
             ->and($config = array(
                 'root' => array(
+                    '_type' => 'array',
                     '_required'=> true,
                     '_children' => array(
                         'a' => array('_type' => 'partial', '_partial' => 'contenu')),
@@ -71,7 +76,61 @@ class SchemaValidator extends atoum\test
             ->then
                 ->boolean($object->validate($config, array('a' => 'test', 'b' => 'toto')))->isEqualTo(true)
                 ->exception(function() use($object, $config) { $object->validate($config, array('a' => 10, 'b' => '5')); })
-                    ->hasMessage('The node "contenu" is not a text value');
+                    ->hasMessage('The node "contenu" is not a text value')
+        ;
+    }
+
+    public function testRoot()
+    {
+        $this
+            ->if($object = new testedClass())
+            ->and($root_array = array('root' => array(
+                '_type' => 'array',
+                '_children' => array(
+                    'a' => array('_type' => 'text', '_strict' => true),
+                    'b' => array('_type' => 'text')
+            ))))
+            ->and($root_text = array('root' => array(
+                    '_type' => 'text'
+            )))
+            ->and($root_partial = array(
+                'root' => array(
+                    '_type' => 'partial',
+                    '_partial' => 'root_p'
+                ),
+                'partials' => array(
+                    'root_p' => array(
+                        '_type' => 'number',
+                        '_strict' => true
+                    )
+                )
+            ))
+            ->and($root_prototype = array('root' => array(
+                '_type' => 'prototype',
+                '_prototype' => array(
+                    '_type' => 'array',
+                    '_children' => array('a' => array('_type' => 'text'))
+            ))))
+            ->and($root_choice = array('root' => array(
+                '_type' => 'choice',
+                '_choices' => array(
+                    1 => array(
+                        '_type' => 'text'
+                    ),
+                    2 => array(
+                        '_type' => 'enum',
+                        '_values' => array('ok')
+                    )
+                )
+            )))
+            ->then
+                ->boolean($object->validate($root_array, array('a' => 'test', 'b' => 'toto')))->isEqualTo(true)
+                ->boolean($object->validate($root_text, 'bla bla bla'))->isEqualTo(true)
+                ->boolean($object->validate($root_partial, 5))->isEqualTo(true)
+                ->boolean($object->validate($root_prototype, array(0 => array('a' => 'test'))))->isEqualTo(true)
+                ->boolean($object->validate($root_choice, 'bla bla bla'))->isEqualTo(true)
+                ->boolean($object->validate($root_choice, 'ok'))->isEqualTo(true)
+        ;
     }
 
     /*
@@ -85,7 +144,8 @@ class SchemaValidator extends atoum\test
             ->and($config = $loader->loadFromFile('test/data/TestBasic/Schema.yml'))
             ->and($object = new testedClass())
             ->then
-                ->boolean($object->validate($config, $data))->isEqualTo(true);
+                ->boolean($object->validate($config, $data))->isEqualTo(true)
+        ;
     }
     public function testTypesBase()
     {
@@ -95,7 +155,8 @@ class SchemaValidator extends atoum\test
             ->and($config = $loader->loadFromFile('test/data/TestTypes/Schema.yml'))
             ->and($object = new testedClass())
             ->then
-                ->boolean($object->validate($config, $data))->isEqualTo(true);
+                ->boolean($object->validate($config, $data))->isEqualTo(true)
+        ;
     }
     public function testAttributesBase()
     {
@@ -105,7 +166,8 @@ class SchemaValidator extends atoum\test
             ->and($config = $loader->loadFromFile('test/data/TestAttributes/Schema.yml'))
             ->and($object = new testedClass())
             ->then
-                ->boolean($object->validate($config, $data))->isEqualTo(true);
+                ->boolean($object->validate($config, $data))->isEqualTo(true)
+        ;
     }
     public function testAdvancedBase()
     {
@@ -115,7 +177,8 @@ class SchemaValidator extends atoum\test
             ->and($config = $loader->loadFromFile('test/data/TestAdvanced/Schema.yml'))
             ->and($object = new testedClass())
             ->then
-                ->boolean($object->validate($config, $data))->isEqualTo(true);
+                ->boolean($object->validate($config, $data))->isEqualTo(true)
+        ;
     }
     public function testXmlBase()
     {
@@ -125,6 +188,7 @@ class SchemaValidator extends atoum\test
             ->and($config = $loader->loadFromFile('test/data/TestXml/Schema.xml'))
             ->and($object = new testedClass())
             ->then
-                ->boolean($object->validate($config, $data))->isEqualTo(true);
+                ->boolean($object->validate($config, $data))->isEqualTo(true)
+        ;
     }
 }

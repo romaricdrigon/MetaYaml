@@ -25,7 +25,11 @@ class SchemaValidator
             $this->prefix = $schema_config['prefix'];
         }
 
-        return $this->validateNode('root', 'array', $schema_config['root'], $data);
+        return $this->validateNode('root',
+            $schema_config['root'][$this->getFullName('type')],
+            $schema_config['root'],
+            $data
+        );
     }
 
     // get prefix-aware name
