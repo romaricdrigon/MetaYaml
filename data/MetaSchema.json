@@ -2,13 +2,13 @@
     "prefix": "schema:",
     "root": {
         "schema:type": "array",
-        "schema:content": {
+        "schema:children": {
             "root": {
                 "schema:type": "array",
                 "schema:required": true,
                 "schema:not_empty": true,
-                "schema:content": {
-                    "#content": {
+                "schema:children": {
+                    "#children": {
                         "schema:type": "prototype",
                         "schema:required": true,
                         "schema:prototype": {
@@ -63,7 +63,7 @@
         },
         "node_text": {
             "schema:type": "array",
-            "schema:content": {
+            "schema:children": {
                 "#type": {
                     "schema:type": "enum",
                     "schema:required": true,
@@ -82,7 +82,7 @@
         },
         "node_number": {
             "schema:type": "array",
-            "schema:content": {
+            "schema:children": {
                 "#type": {
                     "schema:type": "enum",
                     "schema:required": true,
@@ -98,7 +98,7 @@
         },
         "node_boolean": {
             "schema:type": "array",
-            "schema:content": {
+            "schema:children": {
                 "#type": {
                     "schema:type": "enum",
                     "schema:required": true,
@@ -114,7 +114,7 @@
         },
         "node_enum": {
             "schema:type": "array",
-            "schema:content": {
+            "schema:children": {
                 "#type": {
                     "schema:type": "enum",
                     "schema:required": true,
@@ -137,7 +137,7 @@
         },
         "node_prototype": {
             "schema:type": "array",
-            "schema:content": {
+            "schema:children": {
                 "#type": {
                     "schema:type": "enum",
                     "schema:required": true,
@@ -155,7 +155,7 @@
         },
         "node_choice": {
             "schema:type": "array",
-            "schema:content": {
+            "schema:children": {
                 "#type": {
                     "schema:type": "enum",
                     "schema:required": true,
@@ -176,7 +176,7 @@
         },
         "node_partial": {
             "schema:type": "array",
-            "schema:content": {
+            "schema:children": {
                 "#type": {
                     "schema:type": "enum",
                     "schema:required": true,
@@ -193,7 +193,7 @@
         },
         "node_array": {
             "schema:type": "array",
-            "schema:content": {
+            "schema:children": {
                 "#type": {
                     "schema:type": "enum",
                     "schema:required": true,
@@ -205,7 +205,7 @@
                 "#not_empty": {
                     "schema:type": "boolean"
                 },
-                "#content": {
+                "#children": {
                     "schema:type": "prototype",
                     "schema:required": true,
                     "schema:prototype": {

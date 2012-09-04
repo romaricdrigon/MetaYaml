@@ -1,21 +1,21 @@
 prefix: __
 root:
     __type: array
-    __content:
+    __children:
         fleurs:
             __type: array
             __required: true
-            __content:
+            __children:
                 roses:
                     __required: true
                     __type: array
-                    __content:
+                    __children:
                         opera:
                             __required: true
                             __type: text
                         sauvages:
                             __type: array
-                            __content:
+                            __children:
                                 'du jardin':
                                     __strict: true
                                     __type: text
@@ -23,7 +23,7 @@ root:
                                     __type: text
                 violette:
                     __type: array
-                    __content:
+                    __children:
                         nom:
                             __type: text
                         est fannee:
@@ -49,7 +49,7 @@ partials:
     tulipe_p:
         __type: array
         __required: true
-        __content:
+        __children:
             nom:
                 __type: text
                 __required: true

@@ -48,11 +48,11 @@ A schema file will define the array structure (which elements are allowed, where
 Here's a simple example of a schema, using Yaml syntax :
 ```yaml
 root: # root is an always required node ; no prefix here
-    _content: # array nodes have a _content, defining their children
+    _children: # array nodes have a _children, defining their children
         fleurs:
             _type: array # _type is always required
             _required: true # optional, default false
-            _content:
+            _children:
                 rose:
                     _required: true
                     _type: text
@@ -102,7 +102,7 @@ Those types are available:
 * `number`
 * `boolean`
 * `enum`: list accepted values in _values node
-* `array`: define children in a _content node ; array children must have named keys
+* `array`: define children in a _children node ; array children must have named keys
 * `prototype`: define a repetition of items whose name is not important. You must give children's type in `_prototype` node.
 * `choice`: child node can be any of the nodes provided in `_choices`. Keys in `_choices` array are not important (as long as they are unique). In `_choices` it's best to put array options in last.
 * `partial`: "shortcut" to a block described in `partials` root node. Provide partial name in `_partial`
@@ -117,7 +117,7 @@ Here's a comprehensive example:
 ```yaml
 root:
     # root is always an array
-    _content:
+    _children:
         texte:
             _type: text
             _not_empty: true
@@ -136,7 +136,7 @@ root:
             _type: prototype
             _prototype:
                 _type: array
-                _content:
+                _children:
                     texte:
                         _type: text
                         _is_required: true
@@ -156,7 +156,7 @@ root:
 partials:
     block:
         _type: array
-        _content:
+        _children:
             line_1:
                 _type: text
 ```

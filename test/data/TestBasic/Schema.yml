@@ -1,9 +1,9 @@
 root:
-    _content:
+    _children:
         fleurs:
             _type: array
             _required: true
-            _content:
+            _children:
                 rose:
                     _required: true
                     _type: text

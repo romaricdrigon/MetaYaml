@@ -22,7 +22,7 @@ class MetaYaml extends atoum\test
                         'root' =>
                         array (
                             '_type' => 'array',
-                            '_content' =>
+                            '_children' =>
                             array (
                                 'texte' =>
                                 array (
@@ -83,7 +83,7 @@ class MetaYaml extends atoum\test
                                     '_prototype' =>
                                     array (
                                         '_type' => 'array',
-                                        '_content' =>
+                                        '_children' =>
                                         array (
                                             'texte' =>
                                             array (
@@ -105,7 +105,7 @@ class MetaYaml extends atoum\test
                             'block' =>
                             array (
                                 '_type' => 'array',
-                                '_content' =>
+                                '_children' =>
                                 array (
                                     'line_1' =>
                                     array (

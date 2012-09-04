@@ -1,42 +1,42 @@
 <prefix>my_</prefix>
 <root>
-    <my_content>
+    <my_children>
         <fleurs>
             <my_type>array</my_type>
-            <my_content>
+            <my_children>
                 <roses>
                     <my_type>array</my_type>
-                    <my_content>
+                    <my_children>
                         <opera>
                             <my_type>text</my_type>
                         </opera>
                         <sauvage>
                             <my_type>array</my_type>
-                            <my_content>
+                            <my_children>
                                 <des_bois>
                                     <my_type>text</my_type>
                                 </des_bois>
                                 <des_sous_bois>
                                     <my_type>array</my_type>
-                                    <my_content>
+                                    <my_children>
                                         <sauvage>
                                             <my_type>text</my_type>
                                         </sauvage>
                                         <_value>
                                             <my_type>text</my_type>
                                         </_value>
-                                    </my_content>
+                                    </my_children>
                                 </des_sous_bois>
-                            </my_content>
+                            </my_children>
                         </sauvage>
-                    </my_content>
+                    </my_children>
                 </roses>
                 <tulipe>
                     <my_type>text</my_type>
                 </tulipe>
                 <violette>
                     <my_type>array</my_type>
-                    <my_content>
+                    <my_children>
                         <couleur>
                             <my_type>text</my_type>
                         </couleur>
@@ -46,9 +46,9 @@
                         <_value>
                             <my_type>text</my_type>
                         </_value>
-                    </my_content>
+                    </my_children>
                 </violette>
-            </my_content>
+            </my_children>
         </fleurs>
-    </my_content>
+    </my_children>
 </root>

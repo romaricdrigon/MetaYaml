@@ -1,6 +1,6 @@
 root:
     _type: array
-    _content:
+    _children:
         texte:
             _type: text
         # a comment
@@ -34,7 +34,7 @@ root:
             _type: prototype
             _prototype:
                 _type: array
-                _content:
+                _children:
                     texte:
                         _type: text
                         _is_required: true
@@ -44,7 +44,7 @@ root:
 partials:
     block:
         _type: array
-        _content:
+        _children:
             line_1:
                 _type: text
             line_2:

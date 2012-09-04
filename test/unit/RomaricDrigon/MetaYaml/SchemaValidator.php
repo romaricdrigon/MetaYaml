@@ -16,7 +16,7 @@ class SchemaValidator extends atoum\test
             ->if($object = new testedClass())
             ->and($config = array('root' => array(
                 '_required'=> true,
-                '_content' => array(
+                '_children' => array(
                     'a' => array('_type' => 'text', '_strict' => true),
                     'b' => array('_type' => 'text')
             ))))
@@ -35,7 +35,7 @@ class SchemaValidator extends atoum\test
             ->and($config = array(
                 'root' => array(
                     'my:required'=> true,
-                    'my:content' => array(
+                    'my:children' => array(
                         'a' => array('my:type' => 'text', 'my:strict' => true),
                         'b' => array('my:type' => 'text')
                     )
@@ -57,7 +57,7 @@ class SchemaValidator extends atoum\test
             ->and($config = array(
                 'root' => array(
                     '_required'=> true,
-                    '_content' => array(
+                    '_children' => array(
                         'a' => array('_type' => 'partial', '_partial' => 'contenu')),
                         'b' => array('_type' => 'text')
                 ),

@@ -1,5 +1,5 @@
 root:
-    _content:
+    _children:
         requis:
             _type: text
             _required: true
@@ -10,6 +10,6 @@ root:
             _type: array
             _not_empty: true
             _required: true
-            _content:
+            _children:
                 index:
                     _type: text

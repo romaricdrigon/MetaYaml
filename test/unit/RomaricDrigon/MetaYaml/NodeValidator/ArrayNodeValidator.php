@@ -15,7 +15,7 @@ class ArrayNodeValidator extends atoum\test
             ->and($object = new testedClass($schema_validator))
             ->and($config = array(
                 '_required' => true,
-                '_content' => array(
+                '_children' => array(
                     'a' => array('_type' => 'text', '_strict' => true),
                     'b' => array('_type' => 'text')
                 )
@@ -36,7 +36,7 @@ class ArrayNodeValidator extends atoum\test
             ->and($object = new testedClass($schema_validator))
             ->and($config = array(
             '_not_empty' => true,
-            '_content' => array(
+            '_children' => array(
                 'a' => array('_type' => 'text', '_strict' => true),
                 'b' => array('_type' => 'text')
             )
