@@ -41,6 +41,9 @@ root:
         paragraph:
             _type: partial
             _partial: block
+        regex:
+            _type: pattern
+            _pattern: /e/
 partials:
     block:
         _type: array

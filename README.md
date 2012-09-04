@@ -102,6 +102,7 @@ Those types are available:
 * `text`
 * `number`
 * `boolean`
+* `pattern`: check if match the regular expression provided in `_pattern`, which is a [PCRE regex](http://www.php.net/manual/en/reference.pcre.pattern.syntax.php)
 * `enum`: list accepted values in _values node
 * `array`: define children in a _children node ; array children must have named keys ; any extra key will provoke an error
 * `prototype`: define a repetition of items whose name/index is not important. You must give children's type in `_prototype` node.
@@ -161,6 +162,9 @@ root:
                         - linux
                 2:
                     _type: number
+        regex:
+            _type: pattern
+            _pattern: /e/
 partials:
     block:
         _type: array

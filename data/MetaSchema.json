@@ -29,6 +29,10 @@
                     "schema:type": "partial",
                     "schema:partial": "node_text"
                 },
+                "8": {
+                    "schema:type": "partial",
+                    "schema:partial": "node_pattern"
+                },
                 "1": {
                     "schema:type": "partial",
                     "schema:partial": "node_number"
@@ -75,6 +79,23 @@
                 },
                 "#not_empty": {
                     "schema:type": "boolean"
+                }
+            }
+        },
+        "node_pattern": {
+            "schema:type": "array",
+            "schema:children": {
+                "#type": {
+                    "schema:type": "enum",
+                    "schema:required": true,
+                    "schema:values": ["pattern"]
+                },
+                "#required": {
+                    "schema:type": "boolean"
+                },
+                "#pattern": {
+                    "schema:type": "text",
+                    "schema:required": true
                 }
             }
         },

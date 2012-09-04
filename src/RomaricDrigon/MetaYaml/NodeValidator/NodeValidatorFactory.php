@@ -14,6 +14,8 @@ class NodeValidatorFactory
                 return new NumberNodeValidator($validator);
             case 'text':
                 return new TextNodeValidator($validator);
+            case 'pattern':
+                return new PatternNodeValidator($validator);
             case 'boolean':
                 return new BooleanNodeValidator($validator);
             case 'enum':

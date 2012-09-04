@@ -18,6 +18,8 @@ class NodeValidatorFactory extends atoum\test
                     ->isInstanceOf('RomaricDrigon\\MetaYaml\\NodeValidator\\NumberNodeValidator')
                 ->object($object->getValidator('test', 'text', $schema_validator))
                     ->isInstanceOf('RomaricDrigon\\MetaYaml\\NodeValidator\\TextNodeValidator')
+                ->object($object->getValidator('test', 'pattern', $schema_validator))
+                    ->isInstanceOf('RomaricDrigon\\MetaYaml\\NodeValidator\\PatternNodeValidator')
                 ->object($object->getValidator('test', 'boolean', $schema_validator))
                     ->isInstanceOf('RomaricDrigon\\MetaYaml\\NodeValidator\\BooleanNodeValidator')
                 ->object($object->getValidator('test', 'enum', $schema_validator))
