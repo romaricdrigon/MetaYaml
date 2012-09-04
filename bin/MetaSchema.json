@@ -8,7 +8,7 @@
                 "schema:required": true,
                 "schema:not_empty": true,
                 "schema:content": {
-                    "_content": {
+                    "#content": {
                         "schema:type": "prototype",
                         "schema:required": true,
                         "schema:prototype": {
@@ -64,18 +64,18 @@
         "node_text": {
             "schema:type": "array",
             "schema:content": {
-                "_type": {
+                "#type": {
                     "schema:type": "enum",
                     "schema:required": true,
                     "schema:values": ["text"]
                 },
-                "_required": {
+                "#required": {
                     "schema:type": "boolean"
                 },
-                "_strict": {
+                "#strict": {
                     "schema:type": "boolean"
                 },
-                "_not_empty": {
+                "#not_empty": {
                     "schema:type": "boolean"
                 }
             }
@@ -83,15 +83,15 @@
         "node_number": {
             "schema:type": "array",
             "schema:content": {
-                "_type": {
+                "#type": {
                     "schema:type": "enum",
                     "schema:required": true,
                     "schema:values": ["number"]
                 },
-                "_required": {
+                "#required": {
                     "schema:type": "boolean"
                 },
-                "_strict": {
+                "#strict": {
                     "schema:type": "boolean"
                 }
             }
@@ -99,15 +99,15 @@
         "node_boolean": {
             "schema:type": "array",
             "schema:content": {
-                "_type": {
+                "#type": {
                     "schema:type": "enum",
                     "schema:required": true,
                     "schema:values": ["boolean"]
                 },
-                "_required": {
+                "#required": {
                     "schema:type": "boolean"
                 },
-                "_strict": {
+                "#strict": {
                     "schema:type": "boolean"
                 }
             }
@@ -115,18 +115,18 @@
         "node_enum": {
             "schema:type": "array",
             "schema:content": {
-                "_type": {
+                "#type": {
                     "schema:type": "enum",
                     "schema:required": true,
                     "schema:values": ["enum"]
                 },
-                "_required": {
+                "#required": {
                     "schema:type": "boolean"
                 },
-                "_strict": {
+                "#strict": {
                     "schema:type": "boolean"
                 },
-                "_values": {
+                "#values": {
                     "schema:type": "prototype",
                     "schema:required": true,
                     "schema:prototype": {
@@ -138,15 +138,15 @@
         "node_prototype": {
             "schema:type": "array",
             "schema:content": {
-                "_type": {
+                "#type": {
                     "schema:type": "enum",
                     "schema:required": true,
                     "schema:values": ["prototype"]
                 },
-                "_required": {
+                "#required": {
                     "schema:type": "boolean"
                 },
-                "_prototype": {
+                "#prototype": {
                     "schema:type": "partial",
                     "schema:required": true,
                     "schema:partial": "node"
@@ -156,15 +156,15 @@
         "node_choice": {
             "schema:type": "array",
             "schema:content": {
-                "_type": {
+                "#type": {
                     "schema:type": "enum",
                     "schema:required": true,
                     "schema:values": ["choice"]
                 },
-                "_required": {
+                "#required": {
                     "schema:type": "boolean"
                 },
-                "_choices": {
+                "#choices": {
                     "schema:type": "prototype",
                     "schema:required": true,
                     "schema:prototype": {
@@ -177,15 +177,15 @@
         "node_partial": {
             "schema:type": "array",
             "schema:content": {
-                "_type": {
+                "#type": {
                     "schema:type": "enum",
                     "schema:required": true,
                     "schema:values": ["partial"]
                 },
-                "_required": {
+                "#required": {
                     "schema:type": "boolean"
                 },
-                "_partial": {
+                "#partial": {
                     "schema:type": "text",
                     "schema:required": true
                 }
@@ -194,18 +194,18 @@
         "node_array": {
             "schema:type": "array",
             "schema:content": {
-                "_type": {
+                "#type": {
                     "schema:type": "enum",
                     "schema:required": true,
                     "schema:values": ["array"]
                 },
-                "_required": {
+                "#required": {
                     "schema:type": "boolean"
                 },
-                "_not_empty": {
+                "#not_empty": {
                     "schema:type": "boolean"
                 },
-                "_content": {
+                "#content": {
                     "schema:type": "prototype",
                     "schema:required": true,
                     "schema:prototype": {

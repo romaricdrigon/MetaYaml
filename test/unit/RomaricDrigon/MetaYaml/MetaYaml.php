@@ -123,4 +123,17 @@ class MetaYaml extends atoum\test
                 ->boolean($object->validate($data))
                     ->isEqualTo(true);
     }
+
+    public function testPrefix()
+    {
+        $this
+            ->if($yaml_loader = new YamlLoader())
+            ->and($schema = $yaml_loader->loadFromFile('test/data/TestAdvanced/Schema.yml'))
+            ->and($data = $yaml_loader->loadFromFile('test/data/TestAdvanced/TestBase.yml'))
+            ->and($object = new testedClass($schema))
+            ->then
+                ->object($object)->isInstanceOf('RomaricDrigon\\MetaYaml\\MetaYaml')
+                ->boolean($object->validate($data))
+                    ->isEqualTo(true);
+    }
 }
