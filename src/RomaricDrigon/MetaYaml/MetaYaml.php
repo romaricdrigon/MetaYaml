@@ -17,7 +17,7 @@ class MetaYaml
             $json_loader = new JsonLoader();
 
             // we have to check if we use a prefix
-            $meta_json = file_get_contents(__DIR__.'/../../../bin/MetaSchema.json');
+            $meta_json = file_get_contents(__DIR__.'/../../../data/MetaSchema.json');
             $prefix = isset($schema['prefix']) ? $schema['prefix'] : '_';
             $meta_json = str_replace('#', $prefix, $meta_json);
 

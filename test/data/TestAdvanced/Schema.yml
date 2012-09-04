@@ -39,13 +39,21 @@ root:
                         age:
                             __type: number
                             __required: true
+                tulipe:
+                    __type: partial
+                    __partial: tulipe_p
+                anemone:
+                    __type: partial
+                    __partial: anemone_p
 partials:
-    tulipe:
+    tulipe_p:
         __type: array
         __required: true
         __content:
             nom:
                 __type: text
                 __required: true
-            lieu__cueillette:
+            lieu_cueillette:
                 __type: text
+    anemone_p:
+        __type: text
