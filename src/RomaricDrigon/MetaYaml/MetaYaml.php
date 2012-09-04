@@ -22,7 +22,11 @@ class MetaYaml
             $meta_json = str_replace('#', $prefix, $meta_json);
 
             // we validate the schema using the meta schema, defining the structure of our schema
-            $meta_schema_validator->validate($json_loader->load($meta_json), $schema);
+            try {
+                $meta_schema_validator->validate($json_loader->load($meta_json), $schema);
+            } catch (\Exception $e) {
+                throw new \Exception("Unable to validate schema with error: {$e->getMessage()}");
+            }
         }
 
         $this->schema = $schema;

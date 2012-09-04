@@ -11,6 +11,13 @@
             },
             "prefix": {
                 "schema:type": "text"
+            },
+            "partials": {
+                "schema:type": "prototype",
+                "schema:prototype": {
+                    "schema:type": "partial",
+                    "schema:partial": "node"
+                }
             }
         }
     },

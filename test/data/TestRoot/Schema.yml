@@ -1,0 +1,14 @@
+root:
+    _type: prototype
+    _prototype:
+        _type: choice
+        _choices:
+            0:
+                _type: text
+                _strict: true
+            1:
+                _type: number
+                _strict: true
+            2:
+                _type: boolean
+                _strict: true

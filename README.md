@@ -82,6 +82,7 @@ So a basic schema file:
 ```yaml
 root:
     # here put the elements who will be in the file
+    # note that root can be anything: an array, a number, a prototype... just set the corresponding _type
 prefix: my_ # so it's gonna be my_type, my_required...
 partials:
     block:
@@ -103,7 +104,7 @@ Those types are available:
 * `number`
 * `boolean`
 * `enum`: list accepted values in _values node
-* `array`: define children in a _children node ; array children must have named keys
+* `array`: define children in a _children node ; array children must have named keys ; any extra key will provoke an error
 * `prototype`: define a repetition of items whose name is not important. You must give children's type in `_prototype` node.
 * `choice`: child node can be any of the nodes provided in `_choices`. Keys in `_choices` array are not important (as long as they are unique). In `_choices` it's best to put array options in last.
 * `partial`: "shortcut" to a block described in `partials` root node. Provide partial name in `_partial`

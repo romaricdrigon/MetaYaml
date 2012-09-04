@@ -26,7 +26,8 @@ class ArrayNodeValidator extends atoum\test
                 ->exception(function() use($object, $config) { $object->validate('toto', $config, 'test'); })
                     ->hasMessage('The node "toto" is not an array')
                 ->exception(function() use($object, $config) { $object->validate('toto', $config, array('a' => 10, 'b' => '5')); })
-                    ->hasMessage('The node "toto.a" is not a text value');
+                    ->hasMessage('The node "toto.a" is not a text value')
+        ;
     }
 
     public function testNotEmpty()
@@ -35,15 +36,33 @@ class ArrayNodeValidator extends atoum\test
             ->if($schema_validator = new SchemaValidator())
             ->and($object = new testedClass($schema_validator))
             ->and($config = array(
-            '_not_empty' => true,
-            '_children' => array(
-                'a' => array('_type' => 'text', '_strict' => true),
-                'b' => array('_type' => 'text')
-            )
-        ))
+                '_not_empty' => true,
+                '_children' => array(
+                    'a' => array('_type' => 'text', '_strict' => true),
+                    'b' => array('_type' => 'text')
+                )
+            ))
             ->then
-            ->boolean($object->validate('toto', $config, array('a' => 'test', 'b' => 'toto')))->isEqualTo(true)
-            ->exception(function() use($object, $config) { $object->validate('toto', $config, array()); })
-            ->hasMessage('The node "toto" can not be empty');
+                ->boolean($object->validate('toto', $config, array('a' => 'test', 'b' => 'toto')))->isEqualTo(true)
+                ->exception(function() use($object, $config) { $object->validate('toto', $config, array()); })
+                ->hasMessage('The node "toto" can not be empty')
+        ;
+    }
+
+    public function testExtraKeys()
+    {
+        $this
+            ->if($schema_validator = new SchemaValidator())
+            ->and($object = new testedClass($schema_validator))
+            ->and($config = array(
+                '_children' => array(
+                    'a' => array('_type' => 'text')
+                )
+            ))
+            ->then
+                ->boolean($object->validate('test', $config, array('a' => 'test')))->isEqualTo(true)
+                ->exception(function() use($object, $config) { $object->validate('test', $config, array('a' => 'test', 'b' => 'test2')); })
+                    ->hasMessage('The node "test" has not allowed extra key(s): test2')
+        ;
     }
 }

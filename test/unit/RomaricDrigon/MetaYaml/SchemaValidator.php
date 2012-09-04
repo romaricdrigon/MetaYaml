@@ -63,8 +63,9 @@ class SchemaValidator extends atoum\test
                     '_type' => 'array',
                     '_required'=> true,
                     '_children' => array(
-                        'a' => array('_type' => 'partial', '_partial' => 'contenu')),
+                        'a' => array('_type' => 'partial', '_partial' => 'contenu'),
                         'b' => array('_type' => 'text')
+                    ),
                 ),
                 'partials' => array(
                     'contenu' => array(

@@ -37,7 +37,7 @@ root:
                 _children:
                     texte:
                         _type: text
-                        _is_required: true
+                        _required: true
         paragraph:
             _type: partial
             _partial: block

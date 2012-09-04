@@ -8,7 +8,7 @@ use RomaricDrigon\MetaYaml\Loader\YamlLoader;
 
 class MetaYaml extends atoum\test
 {
-    public function testAll()
+    public function testBase()
     {
         $this
             ->if($yaml_loader = new YamlLoader())
@@ -88,7 +88,7 @@ class MetaYaml extends atoum\test
                                             'texte' =>
                                             array (
                                                 '_type' => 'text',
-                                                '_is_required' => true,
+                                                '_required' => true,
                                             ),
                                         ),
                                     ),
@@ -121,7 +121,8 @@ class MetaYaml extends atoum\test
                     )
                     )
                 ->boolean($object->validate($data))
-                    ->isEqualTo(true);
+                    ->isEqualTo(true)
+        ;
     }
 
     public function testPrefix()
@@ -134,6 +135,32 @@ class MetaYaml extends atoum\test
             ->then
                 ->object($object)->isInstanceOf('RomaricDrigon\\MetaYaml\\MetaYaml')
                 ->boolean($object->validate($data))
-                    ->isEqualTo(true);
+                    ->isEqualTo(true)
+        ;
+    }
+
+    public function testRoot()
+    {
+        $this
+            ->if($yaml_loader = new YamlLoader())
+            ->and($schema = $yaml_loader->loadFromFile('test/data/TestRoot/Schema.yml'))
+            ->and($data = $yaml_loader->loadFromFile('test/data/TestRoot/TestBase.yml'))
+            ->and($object = new testedClass($schema))
+            ->then
+                ->object($object)->isInstanceOf('RomaricDrigon\\MetaYaml\\MetaYaml')
+                ->boolean($object->validate($data))
+                    ->isEqualTo(true)
+        ;
+    }
+
+    public function testAll()
+    {
+        $this
+            ->if($yaml_loader = new YamlLoader())
+            ->and($very_wrong_schema = $yaml_loader->loadFromFile('test/data/TestTypes/TestBase.yml'))
+            ->then
+                ->exception(function() use ($very_wrong_schema) { new testedClass($very_wrong_schema); })
+                    ->hasMessage('Unable to validate schema with error: The node "root.root" is required')
+        ;
     }
 }

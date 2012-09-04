@@ -8,6 +8,13 @@
                 <roses>
                     <my_type>array</my_type>
                     <my_children>
+                        <couleur>
+                            <my_type>enum</my_type>
+                            <my_values>
+                                <v0>rouge</v0>
+                                <v1>rose</v1>
+                            </my_values>
+                        </couleur>
                         <opera>
                             <my_type>text</my_type>
                         </opera>
