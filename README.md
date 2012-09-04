@@ -1,7 +1,7 @@
 # MetaYaml
 
 A `[put your file type here]` schema validator using `[put another file type here]` files.  
-At the moment, file type can be Json, Yaml, or Xml.
+At the moment, file type can be Json, Yaml, or XML.
 
 _The name comes from the fact that it was initially made to implement a pseudo-schema for Yaml files._
 
@@ -9,9 +9,9 @@ _The name comes from the fact that it was initially made to implement a pseudo-s
 
 This component is organized as a Symfony2 bundle, but actually the core has no dependencies which should prevent you to use it anywhere else.
 
-* The core requires PHP >= 5.3.3.
-* If you want to use the YamlLoader, you will need the Symfony component [Yaml](https://github.com/symfony/Yaml) (standalone component, does not require Symfony2).
-* To run the tests, you'll need [atoum](https://github.com/mageekguy/atoum).
+* The core requires PHP >= 5.3.3
+* To use the YamlLoader, you'll need the Symfony component [Yaml](https://github.com/symfony/Yaml) (standalone component, does not require Symfony2)
+* To launch the tests, you'll need [atoum](https://github.com/mageekguy/atoum)
 
 To install all these packages, the easiest way is to use [composer](http://getcomposer.org): put composer.phar in root folder, and then run `./composer.phar --update`
 
@@ -19,8 +19,8 @@ To install all these packages, the easiest way is to use [composer](http://getco
 
 You have to create a MetaYaml object, and then pass it both the schema and your data as multidimensional php arrays:
 ```php
-$schema = new MetaYaml($schema); // will load and validate the schema. You can skip this step by passing false as second argument.
-$schema->validate($data); // will return true or throw an exception
+$schema = new MetaYaml($schema); // load and validate the schema. You can skip validation by passing false as second argument.
+$schema->validate($data); // return true or throw an exception
 ```
 
 You can use any of the provided loaders to obtain these arrays (yep, you can validate Xml using a schema from an Yaml file!).
@@ -42,8 +42,7 @@ $array = $loader->loadFromFile('path/to/file);
 
 ### Introduction
 
-A schema file will define the array structure (which elements are allowed, where), some attributes
-(required, can be empty...) and the possible values for these elements (or their type).
+A schema file will define the array structure (which elements are allowed, where), some attributes (required, can be empty...) and the possible values for these elements (or their type).
 
 Here's a simple example of a schema, using Yaml syntax :
 ```yaml
@@ -167,9 +166,9 @@ partials:
 ### More information
 
 For more examples, look inside test/data folder.
-In each folder, you have an .yml file and its schema. There's also a Xml example.
+In each folder, you have an .yml file and its schema. There's also a XML example.
 
-If you're curious about an advanced usage, you can check bin/MetaSchema.json: schema files are validated using this schema.
+If you're curious about an advanced usage, you can check data/MetaSchema.json: schema files are validated using this schema.
 
 ## Test
 
