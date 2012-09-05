@@ -19,14 +19,18 @@ class SchemaValidator extends atoum\test
                 '_required'=> true,
                 '_children' => array(
                     'a' => array('_type' => 'text', '_strict' => true),
-                    'b' => array('_type' => 'text')
+                    'b' => array('_type' => 'text'),
+                    'c' => array('_type' => 'text', '_not_empty' => true),
             ))))
             ->then
                 ->boolean($object->validate($config, array('a' => 'test', 'b' => 'toto')))->isEqualTo(true)
+                ->boolean($object->validate($config, array('a' => 'test', 'b' => 'test2', 'c' => 3)))->isEqualTo(true)
                 ->exception(function() use($object, $config) { $object->validate($config, 'test'); })
                     ->hasMessage("The node 'root' is not an array")
                 ->exception(function() use($object, $config) { $object->validate($config, array('a' => 10, 'b' => '5')); })
                     ->hasMessage("The node 'root.a' is not a text value")
+                ->exception(function() use($object, $config) { $object->validate($config, array('c' => '')); })
+                    ->hasMessage("The node 'root.c' can not be empty")
         ;
     }
 

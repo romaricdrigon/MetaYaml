@@ -126,7 +126,7 @@ You can specify additional attributes:
 
 * general attributes:
  * `_required`: this node must always be defined (by default false)
- * `_not_empty` for text and array nodes: they can't be empty
+ * `_not_empty` for text, number and array nodes: they can't be empty (by default false). Respective empty values are `''`, `0` (as a string, an integer or a float), `array()`. To test for null values, use `_required` instead.
  * `_strict` with text, number, boolean and enum will enforce a strict type check (respectively, with a string, an integer or a float, a boolean, any of these values).
  Watch out when using these with a parser which may not be type-aware (such as the XML one; Yaml and Json should be ok)
 * only for array nodes:
@@ -201,8 +201,7 @@ To launch tests, just run in a shell `./bin/test --test-all`
 ## Extending
 
 You may want to write your own loader, using anything else.  
-Take a look at any class in Loader/ folder, it's pretty simple :
-you have to implement the LoaderInterface, and may want to extend Loader class (so you don't have to write `loadFromFile()`).
+Take a look at any class in Loader/ folder, it's pretty easy: you have to implement the LoaderInterface, and may want to extend Loader class (so you don't have to write `loadFromFile()`).
 
 ## Thanks
 

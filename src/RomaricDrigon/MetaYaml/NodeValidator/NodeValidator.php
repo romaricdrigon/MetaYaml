@@ -16,27 +16,17 @@ abstract class NodeValidator implements NodeValidatorInterface
 
     protected function checkRequired($name, array $node, $data)
     {
-        if (! is_null($data)) return false; // ok
+        if (! is_null($data)) return false; // ok anyway
 
-        $required = isset($node[$this->schema_validator->getFullName('required')]) && $node[$this->schema_validator->getFullName('required')];
-
-        if ($required) {
+        if (isset($node[$this->schema_validator->getFullName('required')])
+            && $node[$this->schema_validator->getFullName('required')]) {
             throw new NodeValidatorException($name, sprintf("The node '$name' is required"));
         } else {
             return true; // data null & not required, stop further validations
         }
     }
 
-    protected function checkEmpty($name, array $node, $data)
-    {
-        if (! empty($data)) return false; // ok
-
-        $not_empty = isset($node[$this->schema_validator->getFullName('not_empty')]) && $node[$this->schema_validator->getFullName('not_empty')];
-
-        if ($not_empty) {
-            throw new NodeValidatorException($name, "The node '$name' can not be empty");
-        } else {
-            return true;
-        }
-    }
+    // empty has some particularities,
+    // so we have to reimplement it each time
+    // protected function checkEmpty($name, array $node, $data) {}
 }
