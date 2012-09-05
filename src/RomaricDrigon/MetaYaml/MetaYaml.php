@@ -17,7 +17,7 @@ class MetaYaml
         if ($validate) {
             // we validate the schema using the meta schema, defining the structure of our schema
             try {
-                $this->validate_schema();
+                $this->validateSchema();
             } catch (\Exception $e) {
                 throw new \Exception("Unable to validate schema with error: {$e->getMessage()}");
             }
@@ -27,7 +27,7 @@ class MetaYaml
     // validate the schema
     // for big files (more than a few hundred lines)
     // can take up to a second
-    public function validate_schema()
+    public function validateSchema()
     {
         $meta_schema_validator = new SchemaValidator();
         $json_loader = new JsonLoader();
