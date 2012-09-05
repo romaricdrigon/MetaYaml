@@ -24,9 +24,9 @@ class ArrayNodeValidator extends atoum\test
                 ->boolean($object->validate('toto', $config, array('a' => 'test', 'b' => 'toto')))->isEqualTo(true)
                 ->boolean($object->validate('toto', $config, array()))->isEqualTo(true)
                 ->exception(function() use($object, $config) { $object->validate('toto', $config, 'test'); })
-                    ->hasMessage('The node "toto" is not an array')
+                    ->hasMessage("The node 'toto' is not an array")
                 ->exception(function() use($object, $config) { $object->validate('toto', $config, array('a' => 10, 'b' => '5')); })
-                    ->hasMessage('The node "toto.a" is not a text value')
+                    ->hasMessage("The node 'toto.a' is not a text value")
         ;
     }
 
@@ -45,7 +45,7 @@ class ArrayNodeValidator extends atoum\test
             ->then
                 ->boolean($object->validate('toto', $config, array('a' => 'test', 'b' => 'toto')))->isEqualTo(true)
                 ->exception(function() use($object, $config) { $object->validate('toto', $config, array()); })
-                ->hasMessage('The node "toto" can not be empty')
+                ->hasMessage("The node 'toto' can not be empty")
         ;
     }
 
@@ -62,7 +62,7 @@ class ArrayNodeValidator extends atoum\test
             ->then
                 ->boolean($object->validate('test', $config, array('a' => 'test')))->isEqualTo(true)
                 ->exception(function() use($object, $config) { $object->validate('test', $config, array('a' => 'test', 'b' => 'test2')); })
-                    ->hasMessage('The node "test" has not allowed extra key(s): test2')
+                    ->hasMessage("The node 'test' has not allowed extra key(s): test2")
         ;
     }
 

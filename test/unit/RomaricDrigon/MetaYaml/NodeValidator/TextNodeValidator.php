@@ -18,9 +18,10 @@ class TextNodeValidator extends atoum\test
                 ->boolean($object->validate('toto', $config, 'test'))->isEqualTo(true)
                 ->boolean($object->validate('toto', $config, true))->isEqualTo(true)
                 ->exception(function() use($object, $config) { $object->validate('test', $config, ''); })
-                    ->hasMessage('The node "test" can not be empty')
+                    ->hasMessage("The node 'test' can not be empty")
             ->if($config = array('_metadata' => array('_not_empty' => false)))
-                ->boolean($object->validate('test', $config, ''))->isEqualTo(true);
+                ->boolean($object->validate('test', $config, ''))->isEqualTo(true)
+        ;
     }
 
     public function testStrict()
@@ -32,6 +33,7 @@ class TextNodeValidator extends atoum\test
             ->then
                 ->boolean($object->validate('toto', $config, 'test'))->isEqualTo(true)
                 ->exception(function() use($object, $config) { $object->validate('test', $config, true); })
-                    ->hasMessage('The node "test" is not a text value');
+                    ->hasMessage("The node 'test' is not a text value")
+        ;
     }
 }

@@ -59,7 +59,7 @@ class MetaYaml extends atoum\test
             ->and($very_wrong_schema = $yaml_loader->loadFromFile('test/data/TestTypes/TestBase.yml'))
             ->then
                 ->exception(function() use ($very_wrong_schema) { new testedClass($very_wrong_schema, true); })
-                    ->hasMessage('Unable to validate schema with error: The node "root.root" is required')
+                    ->hasMessage("Unable to validate schema with error: The node 'root.root' is required")
         ;
     }
 }

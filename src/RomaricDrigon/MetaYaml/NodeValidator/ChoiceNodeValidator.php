@@ -31,8 +31,7 @@ class ChoiceNodeValidator extends NodeValidator
         }
 
         if (! $valid) {
-            throw new NodeValidatorException($name, sprintf("The choice node \"%s\" is invalid with error: %s",
-                $name, $message));
+            throw new NodeValidatorException($name, "The choice node '$name' is invalid with error: $message");
         }
 
         return true;

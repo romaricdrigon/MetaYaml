@@ -19,7 +19,8 @@ class NumberNodeValidator extends atoum\test
                 ->boolean($object->validate('test', $config, 10))->isEqualTo(true)
                 ->boolean($object->validate('test', $config, 5.5))->isEqualTo(true)
                 ->exception(function() use($object, $config) { $object->validate('test', $config, 'test'); })
-                    ->hasMessage('The node "test" is not a number');
+                    ->hasMessage("The node 'test' is not a number")
+        ;
     }
 
     public function testStrict()
@@ -32,8 +33,8 @@ class NumberNodeValidator extends atoum\test
                 ->boolean($object->validate('test', $config, 10))->isEqualTo(true)
                 ->boolean($object->validate('test', $config, 5.5))->isEqualTo(true)
                 ->exception(function() use($object, $config) { $object->validate('test', $config, '10'); })
-                    ->hasMessage('The node "test" is not a number')
+                    ->hasMessage("The node 'test' is not a number")
                 ->exception(function() use($object, $config) { $object->validate('test', $config, '5.5'); })
-                    ->hasMessage('The node "test" is not a number');
+                    ->hasMessage("The node 'test' is not a number");
     }
 }

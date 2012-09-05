@@ -32,9 +32,10 @@ class EnumNodeValidator extends atoum\test
                 ->boolean($object->validate('test', $config, true))->isEqualTo(true)
                 ->boolean($object->validate('test', $config, 'true'))->isEqualTo(true)
                 ->exception(function() use($object, $config) { $object->validate('test', $config, ''); })
-                    ->hasMessage('The value "" is not allowed for node "test"')
+                    ->hasMessage("The value '' is not allowed for node 'test'")
                 ->exception(function() use($object, $config) { $object->validate('test', $config, 'test'); })
-                    ->hasMessage('The value "test" is not allowed for node "test"');
+                    ->hasMessage("The value 'test' is not allowed for node 'test'")
+        ;
     }
 
     public function testWithoutTrue()
@@ -58,11 +59,12 @@ class EnumNodeValidator extends atoum\test
             ->boolean($object->validate('test', $config, false))->isEqualTo(true)
             ->boolean($object->validate('test', $config, 'false'))->isEqualTo(true)
             ->exception(function() use($object, $config) { $object->validate('test', $config, ''); })
-            ->hasMessage('The value "" is not allowed for node "test"')
+            ->hasMessage("The value '' is not allowed for node 'test'")
             ->exception(function() use($object, $config) { $object->validate('test', $config, true); })
-            ->hasMessage('The value "true" is not allowed for node "test"')
+            ->hasMessage("The value 'true' is not allowed for node 'test'")
             ->exception(function() use($object, $config) { $object->validate('test', $config, 'test'); })
-            ->hasMessage('The value "test" is not allowed for node "test"');
+            ->hasMessage("The value 'test' is not allowed for node 'test'")
+        ;
     }
 
     public function testStrict()
@@ -87,10 +89,11 @@ class EnumNodeValidator extends atoum\test
                 ->boolean($object->validate('test', $config, false))->isEqualTo(true)
                 ->boolean($object->validate('test', $config, true))->isEqualTo(true)
                 ->exception(function() use($object, $config) { $object->validate('test', $config, 'true'); })
-                    ->hasMessage('The value "true" is not allowed for node "test"')
+                    ->hasMessage("The value 'true' is not allowed for node 'test'")
                 ->exception(function() use($object, $config) { $object->validate('test', $config, 'false'); })
-                    ->hasMessage('The value "false" is not allowed for node "test"')
+                    ->hasMessage("The value 'false' is not allowed for node 'test'")
                 ->exception(function() use($object, $config) { $object->validate('test', $config, '5'); })
-                    ->hasMessage('The value "5" is not allowed for node "test"');
+                    ->hasMessage("The value '5' is not allowed for node 'test'")
+        ;
     }
 }

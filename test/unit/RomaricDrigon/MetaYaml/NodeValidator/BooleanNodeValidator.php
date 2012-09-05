@@ -18,11 +18,12 @@ class BooleanNodeValidator extends atoum\test
                 ->boolean($object->validate('toto', $config, true))->isEqualTo(true)
                 ->boolean($object->validate('toto', $config, 'false'))->isEqualTo(true)
                 ->exception(function() use($object, $config) { $object->validate('toto', $config, 'test'); })
-                    ->hasMessage('The node "toto" is not a boolean')
+                    ->hasMessage("The node 'toto' is not a boolean")
                 ->exception(function() use($object, $config) { $object->validate('toto', $config, null); })
-                    ->hasMessage('The node "toto" is required')
+                    ->hasMessage("The node 'toto' is required")
             ->if($config = array('_required' => false))
-                ->boolean($object->validate('toto', $config, null))->isEqualTo(true);
+                ->boolean($object->validate('toto', $config, null))->isEqualTo(true)
+        ;
     }
 
     public function testStrict()
@@ -34,6 +35,7 @@ class BooleanNodeValidator extends atoum\test
             ->then
                 ->boolean($object->validate('test', $config, false))->isEqualTo(true)
                 ->exception(function() use($object, $config) { $object->validate('test', $config, 'true'); })
-                    ->hasMessage('The node "test" is not a boolean');
+                    ->hasMessage("The node 'test' is not a boolean")
+        ;
     }
 }

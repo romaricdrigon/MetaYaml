@@ -14,7 +14,7 @@ class TextNodeValidator extends NodeValidator
         $strict = isset($node[$this->schema_validator->getFullName('strict')]) && isset($node[$this->schema_validator->getFullName('strict')]);
 
         if (! is_scalar($data) || ($strict && ! is_string($data))) {
-            throw new NodeValidatorException($name, sprintf('The node "%s" is not a text value', $name));
+            throw new NodeValidatorException($name, "The node '$name' is not a text value");
         }
 
         return true;

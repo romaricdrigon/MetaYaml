@@ -17,9 +17,9 @@ class PrototypeNodeValidator extends atoum\test
             ->then
                 ->boolean($object->validate('test', $config, array('a' => 10, 'b' => 5)))->isEqualTo(true)
                 ->exception(function() use($object, $config) { $object->validate('test', $config, 'test'); })
-                    ->hasMessage('The node "test" is not an array')
+                    ->hasMessage("The node 'test' is not an array")
                 ->exception(function() use($object, $config) { $object->validate('test', $config, array('a' => 10, 'b' => 'test')); })
-                    ->hasMessage('The node "test.b" is not a number')
+                    ->hasMessage("The node 'test.b' is not a number")
         ;
     }
 
@@ -36,9 +36,9 @@ class PrototypeNodeValidator extends atoum\test
             ->then
                 ->boolean($object->validate('test', $config, array('a' => 10, 'b' => 5)))->isEqualTo(true)
                 ->exception(function() use($object, $config) { $object->validate('test', $config, array('a' => 10)); })
-                    ->hasMessage('Prototype node \'test\' has not enough children')
+                    ->hasMessage("Prototype node 'test' has not enough children")
                 ->exception(function() use($object, $config) { $object->validate('test', $config, array('a' => 10, 'b' => 5, 'c' => 2)); })
-                    ->hasMessage('Prototype node \'test\' has too much children')
+                    ->hasMessage("Prototype node 'test' has too much children")
         ;
     }
 }

@@ -15,8 +15,7 @@ class BooleanNodeValidator extends NodeValidator
         if (is_bool($data) || (! $strict && ($data == 'true' || $data == 'false'))) {
             return true;
         } else {
-            throw new NodeValidatorException($name, sprintf('The node "%s" is not a boolean', 
-                $name));
+            throw new NodeValidatorException($name, "The node '$name' is not a boolean");
         }
     }
 }

@@ -12,7 +12,7 @@ class ArrayNodeValidator extends NodeValidator
         if ($this->checkEmpty($name, $node, $data)) return true;
 
         if (! is_array($data)) {
-            throw new NodeValidatorException($name, "The node \"$name\" is not an array");
+            throw new NodeValidatorException($name, "The node '$name' is not an array");
         }
 
         foreach ($node[$this->schema_validator->getFullName('children')] as $key => $value) {
@@ -35,7 +35,7 @@ class ArrayNodeValidator extends NodeValidator
         // we check if we don't have extra keys in $data array, thus not allowed
         if (count($data) !== 0) {
             throw new NodeValidatorException($name,
-                "The node \"$name\" has not allowed extra key(s): ".implode(', ', $data)
+                "The node '$name' has not allowed extra key(s): ".implode(', ', $data)
             );
         }
 

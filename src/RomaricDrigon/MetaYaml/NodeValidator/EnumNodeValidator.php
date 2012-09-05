@@ -33,7 +33,7 @@ class EnumNodeValidator extends NodeValidator
         }
 
         if (! in_array($data, $haystack, $strict)) {
-            throw new NodeValidatorException($name, 'The value "'.$data.'" is not allowed for node "'.$name.'"');
+            throw new NodeValidatorException($name, "The value '$data' is not allowed for node '$name'");
         }
 
         return true;

@@ -24,9 +24,9 @@ class SchemaValidator extends atoum\test
             ->then
                 ->boolean($object->validate($config, array('a' => 'test', 'b' => 'toto')))->isEqualTo(true)
                 ->exception(function() use($object, $config) { $object->validate($config, 'test'); })
-                    ->hasMessage('The node "root" is not an array')
+                    ->hasMessage("The node 'root' is not an array")
                 ->exception(function() use($object, $config) { $object->validate($config, array('a' => 10, 'b' => '5')); })
-                    ->hasMessage('The node "root.a" is not a text value')
+                    ->hasMessage("The node 'root.a' is not a text value")
         ;
     }
 
@@ -48,9 +48,9 @@ class SchemaValidator extends atoum\test
             ->then
                 ->boolean($object->validate($config, array('a' => 'test', 'b' => 'toto')))->isEqualTo(true)
                 ->exception(function() use($object, $config) { $object->validate($config, 'test'); })
-                    ->hasMessage('The node "root" is not an array')
+                    ->hasMessage("The node 'root' is not an array")
                 ->exception(function() use($object, $config) { $object->validate($config, array('a' => 10, 'b' => '5')); })
-                    ->hasMessage('The node "root.a" is not a text value')
+                    ->hasMessage("The node 'root.a' is not a text value")
         ;
     }
 
@@ -77,7 +77,7 @@ class SchemaValidator extends atoum\test
             ->then
                 ->boolean($object->validate($config, array('a' => 'test', 'b' => 'toto')))->isEqualTo(true)
                 ->exception(function() use($object, $config) { $object->validate($config, array('a' => 10, 'b' => '5')); })
-                    ->hasMessage('The node "contenu" is not a text value')
+                    ->hasMessage("The node 'contenu' is not a text value")
         ;
     }
 
@@ -119,7 +119,7 @@ class SchemaValidator extends atoum\test
             ->then
                 ->boolean($object->validate($config, array('value' => 1)))->isEqualTo(true)
                 ->exception(function() use($object, $config) { $object->validate($config, array('value' => 0)); })
-                    ->hasMessage('The choice node "root" is invalid with error: The value "0" is not allowed for node "root.value"')
+                    ->hasMessage("The choice node 'root' is invalid with error: The value '0' is not allowed for node 'root.value'")
         ;
     }
 

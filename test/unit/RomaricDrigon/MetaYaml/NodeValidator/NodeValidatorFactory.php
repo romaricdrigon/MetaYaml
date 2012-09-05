@@ -34,6 +34,7 @@ class NodeValidatorFactory extends atoum\test
                     ->isInstanceOf('RomaricDrigon\\MetaYaml\\NodeValidator\\PartialNodeValidator')
                 ->exception(function() use ($object, $schema_validator) {
                     $object->getValidator('test', 'random_stuff', $schema_validator);
-                    })->hasMessage('Unknown validator type : random_stuff');
+                    })->hasMessage('Unknown validator type : random_stuff')
+        ;
     }
 }

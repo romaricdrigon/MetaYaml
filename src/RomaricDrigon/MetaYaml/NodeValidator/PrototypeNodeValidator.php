@@ -11,7 +11,7 @@ class PrototypeNodeValidator extends NodeValidator
         if ($this->checkRequired($name, $node, $data)) return true;
         
         if (! is_array($data)) {
-            throw new NodeValidatorException($name, sprintf('The node "%s" is not an array', $name));
+            throw new NodeValidatorException($name, "The node '$name' is not an array");
         }
 
         // get min and max number of prototype repetition

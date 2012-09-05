@@ -14,6 +14,7 @@ class NodeValidator extends atoum\test
             ->if($schema_validator = new SchemaValidator())
             ->and($object = new \mock\RomaricDrigon\MetaYaml\NodeValidator\NodeValidator($schema_validator))
             ->then
-                ->object($object)->isInstanceOf('RomaricDrigon\\MetaYaml\\NodeValidator\\NodeValidator');
+                ->object($object)->isInstanceOf('RomaricDrigon\\MetaYaml\\NodeValidator\\NodeValidator')
+        ;
     }
 }

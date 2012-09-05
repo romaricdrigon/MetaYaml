@@ -119,7 +119,7 @@ Those types are available:
 * `enum`: enumeration ; list accepted values in `_values` node
 * `array`: array ; define children in a _children node ; array children must have named keys ; any extra key will provoke an error
 * `prototype`: define a repetition of items whose name/index is not important. You must give children's type in `_prototype` node.
-* `choice`: child node can be any of the nodes provided in `_choices`. Keys in `_choices` array are not important (as long as they are unique). In `_choices` it's best to put array options in last.
+* `choice`: child node can be any of the nodes provided in `_choices`. Keys in `_choices` array are not important (as long as they are unique). In each choice, it's best to put the discriminating field in first.
 * `partial`: "shortcut" to a block described in `partials` root node. Provide partial name in `_partial`
 
 You can specify additional attributes:
