@@ -36,8 +36,6 @@ class XsdGenerator
 
         $writer->endDocument();
 
-        print($writer->outputMemory(false));
-
         return $writer->outputMemory();
     }
 

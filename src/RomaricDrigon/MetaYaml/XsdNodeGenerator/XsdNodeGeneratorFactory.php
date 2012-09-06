@@ -16,13 +16,13 @@ class XsdNodeGeneratorFactory
                 return new XsdTextNodeGenerator($generator);
             case 'number':
                 return new XsdNumberNodeGenerator($generator);
-            /*
-            case 'pattern':
-                return new PatternNodeValidator($validator);
             case 'boolean':
-                return new BooleanNodeValidator($validator);
+                return new XsdBooleanNodeGenerator($generator);
             case 'enum':
-                return new EnumNodeValidator($validator);
+                return new XsdEnumNodeGenerator($generator);
+            case 'pattern':
+                return new XsdPatternNodeGenerator($generator);
+            /*
             case 'prototype':
                 return new PrototypeNodeValidator($validator);
             case 'choice':

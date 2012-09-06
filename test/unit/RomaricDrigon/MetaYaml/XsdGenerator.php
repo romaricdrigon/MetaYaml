@@ -35,9 +35,13 @@ class XsdGenerator extends atoum\test
                             'd1' => array('_type' => 'text')
                     )),
                     'e' => array('_type' => 'number'),
-                    'f' => array('_type' => 'number', '_strict' => true)
+                    'f' => array('_type' => 'number', '_not_empty' => true),
+                    'g' => array('_type' => 'boolean'),
+                    'h' => array('_type' => 'enum', '_values' => array('one', '2', 3)),
+                    'i' => array('_type' => 'pattern', '_pattern' => '/test/')
             ))))
             ->then
+                ->integer(print($object->build($config)))->isEqualTo(1)
                 ->string($object->build($config))
                     ->isEqualTo(<<<EOT
 <?xml version="1.0" encoding="UTF-8"?>
@@ -66,7 +70,30 @@ class XsdGenerator extends atoum\test
         </xsd:complexType>
     </xsd:element>
     <xsd:element name="e" type="xsd:decimal"/>
-    <xsd:element name="f" type="xsd:decimal"/>
+    <xsd:element name="f">
+        <xsd:simpleType>
+            <xsd:restriction base="xsd:decimal">
+                <xsd:pattern value="^[^0]*$"/>
+            </xsd:restriction>
+        </xsd:simpleType>
+    </xsd:element>
+    <xsd:element name="g" type="xsd:boolean"/>
+    <xsd:element name="h">
+        <xsd:simpleType>
+            <xsd:restriction base="xsd:string">
+                <xsd:enumeration value="one"/>
+                <xsd:enumeration value="2"/>
+                <xsd:enumeration value="3"/>
+            </xsd:restriction>
+        </xsd:simpleType>
+    </xsd:element>
+    <xsd:element name="i">
+        <xsd:simpleType>
+            <xsd:restriction base="xsd:string">
+                <xsd:pattern value="/test/"/>
+            </xsd:restriction>
+        </xsd:simpleType>
+    </xsd:element>
 </xsd:schema>
 
 EOT

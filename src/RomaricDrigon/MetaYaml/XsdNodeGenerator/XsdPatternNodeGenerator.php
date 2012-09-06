@@ -4,7 +4,7 @@ namespace RomaricDrigon\MetaYaml\XsdNodeGenerator;
 
 use RomaricDrigon\MetaYaml\Exception\NodeValidatorException;
 
-class XsdNumberNodeGenerator extends XsdNodeGenerator
+class XsdPatternNodeGenerator extends XsdNodeGenerator
 {
     public function build($name, $node, \XMLWriter &$writer, $under_root)
     {
@@ -12,30 +12,17 @@ class XsdNumberNodeGenerator extends XsdNodeGenerator
         $writer->startElementNs('xsd', 'element', null);
         $writer->writeAttribute('name', $name);
         $this->addRequired($node, $writer, $under_root);
-        // there are not way to represent a strict string
 
-        if ($this->addNotEmpty($node, $writer) === false) {
-            $writer->writeAttribute('type', 'xsd:decimal');
-        }
-
-        $writer->endElement();
-    }
-
-    public function addNotEmpty($node, \XMLWriter &$writer)
-    {
-        if (isset($node[$this->xsd_generator->getFullName('not_empty')]) && $node[$this->xsd_generator->getFullName('not_empty')]) {
+        // simpleType with restrictions
             $writer->startElementNs('xsd', 'simpleType', null);
                 $writer->startElementNs('xsd', 'restriction', null);
-                $writer->writeAttribute('base', 'xsd:decimal');
+                $writer->writeAttribute('base', 'xsd:string');
                     $writer->startElementNs('xsd', 'pattern', null);
-                    $writer->writeAttribute('value', '^[^0]*$');
+                    $writer->writeAttribute('value', $node[$this->xsd_generator->getFullName('pattern')]);
                     $writer->endElement();
                 $writer->endElement();
             $writer->endElement();
 
-            return true;
-        }
-
-        return false;
+        $writer->endElement();
     }
 }

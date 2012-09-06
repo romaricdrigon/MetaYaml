@@ -14,7 +14,7 @@ class XsdTextNodeGenerator extends XsdNodeGenerator
         $this->addRequired($node, $writer, $under_root);
         // there are not way to represent a strict string
 
-        if ($this->addNotEmpty($node, $writer) == false) {
+        if ($this->addNotEmpty($node, $writer) === false) {
             $writer->writeAttribute('type', 'xsd:normalizedString');
         }
 
@@ -32,6 +32,10 @@ class XsdTextNodeGenerator extends XsdNodeGenerator
                     $writer->endElement();
                 $writer->endElement();
             $writer->endElement();
+
+            return true;
         }
+
+        return false;
     }
 }
