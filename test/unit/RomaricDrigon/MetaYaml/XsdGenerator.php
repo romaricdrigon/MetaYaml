@@ -40,7 +40,8 @@ class XsdGenerator extends atoum\test
                         'g' => array('_type' => 'boolean'),
                         'h' => array('_type' => 'enum', '_values' => array('one', '2', 3)),
                         'i' => array('_type' => 'pattern', '_pattern' => '/test/'),
-                        'j' => array('_type' => 'partial', '_partial' => 'p_node')
+                        'j' => array('_type' => 'partial', '_partial' => 'p_node'),
+                        'k' => array('_type' => 'prototype', '_prototype' => array('_type' => 'text'))
                 )),
                 'partials' => array(
                     'p_node' => array('_type' => 'text', '_required' => true)
@@ -71,7 +72,7 @@ class XsdGenerator extends atoum\test
     <xsd:element name="d">
         <xsd:complexType>
             <xsd:sequence>
-                <xsd:any minOccurs="1" maxOccurs="unbounded"/>
+                <xsd:any processContents="skip" minOccurs="1" maxOccurs="unbounded"/>
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
@@ -101,6 +102,13 @@ class XsdGenerator extends atoum\test
         </xsd:simpleType>
     </xsd:element>
     <xsd:element name="p_node" type="xsd:normalizedString"/>
+    <xsd:element name="k">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:any minOccurs="0" maxOccurs="200"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
 </xsd:schema>
 
 EOT

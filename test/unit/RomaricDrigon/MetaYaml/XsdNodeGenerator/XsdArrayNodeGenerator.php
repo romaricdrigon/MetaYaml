@@ -37,7 +37,7 @@ class XsdArrayNodeGenerator extends atoum\test
                 'a' => array('_type' => 'text')
             ), '_ignore_extra_keys' => true), $writer, false))->isNull()
             ->string($writer->outputMemory())
-            ->isEqualTo('<xsd:element name="test" minOccurs="0"><xsd:complexType><xsd:sequence><xsd:any minOccurs="0"'.
+            ->isEqualTo('<xsd:element name="test" minOccurs="0"><xsd:complexType><xsd:sequence><xsd:any processContents="skip" minOccurs="0"'.
                         ' maxOccurs="unbounded"/></xsd:sequence></xsd:complexType></xsd:element>');
         ;
     }

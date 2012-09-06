@@ -24,9 +24,10 @@ class XsdNodeGeneratorFactory
                 return new XsdPatternNodeGenerator($generator);
             case 'partial':
                 return new XsdPartialNodeGenerator($generator);
-            /*
             case 'prototype':
-                return new PrototypeNodeValidator($validator);
+                return new XsdPrototypeNodeGenerator($generator);
+            /*
+
             case 'choice':
                 return new ChoiceNodeValidator($validator);*/
             default:

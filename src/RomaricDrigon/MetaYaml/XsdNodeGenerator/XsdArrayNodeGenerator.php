@@ -38,6 +38,7 @@ class XsdArrayNodeGenerator extends XsdNodeGenerator
 
             $writer->startElementNs('xsd', 'sequence', null);
                 $writer->startElementNs('xsd', 'any', null);
+                $writer->writeAttribute('processContents', 'skip');
                 $writer->writeAttribute('minOccurs', $min);
                 $writer->writeAttribute('maxOccurs', 'unbounded');
                 $writer->endElement();

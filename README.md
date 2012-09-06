@@ -281,12 +281,13 @@ $my_xsd_string = $generator->build($schema, true);
 Note this feature is still experimental.
 A few limitations, some relative to XML Schema, apply:
 * `root` node must be an `array`
-* only `text`, `number`, `boolean`, `enum`, `pattern`, `array` and `partial` nodes are supported
+* an element can't have a name beginning by a number
 * all first-level nodes will be mandatory (but they maybe empty)
-* `strict` mode does not exists
-* an element can't have a name begining by a number
-* `ignore_extra_keys` attribute will cause all children nodes not to be validated
 * `pattern` may have a slightly different behavior due to implementations differences
+* `prototype` children nodes type will not be validated
+* `choice` has a lax behavior
+* `strict` mode does not exists
+* `ignore_extra_keys` attribute will cause all children nodes not to be validated
 
 ## Test
 
