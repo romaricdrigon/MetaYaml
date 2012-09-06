@@ -110,6 +110,9 @@
                 "#required": {
                     "schema:type": "boolean"
                 },
+                "#not_empty": {
+                    "schema:type": "boolean"
+                },
                 "#strict": {
                     "schema:type": "boolean"
                 }
