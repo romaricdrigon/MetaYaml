@@ -282,10 +282,10 @@ Note this feature is still experimental.
 A few limitations, some relative to XML Schema, apply:
 * `root` node must be an `array`
 * an element can't have a name beginning by a number
-* all first-level nodes will be mandatory (but they maybe empty)
+* all first-level nodes will be mandatory (but they may be empty)
+* `choice` node are not supported
 * `pattern` may have a slightly different behavior due to implementations differences
 * `prototype` children nodes type will not be validated
-* `choice` has a lax behavior
 * `strict` mode does not exists
 * `ignore_extra_keys` attribute will cause all children nodes not to be validated
 

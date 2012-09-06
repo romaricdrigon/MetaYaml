@@ -31,6 +31,9 @@ class XsdNodeGeneratorFactory extends atoum\test
                 ->object($object->getGenerator('test', 'prototype', $xsd_generator))
                     ->isInstanceOf('RomaricDrigon\\MetaYaml\\XsdNodeGenerator\\XsdPrototypeNodeGenerator')
                 ->exception(function() use ($object, $xsd_generator) {
+                    $object->getGenerator('test', 'choice', $xsd_generator);
+                })->hasMessage('Choice nodes are not supported')
+                ->exception(function() use ($object, $xsd_generator) {
                     $object->getGenerator('test', 'random_stuff', $xsd_generator);
                 })->hasMessage('Unknown generator type : random_stuff')
         ;

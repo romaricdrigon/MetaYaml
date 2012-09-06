@@ -48,7 +48,7 @@ class XsdGenerator extends atoum\test
                 )
             ))
             ->then
-                ->integer(print($object->build($config)))->isEqualTo(1)
+                //->integer(print($object->build($config)))->isEqualTo(1)
                 ->string($object->build($config))
                     ->isEqualTo(<<<EOT
 <?xml version="1.0" encoding="UTF-8"?>
@@ -130,6 +130,17 @@ EOT
             ->then
                 ->exception(function() use ($object, $config) { $object->build($config); })
                     ->hasMessage("You're using a partial but partial 'p_node' is not defined in your schema");
+        ;
+    }
+
+    public function testWrongRootType()
+    {
+        $this
+            ->if($object = new testedClass())
+            ->and($config = array('root' => array('_type' => 'text')))
+            ->then
+                ->exception(function() use ($object, $config) { $object->build($config); })
+                    ->hasMessage("Only array root nodes are supported");
         ;
     }
 }

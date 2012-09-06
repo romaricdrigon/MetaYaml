@@ -16,6 +16,7 @@ class XsdGenerator
     }
 
     // main function
+
     public function build($schema_config, $indent = true)
     {
         $this->schema_config = $schema_config;
@@ -30,10 +31,8 @@ class XsdGenerator
         }
 
         $writer->startDocument('1.0', 'UTF-8');
-
             // build writer - use a reference, we don't want to recopy it each time
             $this->buildRootNode($schema_config['root'][$this->getFullName('type')], $schema_config['root'], $writer);
-
         $writer->endDocument();
 
         return $writer->outputMemory();
@@ -47,9 +46,12 @@ class XsdGenerator
     }
 
     // build nodes
+
     public function buildRootNode($type, $node, \XMLWriter &$writer)
     {
-        if ($type !== 'array') return; // TODO : for the moment we support only array root nodes
+        if ($type !== 'array') {
+            throw new \Exception('Only array root nodes are supported');
+        }
 
         $writer->startElementNs('xsd', 'schema', 'http://www.w3.org/2001/XMLSchema');
 
@@ -59,6 +61,7 @@ class XsdGenerator
 
         $writer->endElement();
     }
+
     public function buildNode($name, $type, $node, \XMLWriter &$writer, $under_root = false)
     {
         $generator = $this->factory->getGenerator($name, $type, $this);

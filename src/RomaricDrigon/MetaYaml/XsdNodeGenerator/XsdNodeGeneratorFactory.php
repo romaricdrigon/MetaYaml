@@ -26,10 +26,8 @@ class XsdNodeGeneratorFactory
                 return new XsdPartialNodeGenerator($generator);
             case 'prototype':
                 return new XsdPrototypeNodeGenerator($generator);
-            /*
-
             case 'choice':
-                return new ChoiceNodeValidator($validator);*/
+                throw new NodeValidatorException($name, 'Choice nodes are not supported');
             default:
                 throw new NodeValidatorException($name, 'Unknown generator type : '.$type);
         }
