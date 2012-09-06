@@ -1,9 +1,21 @@
 # MetaYaml
 
 A `[put your file type here]` schema validator using `[put another file type here]` files.  
-At the moment, file type can be Json, Yaml, or XML. It can also generate an XSD file (experimental).
+At the moment, file type can be Json, Yaml, or [XML](#notes-on-xml-support). It can also generate an XSD file (experimental).
 
 _The name comes from the fact that it was initially made to implement a pseudo-schema for Yaml files._
+
+> 1. [Installation](#installation)
+2. [Basic usage](#basic-usage)
+3. [How to write a schema](#how-to-write-a-schema)
+ * [Introduction](#introduction)
+ * [Schema structure](#schema-structure)
+ * [Schema nodes](#schema-nodes)
+ * [More information](#more-information)
+4. [Notes on XML support](#notes-on-xml-support)
+5. [Test](#test)
+6. [Extending](#extending)
+7. [Thanks](#thanks)
 
 ## Installation
 
