@@ -215,8 +215,8 @@ This is not possible in an array; the only way is to use a child.
 
 Thus, the following conventions are enforced by the XML loader:
 
-* elements AND attributes are stored as child, using respectively element name/content, attribute name/value as key and value
-* if a node has an attribute and a child node with the same node, the attribute will be overwritten
+* elements AND attributes are stored as child, using element name and content, or attribute name and value, as respectively key and value
+* if a node has an attribute and a child node with the same name, the attribute will be overwritten
 * if a node has both attribute(s) and a text content, text content will be stored under key `_value`
 * multiple child node with the same name will be overwritten, only the last will be retained; except if they have a `_key` attribute, which will be used thus
 * namespaces are not supported
@@ -281,11 +281,12 @@ $my_xsd_string = $generator->build($schema, true);
 Note this feature is still experimental.
 A few limitations, some relative to XML Schema, apply:
 * `root` node must be an `array`
-* only `text`, `number`, `boolean`, `enum` and `array` nodes are supported
-* all first-level nodes will be mandatory (even if empty)
+* only `text`, `number`, `boolean`, `enum`, `pattern`, `array` and `partial` nodes are supported
+* all first-level nodes will be mandatory (but they maybe empty)
 * `strict` mode does not exists
 * an element can't have a name begining by a number
 * `ignore_extra_keys` attribute will cause all children nodes not to be validated
+* `pattern` may have a slightly different behavior due to implementations differences
 
 ## Test
 

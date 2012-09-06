@@ -66,16 +66,17 @@ class XsdGenerator
         $generator->build($name, $node, $writer, $under_root);
     }
 
-    /*public function buildPartial($name, $data)
+    public function buildPartial($name, \XMLWriter &$writer, $under_root = false)
     {
         if (! isset($this->schema_config['partials']) || ! isset($this->schema_config['partials'][$name])) {
             throw new \Exception("You're using a partial but partial '$name' is not defined in your schema");
         }
 
-        return $this->validateNode($name,
+        $this->buildNode($name,
             $this->schema_config['partials'][$name][$this->getFullName('type')],
             $this->schema_config['partials'][$name],
-            $data
+            $writer,
+            $under_root
         );
-    }*/
+    }
 }

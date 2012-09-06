@@ -22,13 +22,13 @@ class XsdNodeGeneratorFactory
                 return new XsdEnumNodeGenerator($generator);
             case 'pattern':
                 return new XsdPatternNodeGenerator($generator);
+            case 'partial':
+                return new XsdPartialNodeGenerator($generator);
             /*
             case 'prototype':
                 return new PrototypeNodeValidator($validator);
             case 'choice':
-                return new ChoiceNodeValidator($validator);
-            case 'partial':
-                return new PartialNodeValidator($validator);*/
+                return new ChoiceNodeValidator($validator);*/
             default:
                 throw new NodeValidatorException($name, 'Unknown generator type : '.$type);
         }

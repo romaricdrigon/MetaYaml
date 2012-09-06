@@ -14,32 +14,38 @@ class XsdGenerator extends atoum\test
     {
         $this
             ->if($object = new testedClass())
-            ->and($config = array('root' => array(
-                '_type' => 'array',
-                '_required'=> true,
-                '_children' => array(
-                    'a' => array('_type' => 'text', '_strict' => true),
-                    'b' => array(
-                        '_type' => 'array',
-                        '_children' => array(
-                            'b0' => array('_type' => 'text'),
-                            'b1' => array('_type' => 'text')
-                    )),
-                    'c' => array('_type' => 'text', '_required' => true, '_not_empty' => true),
-                    'd' => array(
-                        '_type' => 'array',
-                        '_ignore_extra_keys' => true,
-                        '_not_empty' => true,
-                        '_children' => array(
-                            'd0' => array('_type' => 'text'),
-                            'd1' => array('_type' => 'text')
-                    )),
-                    'e' => array('_type' => 'number'),
-                    'f' => array('_type' => 'number', '_not_empty' => true),
-                    'g' => array('_type' => 'boolean'),
-                    'h' => array('_type' => 'enum', '_values' => array('one', '2', 3)),
-                    'i' => array('_type' => 'pattern', '_pattern' => '/test/')
-            ))))
+            ->and($config = array(
+                'root' => array(
+                    '_type' => 'array',
+                    '_required'=> true,
+                    '_children' => array(
+                        'a' => array('_type' => 'text', '_strict' => true),
+                        'b' => array(
+                            '_type' => 'array',
+                            '_children' => array(
+                                'b0' => array('_type' => 'text'),
+                                'b1' => array('_type' => 'text')
+                        )),
+                        'c' => array('_type' => 'text', '_required' => true, '_not_empty' => true),
+                        'd' => array(
+                            '_type' => 'array',
+                            '_ignore_extra_keys' => true,
+                            '_not_empty' => true,
+                            '_children' => array(
+                                'd0' => array('_type' => 'text'),
+                                'd1' => array('_type' => 'text')
+                        )),
+                        'e' => array('_type' => 'number'),
+                        'f' => array('_type' => 'number', '_not_empty' => true),
+                        'g' => array('_type' => 'boolean'),
+                        'h' => array('_type' => 'enum', '_values' => array('one', '2', 3)),
+                        'i' => array('_type' => 'pattern', '_pattern' => '/test/'),
+                        'j' => array('_type' => 'partial', '_partial' => 'p_node')
+                )),
+                'partials' => array(
+                    'p_node' => array('_type' => 'text', '_required' => true)
+                )
+            ))
             ->then
                 ->integer(print($object->build($config)))->isEqualTo(1)
                 ->string($object->build($config))
@@ -94,10 +100,28 @@ class XsdGenerator extends atoum\test
             </xsd:restriction>
         </xsd:simpleType>
     </xsd:element>
+    <xsd:element name="p_node" type="xsd:normalizedString"/>
 </xsd:schema>
 
 EOT
                     ) // always add a last linebreak
+        ;
+    }
+
+    public function testWrongPartial()
+    {
+        $this
+            ->if($object = new testedClass())
+            ->and($config = array(
+                'root' => array(
+                    '_type' => 'array',
+                    '_required'=> true,
+                    '_children' => array(
+                        'a' => array('_type' => 'partial', '_partial' => 'p_node')
+            ))))
+            ->then
+                ->exception(function() use ($object, $config) { $object->build($config); })
+                    ->hasMessage("You're using a partial but partial 'p_node' is not defined in your schema");
         ;
     }
 }
