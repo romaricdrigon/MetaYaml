@@ -6,16 +6,17 @@ At the moment, file type can be Json, Yaml, or [XML](#notes-on-xml-support). It 
 _The name comes from the fact that it was initially made to implement a pseudo-schema for Yaml files._
 
 > 1. [Installation](#installation)
-2. [Basic usage](#basic-usage)
-3. [How to write a schema](#how-to-write-a-schema)
+1. [Basic usage](#basic-usage)
+1. [How to write a schema](#how-to-write-a-schema)
  * [Introduction](#introduction)
  * [Schema structure](#schema-structure)
  * [Schema nodes](#schema-nodes)
  * [More information](#more-information)
-4. [Notes on XML support](#notes-on-xml-support)
-5. [Test](#test)
-6. [Extending](#extending)
-7. [Thanks](#thanks)
+1. [Notes on XML support](#notes-on-xml-support)
+1. [XSD generator](#xsd-generator)
+1. [Test](#test)
+1. [Extending](#extending)
+1. [Thanks](#thanks)
 
 ## Installation
 
@@ -52,6 +53,8 @@ You can use any of the provided loaders to obtain these arrays (yep, you can val
 
 Some loader examples:
 ```php
+use RomaricDrigon\MetaYaml\MetaYaml;
+
 // create one loader object
 $loader = new JsonLoader(); // Json (will use php json_decode)
 $loader = new YamlLoader(); // Yaml using Symfony Yaml component
@@ -257,6 +260,33 @@ array('fleurs' =>
 )
 ```
 
+## XSD generator
+
+MetaYaml can try to generate a [XML Schema Definition](http://en.wikipedia.org/wiki/XML_Schema) from a MetaYaml schema.
+You may want to use this file to pre-validate XML input, or to use in another context (client-side...).
+The same conventions (cf above) will be used.
+
+Usage example :
+```php
+use RomaricDrigon\MetaYaml\MetaYaml\XsdGenerator;
+
+// create a XsdGenerator object (requires Php XMLWriter from libxml, enabled by default)
+$generator = new XsdGenerator();
+
+// $schema is the source schema, php array
+// second parameter to soft-indent generated XML (default true)
+$my_xsd_string = $generator->build($schema, true);
+```
+
+Note this feature is still experimental.
+A few limitations, some relative to XML Schema, apply:
+* `root` node must be an `array`
+* only `text`, `number`, `boolean`, `enum` and `array` nodes are supported
+* all first-level nodes will be mandatory (even if empty)
+* `strict` mode does not exists
+* an element can't have a name begining by a number
+* `ignore_extra_keys` attribute will cause all children nodes not to be validated
+
 ## Test
 
 The project is fully tested using [atoum](https://github.com/mageekguy/atoum).
@@ -270,3 +300,5 @@ Take a look at any class in Loader/ folder, it's pretty easy: you have to implem
 ## Thanks
 
 Thanks to [Riad Benguella](https://github.com/youknowriad) and [Julien Bianchi](https://github.com/jubianchi) for their help & advices.
+
+[Top](#metayaml)
