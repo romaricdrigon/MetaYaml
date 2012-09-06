@@ -11,14 +11,27 @@ class XsdTextNodeGenerator extends XsdNodeGenerator
         // always inside an xsd:element
         $writer->startElementNs('xsd', 'element', null);
         $writer->writeAttribute('name', $name);
-        $writer->writeAttribute('type', 'xsd:string');
+        $this->addRequired($node, $writer, $under_root);
+        // there are not way to represent a strict string
 
-        if (! $under_root && ! (isset($node[$this->xsd_generator->getFullName('required')]) && $node[$this->xsd_generator->getFullName('required')])) {
-            $writer->writeAttribute('minOccurs', '0');
+        if ($this->addNotEmpty($node, $writer) == false) {
+            $writer->writeAttribute('type', 'xsd:normalizedString');
         }
 
-        // TODO : strict
-        // TODO : not_empty
         $writer->endElement();
+    }
+
+    public function addNotEmpty($node, \XMLWriter &$writer)
+    {
+        if (isset($node[$this->xsd_generator->getFullName('not_empty')]) && $node[$this->xsd_generator->getFullName('not_empty')]) {
+            $writer->startElementNs('xsd', 'simpleType', null);
+                $writer->startElementNs('xsd', 'restriction', null);
+                $writer->writeAttribute('base', 'xsd:normalizedString');
+                    $writer->startElementNs('xsd', 'minLength', null);
+                    $writer->writeAttribute('value', '200');
+                    $writer->endElement();
+                $writer->endElement();
+            $writer->endElement();
+        }
     }
 }
