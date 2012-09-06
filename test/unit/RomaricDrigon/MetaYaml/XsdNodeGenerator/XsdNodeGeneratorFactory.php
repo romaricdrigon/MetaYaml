@@ -15,9 +15,11 @@ class XsdNodeGeneratorFactory extends atoum\test
             ->and($object = new testedClass())
             ->then
                 ->object($object->getGenerator('test', 'text', $xsd_generator))
-                ->isInstanceOf('RomaricDrigon\\MetaYaml\\XsdNodeGenerator\\XsdTextNodeGenerator')
+                    ->isInstanceOf('RomaricDrigon\\MetaYaml\\XsdNodeGenerator\\XsdTextNodeGenerator')
                 ->object($object->getGenerator('test', 'array', $xsd_generator))
-                ->isInstanceOf('RomaricDrigon\\MetaYaml\\XsdNodeGenerator\\XsdArrayNodeGenerator')
+                    ->isInstanceOf('RomaricDrigon\\MetaYaml\\XsdNodeGenerator\\XsdArrayNodeGenerator')
+                ->object($object->getGenerator('test', 'number', $xsd_generator))
+                    ->isInstanceOf('RomaricDrigon\\MetaYaml\\XsdNodeGenerator\\XsdNumberNodeGenerator')
                 ->exception(function() use ($object, $xsd_generator) {
                     $object->getGenerator('test', 'random_stuff', $xsd_generator);
                 })->hasMessage('Unknown generator type : random_stuff')

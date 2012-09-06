@@ -33,7 +33,9 @@ class XsdGenerator extends atoum\test
                         '_children' => array(
                             'd0' => array('_type' => 'text'),
                             'd1' => array('_type' => 'text')
-                        )),
+                    )),
+                    'e' => array('_type' => 'number'),
+                    'f' => array('_type' => 'number', '_strict' => true)
             ))))
             ->then
                 ->string($object->build($config))
@@ -63,6 +65,8 @@ class XsdGenerator extends atoum\test
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
+    <xsd:element name="e" type="xsd:decimal"/>
+    <xsd:element name="f" type="xsd:decimal"/>
 </xsd:schema>
 
 EOT

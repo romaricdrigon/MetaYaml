@@ -14,8 +14,9 @@ class XsdNodeGeneratorFactory
                 return new XsdArrayNodeGenerator($generator);
             case 'text':
                 return new XsdTextNodeGenerator($generator);
-            /*case 'number':
-                return new NumberNodeValidator($validator);
+            case 'number':
+                return new XsdNumberNodeGenerator($generator);
+            /*
             case 'pattern':
                 return new PatternNodeValidator($validator);
             case 'boolean':
