@@ -1,7 +1,7 @@
 # MetaYaml
 
 A `[put your file type here]` schema validator using `[put another file type here]` files.  
-At the moment, file type can be Json, Yaml, or XML.
+At the moment, file type can be Json, Yaml, or XML. It can also generate an XSD file (experimental).
 
 _The name comes from the fact that it was initially made to implement a pseudo-schema for Yaml files._
 
@@ -192,6 +192,58 @@ For more examples, look inside test/data folder.
 In each folder, you have an .yml file and its schema. There's also a XML example.
 
 If you're curious about an advanced usage, you can check data/MetaSchema.json: schema files are validated using this schema.
+
+## Notes on XML support
+
+In XML, you can store a value in a node within a child element, or using an attribute.
+This is not possible in an array; the only way is to use a child.
+
+Thus, the following conventions are enforced by the XML loader:
+
+* elements AND attributes are stored as child, using respectively element name/content, attribute name/value as key and value
+* if a node has an attribute and a child node with the same node, the attribute will be overwritten
+* if a node has both attribute(s) and a text content, text content will be stored under key `_value`
+* multiple child node with the same name will be overwritten, only the last will be retained; except if they have a `_key` attribute, which will be used thus
+* namespaces are not supported
+* empty nodes are ditched
+
+Let's take an example:
+```xml
+<fleurs>
+    <roses couleur="rose">
+        <opera>une rose</opera>
+        <sauvage>
+            <des_bois>une autre rose</des_bois>
+            <des_sous_bois sauvage="oui">encore</des_sous_bois>
+        </sauvage>
+    </roses>
+    <tulipe>je vais disparaitre !</tulipe>
+    <tulipe>deuxieme tulipe</tulipe>
+    <fleur couleur="violette" sauvage="false" _key="violette">une violette</fleur>
+</fleurs>
+```
+
+will give us this array:
+```php
+array('fleurs' =>
+    'roses' => array(
+        'couleur' => 'rose',
+        'sauvage' => array(
+            'des_bois' => 'une autre rose',
+            'des_sous_bois' => array(
+                'sauvage' => 'oui',
+                '_value' => 'encore'
+            )
+        )
+    ),
+    'tulipe' => 'deuxieme tulipe',
+    'violette' => array(
+        'couleur' => 'violette',
+        'sauvage' => 'false',
+        '_value' => 'une violette'
+    )
+)
+```
 
 ## Test
 
