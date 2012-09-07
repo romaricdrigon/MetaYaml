@@ -1,7 +1,7 @@
 # MetaYaml
 
 A `[put your file type here]` schema validator using `[put another file type here]` files.  
-At the moment, file type can be Json, Yaml, or [XML](#notes-on-xml-support). It can generate a documentation about the schema, or an XSD file (experimental).
+At the moment, file type can be Json, Yaml, or [XML](#notes-on-xml-support). It can generate a documentation about the schema, or a XSD file (experimental).
 
 _The name comes from the fact that it was initially made to implement a pseudo-schema for Yaml files._
 
@@ -220,7 +220,7 @@ You can retrieve the documentation about a node (its type, description, other at
 $schema = new MetaYaml($schema, true);
 
 // get documentation about root node
-$schema->getDocumentationForNode($data);
+$schema->getDocumentationForNode();
 
 // get documentation about a child node 'test' in an array 'a_test' under root
 $schema->getDocumentationForNode(array('a_test', 'test'));
