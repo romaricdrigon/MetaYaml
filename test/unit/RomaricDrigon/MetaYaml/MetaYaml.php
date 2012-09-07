@@ -77,23 +77,27 @@ class MetaYaml extends atoum\test
                 ->object($object)->isInstanceOf('RomaricDrigon\\MetaYaml\\MetaYaml')
                 ->array($object->getDocumentationForNode())
                     ->isEqualTo(array(
+                        'name' => 'root',
                         'documentation' => $schema['root'],
                         'prefix' => '_',
                         'partials' => $schema['partials']))
                 //->boolean(print_r($object->getDocumentationForNode(array('paragraph'))))
                 ->array($object->getDocumentationForNode(array('texte')))
                     ->isEqualTo(array(
+                        'name' => 'texte',
                         'documentation' => array('_type' => 'text'),
                         'prefix' => '_',
                         'partials' => $schema['partials']))
                 ->array($object->getDocumentationForNode(array('paragraph')))
                     ->isEqualTo(array(
+                        'name' => 'paragraph',
                         'documentation' => array('_type' => 'array', '_children' => array(
                             'line_1' => array('_type' => 'text'), 'line_2' => array('_type' => 'text'))),
                         'prefix' => '_',
                         'partials' => $schema['partials']))
                 ->array($object->getDocumentationForNode(array('paragraph', 'line_1')))
                     ->isEqualTo(array(
+                        'name' => 'line_1',
                         'documentation' => array('_type' => 'text'),
                         'prefix' => '_',
                         'partials' => $schema['partials']))

@@ -67,6 +67,7 @@ class MetaYaml
         $documentation = $this->findNode($this->schema['root'], $keys);
 
         return array(
+            'name' => end($keys) ?: 'root',
             'documentation' => $documentation,
             'prefix' => $this->prefix,
             'partials' => isset($this->schema['partials']) ? $this->schema['partials'] : array()
