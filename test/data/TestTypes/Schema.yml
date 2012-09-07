@@ -44,6 +44,12 @@ root:
         regex:
             _type: pattern
             _pattern: /e/
+        # next is for some exceptions tests
+        # it's a not defined partial
+        # do not declare it in your schema!
+        wrong_partial:
+            _type: partial
+            _partial: unknown
 partials:
     block:
         _type: array

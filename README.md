@@ -1,7 +1,7 @@
 # MetaYaml
 
 A `[put your file type here]` schema validator using `[put another file type here]` files.  
-At the moment, file type can be Json, Yaml, or [XML](#notes-on-xml-support). It can also generate an XSD file (experimental).
+At the moment, file type can be Json, Yaml, or [XML](#notes-on-xml-support). It can generate a documentation about the schema, or an XSD file (experimental).
 
 _The name comes from the fact that it was initially made to implement a pseudo-schema for Yaml files._
 
@@ -12,6 +12,7 @@ _The name comes from the fact that it was initially made to implement a pseudo-s
  * [Schema structure](#schema-structure)
  * [Schema nodes](#schema-nodes)
  * [More information](#more-information)
+1. [Documentation generator](#documentation-generator)
 1. [Notes on XML support](#notes-on-xml-support)
 1. [XSD generator](#xsd-generator)
 1. [Test](#test)
@@ -144,6 +145,7 @@ You can specify additional attributes:
  * `_not_empty` for text, number and array nodes: they can't be empty (by default false). Respective empty values are `''`, `0` (as a string, an integer or a float), `array()`. To test for null values, use `_required` instead.
  * `_strict` with text, number, boolean and enum will enforce a strict type check (respectively, with a string, an integer or a float, a boolean, any of these values).
  Watch out when using these with a parser which may not be type-aware (such as the XML one; Yaml and Json should be ok)
+ * `_description`: full-text description, cf. [Documentation generator](#documentation-generator)
 * only for array nodes:
  * `_ignore_extra_keys`: the node can contain children whose keys are not listed in `_children`; they'll be ignored
 * only for prototype nodes:
@@ -206,7 +208,35 @@ partials:
 For more examples, look inside test/data folder.
 In each folder, you have an .yml file and its schema. There's also a XML example.
 
-If you're curious about an advanced usage, you can check data/MetaSchema.json: schema files are validated using this schema.
+If you're curious about an advanced usage, you can check `data/MetaSchema.json`: schema files are validated using this schema (an yep, the schema validates successfully itself!)
+
+## Documentation generator ##
+
+Each node can have a `_description` attribute, containing some human-readable text.
+You can retrieve the documentation about a node (its type, description, other attributes...) like this:
+```php
+// create object, load schema from an array
+// it's recommended to validate the schema before reading documentation
+$schema = new MetaYaml($schema, true);
+
+// get documentation about root node
+$schema->getDocumentationForNode($data);
+
+// get documentation about a child node 'test' in an array 'a_test' under root
+$schema->getDocumentationForNode(array('a_test', 'test'));
+```
+
+It returns an associative array formatted like this:
+```php
+array(
+    'documentation' => array(
+        '_type' => 'array',
+        '_children' => ... // and so on
+    ),
+    'prefix' => '_',
+    'partials' => // the list of available partials in the schema
+)
+```
 
 ## Notes on XML support
 
@@ -261,6 +291,8 @@ array('fleurs' =>
 ```
 
 ## XSD generator
+
+_**Please note this feature is still experimental**_
 
 MetaYaml can try to generate a [XML Schema Definition](http://en.wikipedia.org/wiki/XML_Schema) from a MetaYaml schema.
 You may want to use this file to pre-validate XML input, or to use in another context (client-side...).

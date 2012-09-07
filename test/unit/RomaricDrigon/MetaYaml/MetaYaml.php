@@ -62,4 +62,45 @@ class MetaYaml extends atoum\test
                     ->hasMessage("Unable to validate schema with error: The node 'root.root' is required")
         ;
     }
+
+    /*
+     * Tests of getDocumentation function
+     */
+
+    public function testDocumentationRoot()
+    {
+        $this
+            ->if($yaml_loader = new YamlLoader())
+            ->and($schema = $yaml_loader->loadFromFile('test/data/TestTypes/Schema.yml'))
+            ->and($object = new testedClass($schema, true))
+            ->then
+                ->object($object)->isInstanceOf('RomaricDrigon\\MetaYaml\\MetaYaml')
+                ->array($object->getDocumentationForNode())
+                    ->isEqualTo(array(
+                        'documentation' => $schema['root'],
+                        'prefix' => '_',
+                        'partials' => $schema['partials']))
+                //->boolean(print_r($object->getDocumentationForNode(array('paragraph'))))
+                ->array($object->getDocumentationForNode(array('texte')))
+                    ->isEqualTo(array(
+                        'documentation' => array('_type' => 'text'),
+                        'prefix' => '_',
+                        'partials' => $schema['partials']))
+                ->array($object->getDocumentationForNode(array('paragraph')))
+                    ->isEqualTo(array(
+                        'documentation' => array('_type' => 'array', '_children' => array(
+                            'line_1' => array('_type' => 'text'), 'line_2' => array('_type' => 'text'))),
+                        'prefix' => '_',
+                        'partials' => $schema['partials']))
+                ->array($object->getDocumentationForNode(array('paragraph', 'line_1')))
+                    ->isEqualTo(array(
+                        'documentation' => array('_type' => 'text'),
+                        'prefix' => '_',
+                        'partials' => $schema['partials']))
+                ->exception(function() use ($object) { $object->getDocumentationForNode(array('paragraph', 'unknown')); })
+                    ->hasMessage('Unable to find child unknown')
+                ->exception(function() use ($object) { $object->getDocumentationForNode(array('wrong_partial')); })
+                    ->hasMessage("You're using a partial but partial 'unknown' is not defined in your schema")
+        ;
+    }
 }

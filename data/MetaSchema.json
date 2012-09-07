@@ -71,6 +71,9 @@
                     "schema:required": true,
                     "schema:values": ["text"]
                 },
+                "#description": {
+                    "schema:type": "text"
+                },
                 "#required": {
                     "schema:type": "boolean"
                 },
@@ -90,6 +93,9 @@
                     "schema:required": true,
                     "schema:values": ["pattern"]
                 },
+                "#description": {
+                    "schema:type": "text"
+                },
                 "#required": {
                     "schema:type": "boolean"
                 },
@@ -106,6 +112,9 @@
                     "schema:type": "enum",
                     "schema:required": true,
                     "schema:values": ["number"]
+                },
+                "#description": {
+                    "schema:type": "text"
                 },
                 "#required": {
                     "schema:type": "boolean"
@@ -126,6 +135,9 @@
                     "schema:required": true,
                     "schema:values": ["boolean"]
                 },
+                "#description": {
+                    "schema:type": "text"
+                },
                 "#required": {
                     "schema:type": "boolean"
                 },
@@ -141,6 +153,9 @@
                     "schema:type": "enum",
                     "schema:required": true,
                     "schema:values": ["enum"]
+                },
+                "#description": {
+                    "schema:type": "text"
                 },
                 "#required": {
                     "schema:type": "boolean"
@@ -165,6 +180,9 @@
                     "schema:required": true,
                     "schema:values": ["prototype"]
                 },
+                "#description": {
+                    "schema:type": "text"
+                },
                 "#required": {
                     "schema:type": "boolean"
                 },
@@ -188,6 +206,9 @@
                     "schema:type": "enum",
                     "schema:required": true,
                     "schema:values": ["choice"]
+                },
+                "#description": {
+                    "schema:type": "text"
                 },
                 "#required": {
                     "schema:type": "boolean"
@@ -226,6 +247,9 @@
                     "schema:type": "enum",
                     "schema:required": true,
                     "schema:values": ["array"]
+                },
+                "#description": {
+                    "schema:type": "text"
                 },
                 "#required": {
                     "schema:type": "boolean"
