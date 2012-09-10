@@ -26,6 +26,13 @@ root:
                         - linux
                 2:
                     _type: number
+                3:
+                    _type: array
+                    _children:
+                        one_item:
+                            _type: number
+                        another_item:
+                            _type: text
         prototype_bool:
             _type: prototype
             _prototype:

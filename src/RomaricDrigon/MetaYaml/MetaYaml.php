@@ -90,19 +90,27 @@ class MetaYaml
             return $array;
         }
 
-        // if it's a prototype, we have to ignore one key
-        if (isset($array[$this->prefix.'type']) && $array[$this->prefix.'type'] === 'prototype') {
-            array_shift($keys);
-            return $this->findNode($array[$this->prefix.'prototype'], $keys);
-        }
-
-        // let's check the children of an array
-        if (isset($array[$this->prefix.'type']) && $array[$this->prefix.'type'] === 'array') {
-            foreach ($array[$this->prefix.'children'] as $name => $child) {
-                if ($name == $keys[0]) {
+        if (isset($array[$this->prefix.'type'])) {
+            switch ($array[$this->prefix.'type']) {
+                case 'prototype': //we have to ignore one key
                     array_shift($keys);
-                    return $this->findNode($child, $keys);
-                }
+                    return $this->findNode($array[$this->prefix.'prototype'], $keys);
+                case 'array': // let's check the children
+                    foreach ($array[$this->prefix.'children'] as $name => $child) {
+                        if ($name == $keys[0]) {
+                            array_shift($keys);
+                            return $this->findNode($child, $keys);
+                        }
+                    }
+                    break;
+                case 'choice': // choice, return an array of possibilities
+                    $choices = array();
+                    foreach ($array[$this->prefix.'choices'] as $name => $choice) {
+                        try {
+                            $choices[$name] = $this->findNode($choice, $keys);
+                        } catch (\Exception $e) {} // exception = invalid choice, so skip it
+                    }
+                    return $choices;
             }
         }
 
