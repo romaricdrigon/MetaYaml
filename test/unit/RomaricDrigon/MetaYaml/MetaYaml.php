@@ -78,27 +78,33 @@ class MetaYaml extends atoum\test
                 ->array($object->getDocumentationForNode())
                     ->isEqualTo(array(
                         'name' => 'root',
-                        'documentation' => $schema['root'],
+                        'node' => $schema['root'],
                         'prefix' => '_',
                         'partials' => $schema['partials']))
                 //->boolean(print_r($object->getDocumentationForNode(array('paragraph'))))
                 ->array($object->getDocumentationForNode(array('texte')))
                     ->isEqualTo(array(
                         'name' => 'texte',
-                        'documentation' => array('_type' => 'text'),
+                        'node' => array('_type' => 'text'),
                         'prefix' => '_',
                         'partials' => $schema['partials']))
                 ->array($object->getDocumentationForNode(array('paragraph')))
                     ->isEqualTo(array(
                         'name' => 'paragraph',
-                        'documentation' => array('_type' => 'array', '_children' => array(
+                        'node' => array('_type' => 'array', '_children' => array(
                             'line_1' => array('_type' => 'text'), 'line_2' => array('_type' => 'text'))),
                         'prefix' => '_',
                         'partials' => $schema['partials']))
                 ->array($object->getDocumentationForNode(array('paragraph', 'line_1')))
                     ->isEqualTo(array(
                         'name' => 'line_1',
-                        'documentation' => array('_type' => 'text'),
+                        'node' => array('_type' => 'text'),
+                        'prefix' => '_',
+                        'partials' => $schema['partials']))
+                ->array($object->getDocumentationForNode(array('prototype_bool', '1')))
+                    ->isEqualTo(array(
+                        'name' => '1',
+                        'node' => array('_type' => 'boolean'),
                         'prefix' => '_',
                         'partials' => $schema['partials']))
                 ->exception(function() use ($object) { $object->getDocumentationForNode(array('paragraph', 'unknown')); })

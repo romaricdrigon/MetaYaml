@@ -90,6 +90,12 @@ class MetaYaml
             return $array;
         }
 
+        // if it's a prototype, we have to ignore one key
+        if (isset($array[$this->prefix.'type']) && $array[$this->prefix.'type'] === 'prototype') {
+            array_shift($keys);
+            return $this->findNode($array[$this->prefix.'prototype'], $keys);
+        }
+
         // let's check the children of an array
         if (isset($array[$this->prefix.'type']) && $array[$this->prefix.'type'] === 'array') {
             foreach ($array[$this->prefix.'children'] as $name => $child) {
