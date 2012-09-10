@@ -123,7 +123,7 @@ class MetaYaml extends atoum\test
                 ->array($object->getDocumentationForNode(array('test_choice', 'one_item')))
                     ->isEqualTo(array(
                         'name' => 'one_item',
-                        'node' => array(3 => array('_type' => 'number')),
+                        'choices' => array(3 => array('_type' => 'number')),
                         'prefix' => '_',
                         'partials' => $schema['partials']))
                 ->exception(function() use ($object) { $object->getDocumentationForNode(array('paragraph', 'unknown')); })

@@ -64,16 +64,16 @@ class MetaYaml
     // get the documentation
     public function getDocumentationForNode(array $keys = array())
     {
-        $node = $this->findNode($this->schema['root'], $keys);
+        $node = $this->findNode($this->schema['root'], $keys, $is_choice);
 
         return array(
             'name' => end($keys) ?: 'root',
-            'node' => $node,
+            ($is_choice ? 'choices' : 'node') => $node,
             'prefix' => $this->prefix,
             'partials' => isset($this->schema['partials']) ? $this->schema['partials'] : array()
         );
     }
-    private function findNode(array $array, array $keys)
+    private function findNode(array $array, array $keys, &$is_choice)
     {
         // first, if it's a partial, let's naviguate
         if (isset($array[$this->prefix.'type']) && $array[$this->prefix.'type'] === 'partial') {
@@ -83,7 +83,7 @@ class MetaYaml
                 throw new \Exception("You're using a partial but partial '$p_name' is not defined in your schema");
             }
 
-            return $this->findNode($this->schema['partials'][$p_name], $keys);
+            return $this->findNode($this->schema['partials'][$p_name], $keys, $is_choice);
         }
 
         if ($keys === array()) {
@@ -94,12 +94,12 @@ class MetaYaml
             switch ($array[$this->prefix.'type']) {
                 case 'prototype': //we have to ignore one key
                     array_shift($keys);
-                    return $this->findNode($array[$this->prefix.'prototype'], $keys);
+                    return $this->findNode($array[$this->prefix.'prototype'], $keys, $is_choice);
                 case 'array': // let's check the children
                     foreach ($array[$this->prefix.'children'] as $name => $child) {
                         if ($name == $keys[0]) {
                             array_shift($keys);
-                            return $this->findNode($child, $keys);
+                            return $this->findNode($child, $keys, $is_choice);
                         }
                     }
                     break;
@@ -107,7 +107,8 @@ class MetaYaml
                     $choices = array();
                     foreach ($array[$this->prefix.'choices'] as $name => $choice) {
                         try {
-                            $choices[$name] = $this->findNode($choice, $keys);
+                            $is_choice = true; // $is_choice is a reference, modify it here
+                            $choices[$name] = $this->findNode($choice, $keys, $is_choice);
                         } catch (\Exception $e) {} // exception = invalid choice, so skip it
                     }
                     return $choices;

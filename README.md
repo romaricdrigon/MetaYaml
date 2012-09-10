@@ -239,6 +239,25 @@ array(
 )
 ```
 
+If the targeted node is inside a choice, the result will differ slightly:
+```php
+array(
+    'name' => 'test', // name of current node, from the choice key in the schema
+    // no node element, choices instead
+    'choices' => array(
+        0 => array(
+            '_type' => 'array' // and so on, for first choice
+        ),
+        1 => array(
+            '_type' => 'text' // and so on, for second choice
+        ),
+        // ...
+    ),
+    'prefix' => '_',
+    'partials' => // the list of available partials in the schema
+)
+```
+
 ## Notes on XML support
 
 In XML, you can store a value in a node within a child element, or using an attribute.
