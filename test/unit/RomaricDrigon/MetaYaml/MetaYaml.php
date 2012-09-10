@@ -75,38 +75,33 @@ class MetaYaml extends atoum\test
             ->and($object = new testedClass($schema, true))
             ->then
                 ->object($object)->isInstanceOf('RomaricDrigon\\MetaYaml\\MetaYaml')
-                ->array($object->getDocumentationForNode())
+                /*->array($object->getDocumentationForNode())
                     ->isEqualTo(array(
                         'name' => 'root',
                         'node' => $schema['root'],
-                        'prefix' => '_',
-                        'partials' => $schema['partials']))
-                //->boolean(print_r($object->getDocumentationForNode(array('test_choice'))))
+                        'prefix' => '_'))*/
+                //->boolean(print_r($object->getDocumentationForNode(array('test_choice_of_partial'))))
                 ->array($object->getDocumentationForNode(array('texte')))
                     ->isEqualTo(array(
                         'name' => 'texte',
                         'node' => array('_type' => 'text'),
-                        'prefix' => '_',
-                        'partials' => $schema['partials']))
+                        'prefix' => '_'))
                 ->array($object->getDocumentationForNode(array('paragraph')))
                     ->isEqualTo(array(
                         'name' => 'paragraph',
                         'node' => array('_type' => 'array', '_children' => array(
                             'line_1' => array('_type' => 'text'), 'line_2' => array('_type' => 'text'))),
-                        'prefix' => '_',
-                        'partials' => $schema['partials']))
+                        'prefix' => '_'))
                 ->array($object->getDocumentationForNode(array('paragraph', 'line_1')))
                     ->isEqualTo(array(
                         'name' => 'line_1',
                         'node' => array('_type' => 'text'),
-                        'prefix' => '_',
-                        'partials' => $schema['partials']))
+                        'prefix' => '_'))
                 ->array($object->getDocumentationForNode(array('prototype_bool', '1')))
                     ->isEqualTo(array(
                         'name' => '1',
                         'node' => array('_type' => 'boolean'),
-                        'prefix' => '_',
-                        'partials' => $schema['partials']))
+                        'prefix' => '_'))
                 ->array($object->getDocumentationForNode(array('test_choice')))
                     ->isEqualTo(array(
                         'name' => 'test_choice',
@@ -118,14 +113,38 @@ class MetaYaml extends atoum\test
                                 3 => array('_type' => 'array', '_children' => array(
                                     'one_item' => array('_type' => 'number'),
                                     'another_item' => array('_type' => 'text'))))),
-                        'prefix' => '_',
-                        'partials' => $schema['partials']))
+                        'prefix' => '_'))
                 ->array($object->getDocumentationForNode(array('test_choice', 'one_item')))
                     ->isEqualTo(array(
                         'name' => 'one_item',
                         'choices' => array(3 => array('_type' => 'number')),
-                        'prefix' => '_',
-                        'partials' => $schema['partials']))
+                        'prefix' => '_'))
+                ->array($object->getDocumentationForNode(array('test_choice_of_partial')))
+                    ->isEqualTo(array(
+                        'name' => 'test_choice_of_partial',
+                        'node' => array(
+                            '_type' => 'choice',
+                            '_choices' => array(
+                            1 => array('_type' => 'text'),
+                            2 => array('_type' => 'text'))),
+                        'prefix' => '_'))
+                ->array($object->getDocumentationForNode(array('test_array_of_partial')))
+                    ->isEqualTo(array(
+                        'name' => 'test_array_of_partial',
+                        'node' => array(
+                            '_type' => 'array',
+                            '_children' => array(
+                                1 => array('_type' => 'text'),
+                                2 => array('_type' => 'text'))),
+                        'prefix' => '_'))
+                ->array($object->getDocumentationForNode(array('test_prototype_partial')))
+                    ->isEqualTo(array(
+                        'name' => 'test_prototype_partial',
+                        'node' => array(
+                            '_type' => 'prototype',
+                            '_prototype' => array(
+                                '_type' => 'text')),
+                        'prefix' => '_'))
                 ->exception(function() use ($object) { $object->getDocumentationForNode(array('paragraph', 'unknown')); })
                     ->hasMessage('Unable to find child unknown')
                 ->exception(function() use ($object) { $object->getDocumentationForNode(array('wrong_partial')); })

@@ -69,8 +69,7 @@ class MetaYaml
         return array(
             'name' => end($keys) ?: 'root',
             ($is_choice ? 'choices' : 'node') => $node,
-            'prefix' => $this->prefix,
-            'partials' => isset($this->schema['partials']) ? $this->schema['partials'] : array()
+            'prefix' => $this->prefix
         );
     }
     private function findNode(array $array, array $keys, &$is_choice)
@@ -86,21 +85,23 @@ class MetaYaml
             return $this->findNode($this->schema['partials'][$p_name], $keys, $is_choice);
         }
 
+        // we're on target, return the result
         if ($keys === array()) {
-            return $array;
+            // on more thing: dig one more level of partial
+            return $this->unfoldPartials($array);
         }
 
+        // they're still some keys, dig deeper
         if (isset($array[$this->prefix.'type'])) {
             switch ($array[$this->prefix.'type']) {
                 case 'prototype': //we have to ignore one key
                     array_shift($keys);
                     return $this->findNode($array[$this->prefix.'prototype'], $keys, $is_choice);
                 case 'array': // let's check the children
-                    foreach ($array[$this->prefix.'children'] as $name => $child) {
-                        if ($name == $keys[0]) {
-                            array_shift($keys);
-                            return $this->findNode($child, $keys, $is_choice);
-                        }
+                    if (isset($array[$this->prefix.'children'][$keys[0]])) {
+                        $child = $array[$this->prefix.'children'][$keys[0]];
+                        array_shift($keys);
+                        return $this->findNode($child, $keys, $is_choice);
                     }
                     break;
                 case 'choice': // choice, return an array of possibilities
@@ -116,5 +117,29 @@ class MetaYaml
         }
 
         throw new \Exception("Unable to find child {$keys[0]}");
+    }
+    private function unfoldPartials(array $node)
+    {
+        if (isset($node[$this->prefix.'children'])) {
+            foreach ($node[$this->prefix.'children'] as &$child) {
+                if ($child[$this->prefix.'type'] === 'partial') {
+                    $child = $this->schema['partials'][$child[$this->prefix.'partial']];
+                }
+            }
+        }
+        if (isset($node[$this->prefix.'prototype'])) {
+            if ($node[$this->prefix.'prototype'][$this->prefix.'type'] === 'partial') {
+                $node[$this->prefix.'prototype'] = $this->schema['partials'][$node[$this->prefix.'prototype'][$this->prefix.'partial']];
+            }
+        }
+        if (isset($node[$this->prefix.'choices'])) {
+            foreach ($node[$this->prefix.'choices'] as &$child) {
+                if ($child[$this->prefix.'type'] === 'partial') {
+                    $child = $this->schema['partials'][$child[$this->prefix.'partial']];
+                }
+            }
+        }
+
+        return $node;
     }
 }

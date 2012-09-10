@@ -1,10 +1,9 @@
 root:
     _type: array
     _children:
+        # a few simple examples
         texte:
             _type: text
-        # a comment
-        # should not provoke anything
         multi_ligne:
             _type: text
         enume:
@@ -16,6 +15,18 @@ root:
             _type: number
         booleen:
             _type: boolean
+        paragraph:
+            _type: partial
+            _partial: block
+        regex:
+            _type: pattern
+            _pattern: /e/
+        prototype_bool:
+            _type: prototype
+            _prototype:
+                _type: boolean
+        # a choice : more verbose
+        # our content can be any of the child nodes
         test_choice:
             _type: choice
             _choices:
@@ -33,10 +44,7 @@ root:
                             _type: number
                         another_item:
                             _type: text
-        prototype_bool:
-            _type: prototype
-            _prototype:
-                _type: boolean
+        # more advanced stuff
         prototype_array:
             _type: prototype
             _prototype:
@@ -45,12 +53,29 @@ root:
                     texte:
                         _type: text
                         _required: true
-        paragraph:
-            _type: partial
-            _partial: block
-        regex:
-            _type: pattern
-            _pattern: /e/
+        test_choice_of_partial:
+            _type: choice
+            _choices:
+                1:
+                    _type: partial
+                    _partial: line
+                2:
+                    _type: partial
+                    _partial: line
+        test_array_of_partial:
+            _type: array
+            _children:
+                1:
+                    _type: partial
+                    _partial: line
+                2:
+                    _type: partial
+                    _partial: line
+        test_prototype_partial:
+            _type: prototype
+            _prototype:
+                _type: partial
+                _partial: line
         # next is for some exceptions tests
         # it's a not defined partial
         # do not declare it in your schema!
@@ -65,3 +90,5 @@ partials:
                 _type: text
             line_2:
                 _type: text
+    line:
+        _type: text

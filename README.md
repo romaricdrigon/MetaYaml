@@ -258,6 +258,8 @@ array(
 )
 ```
 
+If you pass an invalid path (eg a named node does not exist), it will throw an exception.
+
 ## Notes on XML support
 
 In XML, you can store a value in a node within a child element, or using an attribute.
