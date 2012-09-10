@@ -230,7 +230,7 @@ It returns an associative array formatted like this:
 ```php
 array(
     'name' => 'test', // name of current node, root for first node
-    'documentation' => array(
+    'node' => array(
         '_type' => 'array',
         '_children' => ... // and so on
     ),

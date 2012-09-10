@@ -64,11 +64,11 @@ class MetaYaml
     // get the documentation
     public function getDocumentationForNode(array $keys = array())
     {
-        $documentation = $this->findNode($this->schema['root'], $keys);
+        $node = $this->findNode($this->schema['root'], $keys);
 
         return array(
             'name' => end($keys) ?: 'root',
-            'documentation' => $documentation,
+            'node' => $node,
             'prefix' => $this->prefix,
             'partials' => isset($this->schema['partials']) ? $this->schema['partials'] : array()
         );
