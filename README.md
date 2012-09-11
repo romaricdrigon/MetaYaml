@@ -235,6 +235,7 @@ array(
         '_children' => ... // and so on
     ),
     'prefix' => '_',
+    'is_choice' => false,
     'partials' => // the list of available partials in the schema
 )
 ```
@@ -244,7 +245,7 @@ If the targeted node is inside a choice, the result will differ slightly:
 array(
     'name' => 'test', // name of current node, from the choice key in the schema
     // no node element, choices instead
-    'choices' => array(
+    'node' => array(
         0 => array(
             '_type' => 'array' // and so on, for first choice
         ),
@@ -254,6 +255,7 @@ array(
         // ...
     ),
     'prefix' => '_',
+    'is_choice' => true,
     'partials' => // the list of available partials in the schema
 )
 ```

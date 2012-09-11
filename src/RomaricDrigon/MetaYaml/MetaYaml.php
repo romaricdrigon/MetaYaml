@@ -64,12 +64,13 @@ class MetaYaml
     // get the documentation
     public function getDocumentationForNode(array $keys = array())
     {
-        $node = $this->findNode($this->schema['root'], $keys, $is_choice);
+        $is_choice = false;
 
         return array(
             'name' => end($keys) ?: 'root',
-            ($is_choice ? 'choices' : 'node') => $node,
-            'prefix' => $this->prefix
+            'node' =>  $this->findNode($this->schema['root'], $keys, $is_choice),
+            'prefix' => $this->prefix,
+            'is_choice' => $is_choice
         );
     }
     private function findNode(array $array, array $keys, &$is_choice)
