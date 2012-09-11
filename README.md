@@ -234,9 +234,7 @@ array(
         '_type' => 'array',
         '_children' => ... // and so on
     ),
-    'prefix' => '_',
-    'is_choice' => false, // as a string
-    'partials' => // the list of available partials in the schema
+    'prefix' => '_'
 )
 ```
 
@@ -244,8 +242,8 @@ If the targeted node is inside a choice, the result will differ slightly:
 ```php
 array(
     'name' => 'test', // name of current node, from the choice key in the schema
-    // no node element, choices instead
     'node' => array(
+        '_is_choice' => 'true', // important : so we know next keys are choices
         0 => array(
             '_type' => 'array' // and so on, for first choice
         ),
@@ -254,11 +252,10 @@ array(
         ),
         // ...
     ),
-    'prefix' => '_',
-    'is_choice' => 1, // the number of imbricated choices; 2 will give node => array(array(...
-    'partials' => // the list of available partials in the schema
+    'prefix' => '_'
 )
 ```
+This behavior allow us to handle imbricated choices, without loosing data (you'll an array level for each level, is set with the flag `_is_choice`)
 
 If you pass an invalid path (eg a named node does not exist), it will throw an exception.
 

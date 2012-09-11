@@ -64,17 +64,16 @@ class MetaYaml
     // get the documentation
     public function getDocumentationForNode(array $keys = array())
     {
+        $node = $this->findNode($this->schema['root'], $keys);
+
         return array(
             'name' => end($keys) ?: 'root',
-            'node' =>  $this->findNode($this->schema['root'], $keys, $is_choice),
-            'prefix' => $this->prefix,
-            'is_choice' => $is_choice === 0 ? 'false' : $is_choice
+            'node' =>  $node,
+            'prefix' => $this->prefix
         );
     }
-    private function findNode(array $array, array $keys, &$is_choice)
+    private function findNode(array $array, array $keys)
     {
-        ($is_choice == null) && ($is_choice = 0); // init
-
         // first, if it's a partial, let's naviguate
         if (isset($array[$this->prefix.'type']) && $array[$this->prefix.'type'] === 'partial') {
             $p_name = $array[$this->prefix.'partial'];
@@ -83,7 +82,7 @@ class MetaYaml
                 throw new \Exception("You're using a partial but partial '$p_name' is not defined in your schema");
             }
 
-            return $this->findNode($this->schema['partials'][$p_name], $keys, $is_choice);
+            return $this->findNode($this->schema['partials'][$p_name], $keys);
         }
 
         // we're on target, return the result
@@ -97,23 +96,22 @@ class MetaYaml
             switch ($array[$this->prefix.'type']) {
                 case 'prototype': //we have to ignore one key
                     array_shift($keys);
-                    return $this->findNode($array[$this->prefix.'prototype'], $keys, $is_choice);
+                    return $this->findNode($array[$this->prefix.'prototype'], $keys);
                 case 'array': // let's check the children
                     if (isset($array[$this->prefix.'children'][$keys[0]])) {
                         $child = $array[$this->prefix.'children'][$keys[0]];
                         array_shift($keys);
-                        return $this->findNode($child, $keys, $is_choice);
+                        return $this->findNode($child, $keys);
                     }
                     break;
                 case 'choice': // choice, return an array of possibilities
                     $choices = array();
-                    $is_choice++; // $is_choice is a reference, modify it here
                     foreach ($array[$this->prefix.'choices'] as $name => $choice) {
                         try {
-                            $choices[$name] = $this->findNode($choice, $keys, $is_choice);
+                            $choices[$name] = $this->findNode($choice, $keys);
                         } catch (\Exception $e) {} // exception = invalid choice, so skip it
                     }
-                    return $choices;
+                    return $choices + array($this->prefix.'is_choice' => 'true');
             }
         }
 
