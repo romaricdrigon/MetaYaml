@@ -80,7 +80,7 @@ class MetaYaml extends atoum\test
                         'name' => 'root',
                         'node' => $schema['root'],
                         'prefix' => '_'))*/
-                //->boolean(print_r($object->getDocumentationForNode(array('choice_of_choice', 'a', 'b'))))
+                //->boolean(print_r($object->getDocumentationForNode(array('choice_of_choice', 'a'))))
                 ->array($object->getDocumentationForNode(array('texte')))
                     ->isEqualTo(array(
                         'name' => 'texte',
@@ -154,6 +154,16 @@ class MetaYaml extends atoum\test
                                 '_type' => 'text')),
                         'is_choice' => 'false',
                         'prefix' => '_'))
+                ->array($object->getDocumentationForNode(array('choice_of_choice', 'a')))
+                    ->isEqualTo(array(
+                    'name' => 'a',
+                    'node' => array(0 => array(
+                        '_type' => 'choice',
+                        '_choices' => array(
+                            10 => array('_type' => 'array', '_children' => array(
+                                'b' => array('_type' => 'text')))))),
+                    'is_choice' => 1,
+                    'prefix' => '_'))
                 ->array($object->getDocumentationForNode(array('choice_of_choice', 'a', 'b')))
                     ->isEqualTo(array(
                         'name' => 'b',
