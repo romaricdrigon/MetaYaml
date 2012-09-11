@@ -80,7 +80,7 @@ class MetaYaml extends atoum\test
                         'name' => 'root',
                         'node' => $schema['root'],
                         'prefix' => '_'))*/
-                //->boolean(print_r($object->getDocumentationForNode(array('test_choice_of_partial'))))
+                //->boolean(print_r($object->getDocumentationForNode(array('choice_of_choice', 'a', 'b'))))
                 ->array($object->getDocumentationForNode(array('texte')))
                     ->isEqualTo(array(
                         'name' => 'texte',
@@ -123,11 +123,11 @@ class MetaYaml extends atoum\test
                     ->isEqualTo(array(
                         'name' => 'one_item',
                         'node' => array(3 => array('_type' => 'number')),
-                        'is_choice' => 'true',
+                        'is_choice' => 1,
                         'prefix' => '_'))
-                ->array($object->getDocumentationForNode(array('test_choice_of_partial')))
+                ->array($object->getDocumentationForNode(array('choice_of_partial')))
                     ->isEqualTo(array(
-                        'name' => 'test_choice_of_partial',
+                        'name' => 'choice_of_partial',
                         'node' => array(
                             '_type' => 'choice',
                             '_choices' => array(
@@ -135,9 +135,9 @@ class MetaYaml extends atoum\test
                             2 => array('_type' => 'text'))),
                         'is_choice' => 'false',
                         'prefix' => '_'))
-                ->array($object->getDocumentationForNode(array('test_array_of_partial')))
+                ->array($object->getDocumentationForNode(array('array_of_partial')))
                     ->isEqualTo(array(
-                        'name' => 'test_array_of_partial',
+                        'name' => 'array_of_partial',
                         'node' => array(
                             '_type' => 'array',
                             '_children' => array(
@@ -145,14 +145,20 @@ class MetaYaml extends atoum\test
                                 2 => array('_type' => 'text'))),
                         'is_choice' => 'false',
                         'prefix' => '_'))
-                ->array($object->getDocumentationForNode(array('test_prototype_partial')))
+                ->array($object->getDocumentationForNode(array('prototype_partial')))
                     ->isEqualTo(array(
-                        'name' => 'test_prototype_partial',
+                        'name' => 'prototype_partial',
                         'node' => array(
                             '_type' => 'prototype',
                             '_prototype' => array(
                                 '_type' => 'text')),
                         'is_choice' => 'false',
+                        'prefix' => '_'))
+                ->array($object->getDocumentationForNode(array('choice_of_choice', 'a', 'b')))
+                    ->isEqualTo(array(
+                        'name' => 'b',
+                        'node' => array(0 => array(10 => array('_type' => 'text'))),
+                        'is_choice' => 2,
                         'prefix' => '_'))
                 ->exception(function() use ($object) { $object->getDocumentationForNode(array('paragraph', 'unknown')); })
                     ->hasMessage('Unable to find child unknown')

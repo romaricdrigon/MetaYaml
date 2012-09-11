@@ -235,7 +235,7 @@ array(
         '_children' => ... // and so on
     ),
     'prefix' => '_',
-    'is_choice' => false,
+    'is_choice' => false, // as a string
     'partials' => // the list of available partials in the schema
 )
 ```
@@ -255,7 +255,7 @@ array(
         // ...
     ),
     'prefix' => '_',
-    'is_choice' => true,
+    'is_choice' => 1, // the number of imbricated choices; 2 will give node => array(array(...
     'partials' => // the list of available partials in the schema
 )
 ```

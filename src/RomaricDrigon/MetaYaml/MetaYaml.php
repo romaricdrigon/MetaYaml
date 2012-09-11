@@ -68,11 +68,13 @@ class MetaYaml
             'name' => end($keys) ?: 'root',
             'node' =>  $this->findNode($this->schema['root'], $keys, $is_choice),
             'prefix' => $this->prefix,
-            'is_choice' => $is_choice ? 'true' : 'false'
+            'is_choice' => $is_choice === 0 ? 'false' : $is_choice
         );
     }
     private function findNode(array $array, array $keys, &$is_choice)
     {
+        ($is_choice == null) && ($is_choice = 0); // init
+
         // first, if it's a partial, let's naviguate
         if (isset($array[$this->prefix.'type']) && $array[$this->prefix.'type'] === 'partial') {
             $p_name = $array[$this->prefix.'partial'];
@@ -105,9 +107,9 @@ class MetaYaml
                     break;
                 case 'choice': // choice, return an array of possibilities
                     $choices = array();
+                    $is_choice++; // $is_choice is a reference, modify it here
                     foreach ($array[$this->prefix.'choices'] as $name => $choice) {
                         try {
-                            $is_choice = true; // $is_choice is a reference, modify it here
                             $choices[$name] = $this->findNode($choice, $keys, $is_choice);
                         } catch (\Exception $e) {} // exception = invalid choice, so skip it
                     }

@@ -53,7 +53,7 @@ root:
                     texte:
                         _type: text
                         _required: true
-        test_choice_of_partial:
+        choice_of_partial:
             _type: choice
             _choices:
                 1:
@@ -62,7 +62,7 @@ root:
                 2:
                     _type: partial
                     _partial: line
-        test_array_of_partial:
+        array_of_partial:
             _type: array
             _children:
                 1:
@@ -71,11 +71,25 @@ root:
                 2:
                     _type: partial
                     _partial: line
-        test_prototype_partial:
+        prototype_partial:
             _type: prototype
             _prototype:
                 _type: partial
                 _partial: line
+        choice_of_choice:
+            _type: choice
+            _choices:
+                0:
+                    _type: array
+                    _children:
+                        a:
+                            _type: choice
+                            _choices:
+                                10:
+                                    _type: array
+                                    _children:
+                                        b:
+                                            _type: text
         # next is for some exceptions tests
         # it's a not defined partial
         # do not declare it in your schema!
