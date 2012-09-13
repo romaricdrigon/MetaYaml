@@ -176,13 +176,16 @@ class MetaYaml extends atoum\test
                                             'line_1' => array('_type' => 'text'),
                                             'line_2' => array('_type' => 'text')
                                         )),
-                                        'line' => array('_type' => 'text')
-                        )))),
+                                        'line' => array('_type' => 'text'),
+                                        'protoline' => array('_type' => 'prototype', '_prototype' => array(
+                                            '_type' => 'text')))))),
                         'prefix' => '_'))
                 ->exception(function() use ($object) { $object->getDocumentationForNode(array('paragraph', 'unknown')); })
                     ->hasMessage('Unable to find child unknown')
                 ->exception(function() use ($object) { $object->getDocumentationForNode(array('wrong_partial')); })
                     ->hasMessage("You're using a partial but partial 'unknown' is not defined in your schema")
+                ->exception(function() use ($object) { $object->getDocumentationForNode(array('loop_partial'), true); })
+                    ->hasMessage('Partial loop detected while using unfold_partial option')
         ;
     }
 }

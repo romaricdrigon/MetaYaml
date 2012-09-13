@@ -109,8 +109,11 @@ root:
             _type: partial
             _partial: unknown
         loop_partial:
-            _type: partial
-            _partial: loop_partial
+            _type: array
+            _children:
+                a:
+                    _type: partial
+                    _partial: loop_partial
 partials:
     block:
         _type: array
@@ -133,6 +136,11 @@ partials:
             line:
                 _type: partial
                 _partial: partial_of_partial
+            protoline:
+                _type: prototype
+                _prototype:
+                    _type: partial
+                    _partial: line
     # wrong, do not use!
     loop_partial:
         _type: partial

@@ -117,27 +117,35 @@ class MetaYaml
 
         throw new \Exception("Unable to find child {$keys[0]}");
     }
-    private function unfoldPartials(array $node, $unfold_all)
+    private function unfoldPartials(array $node, $unfold_all, $n = 0)
     {
+        if ($n > 20) {
+            throw new \Exception("Partial loop detected while using unfold_partial option");
+        }
+
         // first, if it's a partial, let's naviguate
         if (isset($node[$this->prefix.'type']) && $node[$this->prefix.'type'] === 'partial') {
-            return $this->unfoldPartials($this->schema['partials'][$node[$this->prefix.'partial']], $unfold_all);
+            return $this->unfoldPartials($this->schema['partials'][$node[$this->prefix.'partial']], $unfold_all, $n+1);
         }
 
         if (isset($node[$this->prefix.'children'])) {
-            foreach ($node[$this->prefix.'children'] as $key => &$child) {
+            foreach ($node[$this->prefix.'children'] as &$child) {
                 if ($child[$this->prefix.'type'] === 'partial') {
                     $child = $this->schema['partials'][$child[$this->prefix.'partial']];
                 }
 
                 if ($unfold_all === true) {
-                    $child = $this->unfoldPartials($child, $unfold_all);
+                    $child = $this->unfoldPartials($child, $unfold_all, $n+1);
                 }
             }
         }
         if (isset($node[$this->prefix.'prototype'])) {
             if ($node[$this->prefix.'prototype'][$this->prefix.'type'] === 'partial') {
                 $node[$this->prefix.'prototype'] = $this->schema['partials'][$node[$this->prefix.'prototype'][$this->prefix.'partial']];
+            }
+
+            if ($unfold_all === true) {
+                $node[$this->prefix.'prototype'] = $this->unfoldPartials($node[$this->prefix.'prototype'], $unfold_all, $n+1);
             }
         }
         if (isset($node[$this->prefix.'choices'])) {
@@ -147,7 +155,7 @@ class MetaYaml
                 }
 
                 if ($unfold_all === true) {
-                    $child = $this->unfoldPartials($child, $unfold_all);
+                    $child = $this->unfoldPartials($child, $unfold_all, $n+1);
                 }
             }
         }
