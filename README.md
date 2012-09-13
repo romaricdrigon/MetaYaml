@@ -224,6 +224,10 @@ $schema->getDocumentationForNode();
 
 // get documentation about a child node 'test' in an array 'a_test' under root
 $schema->getDocumentationForNode(array('a_test', 'test'));
+
+// finally, if you cant to unfold (follow) all partials, set second argument to true
+$schema->getDocumentationForNode(array('a_test', 'test'), true);
+// watch out there's no loop inside partials!
 ```
 
 It returns an associative array formatted like this:

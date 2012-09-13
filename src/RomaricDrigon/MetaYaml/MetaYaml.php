@@ -62,9 +62,9 @@ class MetaYaml
     }
 
     // get the documentation
-    public function getDocumentationForNode(array $keys = array())
+    public function getDocumentationForNode(array $keys = array(), $unfold_all = false)
     {
-        $node = $this->findNode($this->schema['root'], $keys);
+        $node = $this->findNode($this->schema['root'], $keys, $unfold_all);
 
         return array(
             'name' => end($keys) ?: 'root',
@@ -72,7 +72,7 @@ class MetaYaml
             'prefix' => $this->prefix
         );
     }
-    private function findNode(array $array, array $keys)
+    private function findNode(array $array, array $keys, $unfold_all)
     {
         // first, if it's a partial, let's naviguate
         if (isset($array[$this->prefix.'type']) && $array[$this->prefix.'type'] === 'partial') {
@@ -82,13 +82,13 @@ class MetaYaml
                 throw new \Exception("You're using a partial but partial '$p_name' is not defined in your schema");
             }
 
-            return $this->findNode($this->schema['partials'][$p_name], $keys);
+            return $this->findNode($this->schema['partials'][$p_name], $keys, $unfold_all);
         }
 
         // we're on target, return the result
         if ($keys === array()) {
             // on more thing: dig one more level of partial
-            return $this->unfoldPartials($array);
+            return $this->unfoldPartials($array, $unfold_all);
         }
 
         // they're still some keys, dig deeper
@@ -96,19 +96,19 @@ class MetaYaml
             switch ($array[$this->prefix.'type']) {
                 case 'prototype': //we have to ignore one key
                     array_shift($keys);
-                    return $this->findNode($array[$this->prefix.'prototype'], $keys);
+                    return $this->findNode($array[$this->prefix.'prototype'], $keys, $unfold_all);
                 case 'array': // let's check the children
                     if (isset($array[$this->prefix.'children'][$keys[0]])) {
                         $child = $array[$this->prefix.'children'][$keys[0]];
                         array_shift($keys);
-                        return $this->findNode($child, $keys);
+                        return $this->findNode($child, $keys, $unfold_all);
                     }
                     break;
                 case 'choice': // choice, return an array of possibilities
                     $choices = array();
                     foreach ($array[$this->prefix.'choices'] as $name => $choice) {
                         try {
-                            $choices[$name] = $this->findNode($choice, $keys);
+                            $choices[$name] = $this->findNode($choice, $keys, $unfold_all);
                         } catch (\Exception $e) {} // exception = invalid choice, so skip it
                     }
                     return $choices + array($this->prefix.'is_choice' => 'true');
@@ -117,12 +117,21 @@ class MetaYaml
 
         throw new \Exception("Unable to find child {$keys[0]}");
     }
-    private function unfoldPartials(array $node)
+    private function unfoldPartials(array $node, $unfold_all)
     {
+        // first, if it's a partial, let's naviguate
+        if (isset($node[$this->prefix.'type']) && $node[$this->prefix.'type'] === 'partial') {
+            return $this->unfoldPartials($this->schema['partials'][$node[$this->prefix.'partial']], $unfold_all);
+        }
+
         if (isset($node[$this->prefix.'children'])) {
-            foreach ($node[$this->prefix.'children'] as &$child) {
+            foreach ($node[$this->prefix.'children'] as $key => &$child) {
                 if ($child[$this->prefix.'type'] === 'partial') {
                     $child = $this->schema['partials'][$child[$this->prefix.'partial']];
+                }
+
+                if ($unfold_all === true) {
+                    $child = $this->unfoldPartials($child, $unfold_all);
                 }
             }
         }
@@ -135,6 +144,10 @@ class MetaYaml
             foreach ($node[$this->prefix.'choices'] as &$child) {
                 if ($child[$this->prefix.'type'] === 'partial') {
                     $child = $this->schema['partials'][$child[$this->prefix.'partial']];
+                }
+
+                if ($unfold_all === true) {
+                    $child = $this->unfoldPartials($child, $unfold_all);
                 }
             }
         }

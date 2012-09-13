@@ -80,7 +80,7 @@ class MetaYaml extends atoum\test
                         'name' => 'root',
                         'node' => $schema['root'],
                         'prefix' => '_'))*/
-                //->boolean(print_r($object->getDocumentationForNode(array('choice_of_choice', 'a'))))
+                //->boolean(print_r($object->getDocumentationForNode(array('deep_partial'), true)))
                 ->array($object->getDocumentationForNode(array('texte')))
                     ->isEqualTo(array(
                         'name' => 'texte',
@@ -160,6 +160,24 @@ class MetaYaml extends atoum\test
                     ->isEqualTo(array(
                         'name' => 'b',
                         'node' => array(0 => array(10 => array('_type' => 'text'), '_is_choice' => 'true'), '_is_choice' => 'true'),
+                        'prefix' => '_'))
+                ->array($object->getDocumentationForNode(array('deep_partial'), true))
+                    ->isEqualTo(array(
+                        'name' => 'deep_partial',
+                        'node' => array(
+                            '_type' => 'array',
+                            '_children' => array(
+                                'a' => array('_type' => 'choice', '_choices' => array(
+                                    0 => array('_type' => 'text'))),
+                                'b' => array(
+                                    '_type' => 'array',
+                                    '_children' => array(
+                                        'block' => array('_type' => 'array', '_children' => array(
+                                            'line_1' => array('_type' => 'text'),
+                                            'line_2' => array('_type' => 'text')
+                                        )),
+                                        'line' => array('_type' => 'text')
+                        )))),
                         'prefix' => '_'))
                 ->exception(function() use ($object) { $object->getDocumentationForNode(array('paragraph', 'unknown')); })
                     ->hasMessage('Unable to find child unknown')

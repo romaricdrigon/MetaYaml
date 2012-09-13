@@ -90,12 +90,27 @@ root:
                                     _children:
                                         b:
                                             _type: text
+        deep_partial:
+            _type: array
+            _children:
+                a:
+                    _type: choice
+                    _choices:
+                        0:
+                            _type: partial
+                            _partial: partial_of_partial
+                b:
+                    _type: partial
+                    _partial: array_of_partial
         # next is for some exceptions tests
         # it's a not defined partial
         # do not declare it in your schema!
         wrong_partial:
             _type: partial
             _partial: unknown
+        loop_partial:
+            _type: partial
+            _partial: loop_partial
 partials:
     block:
         _type: array
@@ -106,3 +121,19 @@ partials:
                 _type: text
     line:
         _type: text
+    partial_of_partial:
+        _type: partial
+        _partial: line
+    array_of_partial:
+        _type: array
+        _children:
+            block:
+                _type: partial
+                _partial: block
+            line:
+                _type: partial
+                _partial: partial_of_partial
+    # wrong, do not use!
+    loop_partial:
+        _type: partial
+        _partial: loop_partial
