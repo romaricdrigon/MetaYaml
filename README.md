@@ -21,11 +21,11 @@ _The name comes from the fact that it was initially made to implement a pseudo-s
 
 ## Installation
 
-This component is organized as a Symfony2 bundle, but actually the core has no dependencies which should prevent you to use it anywhere else.
+It's a standalone component:
 
-* The core requires PHP >= 5.3.3
-* To use the YamlLoader, you'll need the Symfony component [Yaml](https://github.com/symfony/Yaml) (standalone component, does not require Symfony2)
-* To launch the tests, you'll need [atoum](https://github.com/mageekguy/atoum)
+* the core requires PHP >= 5.3.3
+* to use the YamlLoader, you'll need the Symfony component [Yaml](https://github.com/symfony/Yaml) (standalone component, does not require Symfony2)
+* to launch the tests, you'll need [atoum](https://github.com/mageekguy/atoum)
 
 To install all these packages, the easiest way is to use [composer](http://getcomposer.org): put composer.phar in root folder, and then run `./composer.phar --update`
 
@@ -43,7 +43,7 @@ $schema = new MetaYaml($schema);
 */
 $schema->validate_schema(); // return true or throw an exception
 
-// you could also have done this at construct
+// you could also have done this at init
 $schema = new MetaYaml($schema, true); // will load AND validate
 
 // finally, validate your data according to the schema
