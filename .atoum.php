@@ -23,4 +23,6 @@ $cliReport
     ->addField($coverageField, array(atoum\runner::runStop))
 ;
 
+$runner->setBootstrapFile('test/bootstrap.php');
+
 $runner->addReport($cliReport);
