@@ -1,6 +1,6 @@
 {
     "name": "meta-yaml",
-    "description": "Meta-Yaml to validate Yaml using Yaml",
+    "description": "Meta-Yaml to validate Yaml using [Yaml|Xml|json] schemas",
     "keywords": ["yaml", "validation", "schema"],
     "autoload": {
         "psr-0": {
@@ -10,6 +10,6 @@
     "require": {
         "php": ">=5.3.3",
         "symfony/yaml": "dev-master",
-        "mageekguy/atoum": "dev-master"
+        "atoum/atoum": "dev-master"
     }
 }
