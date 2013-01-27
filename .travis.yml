@@ -3,9 +3,7 @@ language: php
 php:
   - "5.4"
   - "5.3"
-# we use atoum for tests
-# and composer for vendors
+# we use composer for vendors, including atoum
 before_script:
  - composer install
- - wget http://downloads.atoum.org/nightly/mageekguy.atoum.phar
-script: php mageekguy.atoum.phar
+script: ./bin/test --test-all
