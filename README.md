@@ -1,5 +1,7 @@
 # MetaYaml
 
+[![Build Status](https://travis-ci.org/romaricdrigon/MetaYaml.png?branch=master)](https://travis-ci.org/romaricdrigon/MetaYaml)
+
 A `[put your file type here]` schema validator using `[put another file type here]` files.  
 At the moment, file type can be Json, Yaml, or [XML](#notes-on-xml-support). It can generate a documentation about the schema, or a XSD file (experimental).
 
