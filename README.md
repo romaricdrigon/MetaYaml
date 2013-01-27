@@ -21,18 +21,20 @@ _The name comes from the fact that it was initially made to implement a pseudo-s
 
 ## Installation
 
-It's a standalone component:
+It is a standalone component:
 
 * the core requires PHP >= 5.3.3
-* to use the YamlLoader, you'll need the Symfony component [Yaml](https://github.com/symfony/Yaml) (standalone component, does not require Symfony2)
+* to use the YamlLoader, you will need the Symfony component [Yaml](https://github.com/symfony/Yaml) (standalone component, does not require Symfony2)
 * to launch the tests, you'll need [atoum](https://github.com/mageekguy/atoum)
 
-To install all these packages, the easiest way is to use [composer](http://getcomposer.org): put composer.phar in root folder, and then run `./composer.phar --update`
+To install all these packages, you can use [composer](http://getcomposer.org): just do `composer --update`
 
 ## Basic usage
 
 You have to create a MetaYaml object, and then pass it both the schema and your data as multidimensional php arrays:
 ```php
+use RomaricDrigon\MetaYaml\MetaYaml;
+
 // create object, load schema from an array
 $schema = new MetaYaml($schema);
 
@@ -44,17 +46,19 @@ $schema = new MetaYaml($schema);
 $schema->validate_schema(); // return true or throw an exception
 
 // you could also have done this at init
-$schema = new MetaYaml($schema, true); // will load AND validate
+$schema = new MetaYaml($schema, true); // will load AND validate the schema
 
-// finally, validate your data according to the schema
+// finally, validate your data array according to the schema
 $schema->validate($data); // return true or throw an exception
 ```
 
-You can use any of the provided loaders to obtain these arrays (yep, you can validate Xml using a schema from an Yaml file!).
+You can use any of the provided loaders to obtain these arrays (yep, you can validate XML using a schema from an Yaml file!).
 
 Some loader examples:
 ```php
 use RomaricDrigon\MetaYaml\MetaYaml;
+use RomaricDrigon\MetaYaml\Loader\YamlLoader;
+use RomaricDrigon\MetaYaml\Loader\XmlLoader; // JsonLoader is already available
 
 // create one loader object
 $loader = new JsonLoader(); // Json (will use php json_decode)
@@ -62,7 +66,7 @@ $loader = new YamlLoader(); // Yaml using Symfony Yaml component
 $loader = new XmlLoader(); // Xml (using php SimpleXml)
 
 // the usage is the same then
-$array = $loader->load($some_string);
+$array = $loader->load('SOME STRING...');
 // or you can load from a file
 $array = $loader->loadFromFile('path/to/file');
 ```
@@ -73,45 +77,46 @@ $array = $loader->loadFromFile('path/to/file');
 
 A schema file will define the array structure (which elements are allowed, where), some attributes (required, can be empty...) and the possible values for these elements (or their type).
 
-Here's a simple example of a schema, using Yaml syntax :
+Here's a simple example of a schema, using Yaml syntax:
 ```yaml
-root: # root is always required node ; no prefix here
-    _type: array # each element must always have a _type
-    _children: # array nodes have a _children, defining their children
-        fleurs:
+root: # root is always required (note no prefix here)
+    _type: array # each element must always have a '_type'
+    _children: # array nodes have a '_children' node, defining their children
+        flowers:
             _type: array
             _required: true # optional, default false
             _children:
                 rose:
                     _required: true
                     _type: text
-                violette:
+                violet:
                     _type: text
-                # -> only rose and violette are allowed children of fleurs
+                # -> only rose and violet are allowed children of flowers
 ```
 
 And a valid Yaml file :
 ```yaml
-fleurs:
-    rose: une rose
-    violette: une violette
+flowers:
+    rose: "a rose"
+    violet: "a violet flower"
 ```
 
-We'll continue with Yaml examples; if you're not familiar with the syntax, you may want to take a look at it's [Wikipedia page](http://en.wikipedia.org/wiki/YAML).
-Of courses the same structures are possible with Json and XML, because the core is the same ; take a look at examples in test/data/ folder.
+We will continue with Yaml examples; if you're not familiar with the syntax, you may want to take a look at its [Wikipedia page](http://en.wikipedia.org/wiki/YAML).
+Of course the same structure is possible with Json or XML, because the core is the same. Take a look at examples in `test/data/` folder.
 
 ### Schema structure
 
-A schema file must have a `root` node, which will described the first-level content.
-You can optionally define a `prefix`; by defaults it's `_` (`_type`, `_required`...).
-You have to define a `partials` node if you want to use this feature.
+A schema file must have a `root` node, which will describe the first-level content.
+You can optionally define a `prefix`; by default it is `_` (`_type`, `_required`...).
 
-So a basic schema file:
+You have to define a `partials` node if you want to use this feature (learn more about it below).
+
+A basic schema file:
 ```yaml
 root:
     # here put the elements who will be in the file
-    # note that root can be anything: an array, a number, a prototype...
-prefix: my_ # so it's gonna be my_type, my_required, my_children...
+    # note that root can have any type: an array, a number, a prototype...
+prefix: my_ # so it's gonna be 'my_type', 'my_required', 'my_children'...
 partials:
     block:
         # here I define a partial called block
@@ -133,7 +138,7 @@ Those types are available:
 * `boolean`: boolean value
 * `pattern`: check if the value matches the regular expression provided in `_pattern`, which is a [PCRE regex](http://www.php.net/manual/en/reference.pcre.pattern.syntax.php)
 * `enum`: enumeration ; list accepted values in `_values` node
-* `array`: array ; define children in a _children node ; array children must have named keys ; any extra key will provoke an error
+* `array`: array; define children in a _children node; array's children must have determined named keys; any extra key will cause an error
 * `prototype`: define a repetition of items whose name/index is not important. You must give children's type in `_prototype` node.
 * `choice`: child node can be any of the nodes provided in `_choices`. Keys in `_choices` array are not important (as long as they are unique). In each choice, it's best to put the discriminating field in first.
 * `partial`: "shortcut" to a block described in `partials` root node. Provide partial name in `_partial`
@@ -142,9 +147,8 @@ You can specify additional attributes:
 
 * general attributes:
  * `_required`: this node must always be defined (by default false)
- * `_not_empty` for text, number and array nodes: they can't be empty (by default false). Respective empty values are `''`, `0` (as a string, an integer or a float), `array()`. To test for null values, use `_required` instead.
- * `_strict` with text, number, boolean and enum will enforce a strict type check (respectively, with a string, an integer or a float, a boolean, any of these values).
- Watch out when using these with a parser which may not be type-aware (such as the XML one; Yaml and Json should be ok)
+ * `_not_empty` for text, number and array nodes: they can't be empty (by default false). Respective empty values are `''`, `0` (as a string, an integer or a float), `array()`. To test for `null` values, use `_required` instead.
+ * `_strict` with text, number, boolean and enum will enforce a strict type check (respectively, with a string, an integer or a float, a boolean, any of these values). Be careful when using these with a parser which may not be type-aware (such as the XML one; Yaml and json should be ok)
  * `_description`: full-text description, cf. [Documentation generator](#documentation-generator)
 * only for array nodes:
  * `_ignore_extra_keys`: the node can contain children whose keys are not listed in `_children`; they'll be ignored
@@ -157,32 +161,32 @@ Here's a comprehensive example:
 root:
     _type: array
     _children:
-        texte:
+        SomeText:
             _type: text
-            _not_empty: true
-        enume:
+            _not_empty: true # so !== ''
+        SomeEnum:
             _type: enum
             _values:
                 - windows
                 - mac
                 - linux
-        entier:
+        SomeNumber:
             _type: number
             _strict: true
-        booleen:
+        SomeBool:
             _type: boolean
-        prototype_array:
+        SomePrototypeArray:
             _type: prototype
             _prototype:
                 _type: array
                 _children:
-                    texte:
+                    SomeOtherText:
                         _type: text
-                        _is_required: true
-        paragraph:
+                        _is_required: true # can't be null
+        SomeParagraph:
             _type: partial
-            _partial: block
-        test_choice:
+            _partial: aBlock # cf 'partials' below
+        SomeChoice:
             _type: choice
             _choices:
                 1:
@@ -192,20 +196,21 @@ root:
                         - linux
                 2:
                     _type: number
-        regex:
+                # so our node must be either #1 or #2
+        SomeRegex:
             _type: pattern
             _pattern: /e/
 partials:
-    block:
+    aBlock:
         _type: array
         _children:
-            line_1:
+            Line1:
                 _type: text
 ```
 
 ### More information
 
-For more examples, look inside test/data folder.
+For more examples, look inside `test/data` folder.
 In each folder, you have an .yml file and its schema. There's also a XML example.
 
 If you're curious about an advanced usage, you can check `data/MetaSchema.json`: schema files are validated using this schema (an yep, the schema validates successfully itself!)
@@ -215,7 +220,6 @@ If you're curious about an advanced usage, you can check `data/MetaSchema.json`:
 Each node can have a `_description` attribute, containing some human-readable text.
 You can retrieve the documentation about a node (its type, description, other attributes...) like this:
 ```php
-// create object, load schema from an array
 // it's recommended to validate the schema before reading documentation
 $schema = new MetaYaml($schema, true);
 
@@ -225,7 +229,7 @@ $schema->getDocumentationForNode();
 // get documentation about a child node 'test' in an array 'a_test' under root
 $schema->getDocumentationForNode(array('a_test', 'test'));
 
-// finally, if you cant to unfold (follow) all partials, set second argument to true
+// finally, if you want to unfold (follow) all partials, set second argument to true
 $schema->getDocumentationForNode(array('a_test', 'test'), true);
 // watch out there's no loop inside partials!
 ```
@@ -247,7 +251,7 @@ If the targeted node is inside a choice, the result will differ slightly:
 array(
     'name' => 'test', // name of current node, from the choice key in the schema
     'node' => array(
-        '_is_choice' => 'true', // important : so we know next keys are choices
+        '_is_choice' => 'true', // important: so we know next keys are choices
         0 => array(
             '_type' => 'array' // and so on, for first choice
         ),
@@ -259,9 +263,9 @@ array(
     'prefix' => '_'
 )
 ```
-This behavior allow us to handle imbricated choices, without loosing data (you'll an array level for each level, is set with the flag `_is_choice`)
+This behavior allow us to handle imbricated choices, without loosing data (you have an array level for each choice level, and you can check the flag `_is_choice`)
 
-If you pass an invalid path (eg a named node does not exist), it will throw an exception.
+If you pass an invalid path (e.g. no node with the name you gave exist), it will throw an exception.
 
 ## Notes on XML support
 
@@ -275,7 +279,7 @@ Thus, the following conventions are enforced by the XML loader:
 * if a node has both attribute(s) and a text content, text content will be stored under key `_value`
 * multiple child node with the same name will be overwritten, only the last will be retained; except if they have a `_key` attribute, which will be used thus
 * namespaces are not supported
-* empty nodes are ditched
+* empty nodes are skipped
 
 Let's take an example:
 ```xml
@@ -317,11 +321,11 @@ array('fleurs' =>
 
 ## XSD generator
 
-_**Please note this feature is still experimental**_
+_**Please note this feature is still experimental!**_
 
 MetaYaml can try to generate a [XML Schema Definition](http://en.wikipedia.org/wiki/XML_Schema) from a MetaYaml schema.
 You may want to use this file to pre-validate XML input, or to use in another context (client-side...).
-The same conventions (cf above) will be used.
+The same conventions (cf. above) will be used.
 
 Usage example :
 ```php
@@ -335,7 +339,6 @@ $generator = new XsdGenerator();
 $my_xsd_string = $generator->build($schema, true);
 ```
 
-Note this feature is still experimental.
 A few limitations, some relative to XML Schema, apply:
 * `root` node must be an `array`
 * an element can't have a name beginning by a number
@@ -354,10 +357,10 @@ To launch tests, just run in a shell `./bin/test --test-all`
 ## Extending
 
 You may want to write your own loader, using anything else.  
-Take a look at any class in Loader/ folder, it's pretty easy: you have to implement the LoaderInterface, and may want to extend Loader class (so you don't have to write `loadFromFile()`).
+Take a look at any class in `Loader/ folder`, it's pretty easy: you have to implement the LoaderInterface, and may want to extend Loader class (so you don't have to write `loadFromFile()`).
 
 ## Thanks
 
-Thanks to [Riad Benguella](https://github.com/youknowriad) and [Julien Bianchi](https://github.com/jubianchi) for their help & advices.
+Thanks to [Riad Benguella](https://github.com/youknowriad) and [Julien Bianchi](https://github.com/jubianchi) for their help & advice.
 
 [Top](#metayaml)
