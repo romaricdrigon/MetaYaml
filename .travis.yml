@@ -1,0 +1,12 @@
+# set up languages
+language: php
+php:
+  - "5.4"
+  - "5.3"
+# we use atoum for tests
+# and composer for vendors
+before_script:
+ - composer install
+ - wget http://downloads.atoum.org/nightly/mageekguy.atoum.phar
+# don't forget test-all flag
+script: php mageekguy.atoum.phar --test-all
