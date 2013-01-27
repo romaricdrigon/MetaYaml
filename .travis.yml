@@ -8,5 +8,4 @@ php:
 before_script:
  - composer install
  - wget http://downloads.atoum.org/nightly/mageekguy.atoum.phar
-# don't forget test-all flag
-script: php mageekguy.atoum.phar --test-all
+script: php mageekguy.atoum.phar
