@@ -2,6 +2,7 @@
     "name": "romaricdrigon/metayaml",
     "description": "Meta-Yaml to validate Yaml using [Yaml|Xml|json] schemas",
     "keywords": ["yaml", "validation", "schema"],
+    "license": "MIT",
     "autoload": {
         "psr-0": {
             "RomaricDrigon\\MetaYaml": "src/"
