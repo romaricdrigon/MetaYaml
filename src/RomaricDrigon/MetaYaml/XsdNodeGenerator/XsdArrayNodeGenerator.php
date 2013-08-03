@@ -2,8 +2,6 @@
 
 namespace RomaricDrigon\MetaYaml\XsdNodeGenerator;
 
-use RomaricDrigon\MetaYaml\Exception\NodeValidatorException;
-
 class XsdArrayNodeGenerator extends XsdNodeGenerator
 {
     public function build($name, $node, \XMLWriter &$writer, $under_root)

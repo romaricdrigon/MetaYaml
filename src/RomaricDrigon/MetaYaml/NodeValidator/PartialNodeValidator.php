@@ -2,8 +2,6 @@
 
 namespace RomaricDrigon\MetaYaml\NodeValidator;
 
-use RomaricDrigon\MetaYaml\Exception\NodeValidatorException;
-
 class PartialNodeValidator extends NodeValidator
 {
     public function validate($name, $node, $data)
