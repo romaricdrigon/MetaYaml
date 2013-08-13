@@ -1,6 +1,7 @@
 # MetaYaml
 
 [![Build Status](https://travis-ci.org/romaricdrigon/MetaYaml.png?branch=master)](https://travis-ci.org/romaricdrigon/MetaYaml)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/b61e16d7-0756-42f1-8dff-32def155f608/mini.png)](https://insight.sensiolabs.com/projects/b61e16d7-0756-42f1-8dff-32def155f608)
 
 A `[put your file type here]` schema validator using `[put another file type here]` files.  
 At the moment, file type can be Json, Yaml, or [XML](#notes-on-xml-support). It can generate a documentation about the schema, or a XSD file (experimental).
