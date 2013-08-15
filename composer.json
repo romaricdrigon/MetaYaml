@@ -1,7 +1,9 @@
 {
     "name": "romaricdrigon/metayaml",
-    "description": "Meta-Yaml to validate Yaml using [Yaml|Xml|json] schemas",
-    "keywords": ["yaml", "validation", "schema"],
+    "type": "library",
+    "description": "Using [Yaml|Xml|json] schemas files to validate [Yaml|Xml|json] ",
+    "homepage": "http://github.com/romaricdrigon/MetaYaml",
+    "keywords": ["yaml", "xml", "json", "validation", "schema"],
     "license": "MIT",
     "autoload": {
         "psr-0": {
