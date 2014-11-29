@@ -1,5 +1,6 @@
 # MetaYaml
 
+[![Latest Stable Version](https://poser.pugx.org/romaricdrigon/metayaml/v/stable.svg)](https://packagist.org/packages/romaricdrigon/metayaml) 
 [![Build Status](https://travis-ci.org/romaricdrigon/MetaYaml.png?branch=master)](https://travis-ci.org/romaricdrigon/MetaYaml)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/b61e16d7-0756-42f1-8dff-32def155f608/mini.png)](https://insight.sensiolabs.com/projects/b61e16d7-0756-42f1-8dff-32def155f608)
 
