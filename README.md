@@ -31,7 +31,7 @@ It is a standalone component:
 * to use the YamlLoader, you will need the Symfony component [Yaml](https://github.com/symfony/Yaml) (standalone component, does not require Symfony2)
 * to launch the tests, you'll need [atoum](https://github.com/mageekguy/atoum)
 
-To install all these packages, you can use [composer](http://getcomposer.org): just do `composer --update`
+To install via [composer](http://getcomposer.org) just do `composer require romaricdrigon/metayaml`
 
 ## Basic usage
 
