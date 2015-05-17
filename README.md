@@ -47,7 +47,7 @@ $schema = new MetaYaml($schema);
     it can take some time (up to a second for a few hundred lines)
     so do it only once, and maybe only in development!
 */
-$schema->validate_schema(); // return true or throw an exception
+$schema->validateSchema(); // return true or throw an exception
 
 // you could also have done this at init
 $schema = new MetaYaml($schema, true); // will load AND validate the schema
