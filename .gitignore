@@ -1,7 +1,4 @@
-app/cache
-app/logs
 composer.lock
-composer.phar
 vendor
 web/
-.idea/*
+
