@@ -15,6 +15,6 @@
         "symfony/yaml": "~2.3|~3.0"
     },
     "require-dev": {
-        "atoum/atoum": "dev-master#c6ec75d4cf132728e80ec8ed1470b83cb53fc1c9"	
+        "atoum/atoum": "~1"	
     }
 }

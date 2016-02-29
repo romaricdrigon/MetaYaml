@@ -355,8 +355,8 @@ A few limitations, some relative to XML Schema, apply:
 
 ## Test
 
-The project is fully tested using [atoum](https://github.com/mageekguy/atoum).
-To launch tests, just run in a shell `./bin/test --test-all`
+The project is fully tested using [atoum](https://github.com/atoum/atoum).
+To launch tests, just run in a shell `./bin/test -d test`
 
 ## Extending
 
