@@ -157,8 +157,8 @@ You can specify additional attributes:
 * only for array nodes:
  * `_ignore_extra_keys`: the node can contain children whose keys are not listed in `_children`; they'll be ignored
 * only for prototype nodes:
- * `min_items`: the prototype node should contain at least 'min' elements
- * `max_items`: the opposite, the max number of elements in the prototype node (by default 200)
+ * `_min_items`: the prototype node should contain at least 'min' elements
+ * `_max_items`: the opposite, the max number of elements in the prototype node (by default 200)
 
 Here's a comprehensive example:
 ```yaml
