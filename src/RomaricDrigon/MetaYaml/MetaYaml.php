@@ -2,6 +2,7 @@
 
 namespace RomaricDrigon\MetaYaml;
 
+use RomaricDrigon\MetaYaml\Exception\NodeValidatorException;
 use RomaricDrigon\MetaYaml\SchemaValidator;
 use RomaricDrigon\MetaYaml\Loader\JsonLoader;
 
@@ -23,8 +24,8 @@ class MetaYaml
             // we validate the schema using the meta schema, defining the structure of our schema
             try {
                 $this->validateSchema();
-            } catch (\Exception $e) {
-                throw new \Exception("Unable to validate schema with error: {$e->getMessage()}");
+            } catch (NodeValidatorException $e) {
+                throw new \Exception("Unable to validate schema with error: {$e->getMessage()}\n{$e->getReport()}");
             }
         }
     }

@@ -13,11 +13,13 @@ class ChoiceNodeValidator extends NodeValidator
         $valid = false;
         $message = '';
         $count_levels = -1;
+        $sub_messages = [];
+        $sub_paths = [];
 
         foreach ($node[$this->schema_validator->getFullName('choices')] as $choice_config) {
             try {
                 $this->schema_validator->validateNode($name, $choice_config[$this->schema_validator->getFullName('type')],
-                    $choice_config, $data);
+                    $choice_config, $data, $this->path);
                 $valid = true;
                 break;
             } catch (NodeValidatorException $e) {
@@ -27,11 +29,17 @@ class ChoiceNodeValidator extends NodeValidator
                     $message = $e->getMessage();
                     $count_levels = $current_count_levels;
                 }
+
+                $sub_messages = array_merge($sub_messages, $e->getMessages());
+                $sub_paths = array_merge($sub_paths, $e->getPaths());
+
             }
         }
 
         if (! $valid) {
-            throw new NodeValidatorException($name, "The choice node '$name' is invalid with error: $message");
+            $messages = array_merge($sub_messages, ["The choice node '$name' is invalid with error: $message"]);
+            $paths = array_merge($sub_paths, [$this->path]);
+            throw new NodeValidatorException($name, $messages, $paths);
         }
 
         return true;

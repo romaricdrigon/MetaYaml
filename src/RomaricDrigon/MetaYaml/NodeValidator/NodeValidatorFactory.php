@@ -29,7 +29,7 @@ class NodeValidatorFactory
             case 'partial':
                 return new PartialNodeValidator($validator);
             default:
-                throw new NodeValidatorException($name, 'Unknown validator type : '.$type);
+                throw new NodeValidatorException($name, 'Unknown validator type : '.$type, $this->path);
         }
     }
 }
