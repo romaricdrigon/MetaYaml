@@ -13,7 +13,8 @@ class PatternNodeValidator extends NodeValidator
         // preg_match return false if there's an error, 0 if not found, 1 if found
         if (1 !== preg_match($node[$this->schema_validator->getFullName('pattern')], $data)) {
             throw new NodeValidatorException($name,
-                "Node '$name' does not match pattern '{$node[$this->schema_validator->getFullName('pattern')]}'"
+                "Node '$name' does not match pattern '{$node[$this->schema_validator->getFullName('pattern')]}'",
+                $this->path
             );
         }
 

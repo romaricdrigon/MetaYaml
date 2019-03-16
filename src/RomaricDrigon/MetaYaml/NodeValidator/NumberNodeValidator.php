@@ -14,7 +14,7 @@ class NumberNodeValidator extends NodeValidator
         $strict = isset($node[$this->schema_validator->getFullName('strict')]) && isset($node[$this->schema_validator->getFullName('strict')]);
 
         if (! is_numeric($data) || ($strict && ! (is_integer($data) || is_float($data)))) {
-            throw new NodeValidatorException($name, "The node '$name' is not a number");
+            throw new NodeValidatorException($name, "The node '$name' is not a number", $this->path);
         }
 
         return true;
@@ -24,7 +24,7 @@ class NumberNodeValidator extends NodeValidator
         if (($data === '0' || $data === 0 || $data === 0.0)
             && isset($node[$this->schema_validator->getFullName('not_empty')])
             && $node[$this->schema_validator->getFullName('not_empty')]) {
-            throw new NodeValidatorException($name, "The node '$name' can not be empty");
+            throw new NodeValidatorException($name, "The node '$name' can not be empty", $this->path);
         }
     }
 }

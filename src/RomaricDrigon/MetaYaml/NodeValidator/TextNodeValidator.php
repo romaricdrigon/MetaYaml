@@ -15,7 +15,7 @@ class TextNodeValidator extends NodeValidator
             (isset($node[$this->schema_validator->getFullName('strict')])
             && $node[$this->schema_validator->getFullName('strict')]
             && ! is_string($data))) {
-            throw new NodeValidatorException($name, "The node '$name' is not a text value");
+            throw new NodeValidatorException($name, "The node '$name' is not a text value", $this->path);
         }
 
         return true;
@@ -25,7 +25,7 @@ class TextNodeValidator extends NodeValidator
         if ($data === ''
             && isset($node[$this->schema_validator->getFullName('not_empty')])
             && $node[$this->schema_validator->getFullName('not_empty')]) {
-            throw new NodeValidatorException($name, "The node '$name' can not be empty");
+            throw new NodeValidatorException($name, "The node '$name' can not be empty", $this->path);
         }
     }
 }

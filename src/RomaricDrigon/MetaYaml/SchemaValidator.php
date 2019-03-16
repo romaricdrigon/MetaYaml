@@ -41,14 +41,18 @@ class SchemaValidator
 
     // validate nodes
 
-    public function validateNode($name, $type, $node, $data)
+  /**
+   * @throws Exception\NodeValidatorException
+   */
+  public function validateNode($name, $type, $node, $data, $path = '')
     {
         $validator = $this->factory->getValidator($name, $type, $this);
+        $validator->setPath($path);
 
         return $validator->validate($name, $node, $data);
     }
 
-    public function validatePartial($name, $data)
+    public function validatePartial($name, $data, $path = '')
     {
         if (! isset($this->schema_config['partials']) || ! isset($this->schema_config['partials'][$name])) {
             throw new \Exception("You're using a partial but partial '$name' is not defined in your schema");
@@ -57,7 +61,8 @@ class SchemaValidator
         return $this->validateNode($name,
             $this->schema_config['partials'][$name][$this->getFullName('type')],
             $this->schema_config['partials'][$name],
-            $data
+            $data,
+            $path
         );
     }
 }

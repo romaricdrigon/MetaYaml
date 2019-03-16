@@ -8,10 +8,16 @@ use RomaricDrigon\MetaYaml\Exception\NodeValidatorException;
 abstract class NodeValidator implements NodeValidatorInterface
 {
     protected $schema_validator;
+    protected $path;
 
-    public function __construct(SchemaValidator $schema_validator)
+  public function __construct(SchemaValidator $schema_validator)
     {
         $this->schema_validator = $schema_validator;
+    }
+
+    public function setPath($path)
+    {
+        $this->path = $path;
     }
 
     protected function checkRequired($name, array $node, $data)
@@ -20,7 +26,7 @@ abstract class NodeValidator implements NodeValidatorInterface
 
         if (isset($node[$this->schema_validator->getFullName('required')])
             && $node[$this->schema_validator->getFullName('required')]) {
-            throw new NodeValidatorException($name, sprintf("The node '$name' is required"));
+            throw new NodeValidatorException($name, sprintf("The node '$name' is required"), $this->path);
         } else {
             return true; // data null & not required, stop further validations
         }

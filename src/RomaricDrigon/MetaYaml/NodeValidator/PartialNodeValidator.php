@@ -9,6 +9,6 @@ class PartialNodeValidator extends NodeValidator
         if ($this->checkRequired($name, $node, $data)) return true;
 
         // we will validate using the partial defined in schema -> _partials -> name
-        return $this->schema_validator->validatePartial($node[$this->schema_validator->getFullName('partial')], $data);
+        return $this->schema_validator->validatePartial($node[$this->schema_validator->getFullName('partial')], $data, $this->path);
     }
 }
